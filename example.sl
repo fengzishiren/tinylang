@@ -11,8 +11,8 @@ define main() {
 	if (a > 100) {
 		print("hello");
 	}
-	
-	print(echo("hello"));
+	msg = echo("hello");
+	print(msg);
 	
 	return a;
 }
