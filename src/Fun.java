@@ -1,5 +1,4 @@
 
-
 import java.util.List;
 
 public class Fun extends Node {
@@ -7,7 +6,7 @@ public class Fun extends Node {
 	public List<Name> params;
 	public Node body;
 
-	public Fun(String name, List<Name> params, Node body ) {
+	public Fun(String name, List<Name> params, Node body) {
 		super();
 		this.name = name;
 		this.params = params;
@@ -23,7 +22,7 @@ public class Fun extends Node {
 	public Value typecheck(Scope s) {
 		return null;
 	}
-	
+
 	@Override
 	public String toString() {
 		return super.toString();

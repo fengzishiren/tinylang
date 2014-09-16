@@ -1,5 +1,4 @@
 
-
 public class Call extends Stmt {
 	public Node op;
 	public Argument args;
@@ -19,7 +18,7 @@ public class Call extends Stmt {
 
 			for (int i = 0; i < closure.fun.params.size(); i++) {
 				Value v = args.elements.get(i).interp(s);
-				funScope.put(closure.fun.params.get(i).id, v);
+				funScope.putValue(closure.fun.params.get(i).id, v);
 			}
 			return closure.fun.body.interp(funScope);
 		} else {

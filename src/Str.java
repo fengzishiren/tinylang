@@ -1,11 +1,8 @@
 
-
 public class Str extends Node {
-	public Object content;
 	public String value;
 
 	public Str(Object content) {
-		this.content = content;
 		this.value = (String) content;
 	}
 
@@ -16,9 +13,7 @@ public class Str extends Node {
 
 	@Override
 	public Value typecheck(Scope s) {
-		// TODO Auto-generated method stub
-		//return Type.STRING;
-		return null;
+		return Type.STRING;
 	}
 
 	@Override

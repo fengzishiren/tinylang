@@ -130,11 +130,13 @@ public class Parser {
 		switch (look.tag) {
 		case '<':
 		case '>':
+		case Tag.EQ:
+		case Tag.NE:
 		case Tag.LE:
 		case Tag.GE:
 			Token tok = look;
 			move();
-			return new Rel(tok, x, atom());
+			return new Rel(tok.tag, x, atom());
 		default:
 			return x;
 		}
@@ -165,7 +167,7 @@ public class Parser {
 	 * 
 	 * int|float|bool|call|id|
 	 * 
-	 * Note: unsupport '('、','
+	 * Note: unsupport '('、')'
 	 * 
 	 * @return
 	 */
