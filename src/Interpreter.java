@@ -16,13 +16,4 @@ public class Interpreter {
 		root.interp(new Scope());
 	}
 
-	public static void main(String[] args) {
-
-		try {
-			Interpreter interpreter = new Interpreter("");
-			interpreter.interp();
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-	}
 }

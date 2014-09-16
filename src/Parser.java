@@ -100,7 +100,7 @@ public class Parser {
 			return new Break();
 		case Tag.RETURN:
 			move();
-			Return ret = new Return(expr());
+			Return ret = new Return(atom());
 			match(';');
 			return ret;
 		default:
@@ -115,7 +115,7 @@ public class Parser {
 			ArrayList<Node> params = new ArrayList<>();
 			match('(');
 			while (look.tag != ')') {
-				params.add(atom());
+				params.add(expr());
 				if (look.tag != ')')
 					match(',');
 			}
@@ -190,16 +190,14 @@ public class Parser {
 			Name name = new Name(id);
 			move();
 			if (look.tag == '(') {
-				move();
-				ArrayList<Node> params = new ArrayList<>();
 				match('(');
+				ArrayList<Node> params = new ArrayList<>();
 				while (look.tag != ')') {
 					params.add(atom());
 					if (look.tag != ')')
 						match(',');
 				}
 				match(')');
-				match(';');
 				return new Call(name, new Argument(params));
 			}
 			return name;
