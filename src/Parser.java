@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 
 public class Parser {
@@ -181,8 +179,22 @@ public class Parser {
 			return x;
 		case Tag.ID:
 			String id = look.toString();
+			Name name = new Name(id);
 			move();
-			return new Name(id);
+			if (look.tag == '(') {
+				move();
+				ArrayList<Node> params = new ArrayList<>();
+				match('(');
+				while (look.tag != ')') {
+					params.add(atom());
+					if (look.tag != ')')
+						match(',');
+				}
+				match(')');
+				match(';');
+				return new Call(name, new Argument(params));
+			}
+			return name;
 		case Tag.STRING:
 			String str = look.toString();
 			move();
