@@ -1,5 +1,6 @@
+
+
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,11 +14,8 @@ public class Lexer {
 	private String text;
 	private int offset;
 
-	private int row, col;
-
-	public void load(String s) {
+	public Lexer(String s) {
 		text = s;
-		offset = row = col = 0;
 	}
 
 	private Map<String, Integer> reserves = new HashMap<String, Integer>();
@@ -29,7 +27,7 @@ public class Lexer {
 		reserves.put("do", Tag.DO);
 		reserves.put("true", Tag.TRUE);
 		reserves.put("false", Tag.FALSE);
-
+		reserves.put("return", Tag.RETURN);
 	}
 
 	private boolean skipSpace() {
@@ -51,10 +49,8 @@ public class Lexer {
 
 	private void forward() {
 		if (text.charAt(offset++) == '\n') {
-			row++;
-			col = 0;
 		} else
-			col++;
+			;
 	}
 
 	private boolean lookequal(char c) {
@@ -71,53 +67,49 @@ public class Lexer {
 		if (text.length() == offset)
 			return null;
 
-		int col = this.col, row = this.row;
 		switch (peek()) {
 		case '&':
 			forward();
 			if (lookequal('&')) {
 				forward();
-				return new Token(Tag.AND, "&&", col, row);
+				return new Token(Tag.AND);
 			} else
-				return new Token('&', "&", col, row);
+				return new Token('&');
 		case '|':
 			forward();
 			if (lookequal('|')) {
 				forward();
-				return new Token(Tag.OR, "||", col, row);
+				return new Token(Tag.OR);
 			} else
-				return new Token('|', "|", col, row);
+				return new Token('|');
 		case '=':
 			forward();
 			if (lookequal('=')) {
 				forward();
-				return new Token(Tag.EQ, "==", col, row);
+				return new Token(Tag.EQ);
 			} else
-				return new Token('=', "=", col, row);
+				return new Token('=');
 		case '!':
 			forward();
 			if (lookequal('=')) {
 				forward();
-				return new Token(Tag.NE, "!=", col, row);
+				return new Token(Tag.NE);
 			} else
-				return new Token('!', "!", col, row);
+				return new Token('!');
 		case '<':
 			forward();
 			if (lookequal('=')) {
 				forward();
-				return new Token(Tag.LE, "<=", col, row);
+				return new Token(Tag.LE);
 			} else
-				return new Token('<', "<", row, col);
+				return new Token('<');
 		case '>':
 			forward();
 			if (lookequal('=')) {
 				forward();
-				return new Token(Tag.GE, ">=", col, row);
+				return new Token(Tag.GE);
 			} else
-				return new Token('>', ">", col, row);
-		case ';':
-			forward();
-			return new Token(Tag.NL, "\\n", col, row);
+				return new Token('>');
 		}
 		if (Character.isDigit(peek())) {
 			int v = 0;
@@ -126,14 +118,17 @@ public class Lexer {
 				forward();
 			} while (offset != text.length() && Character.isDigit(peek()));
 			if (!lookequal('.')) {
-				return new Token(Tag.INT, v + "", row, col);
+				return new Token(Tag.INT, v);
 			}
-			/*
-			 * float x = v; float d = 10; forward(); while (offset !=
-			 * text.length() && Character.isDigit(peek())) { x = x +
-			 * Character.digit(peek(), 10) / d; d *= 10; forward(); } return new
-			 * REAL(x, row, col);
-			 */
+			float x = v;
+			float d = 10;
+			forward();
+			while (offset != text.length() && Character.isDigit(peek())) {
+				x = x + Character.digit(peek(), 10) / d;
+				d *= 10;
+				forward();
+			}
+			return new Token(Tag.FLOAT, x);
 		}
 		if (lookequal('"')) {
 			int start = offset + 1;
@@ -142,7 +137,7 @@ public class Lexer {
 			} while (offset != text.length() && (peek() != '"'));
 			if (offset != text.length())
 				forward();
-			return new Token(Tag.ID, text.substring(start, offset), row, col);
+			return new Token(Tag.STRING, text.substring(start, offset));
 		}
 		if (Character.isLetter(peek()) || peek() == '_') {
 			int start = offset;
@@ -152,23 +147,18 @@ public class Lexer {
 					&& (Character.isLetterOrDigit(peek()) || peek() == '_'));
 			String word = text.substring(start, offset);
 			Integer tag = reserves.get(word);
-			return new Token(tag == null ? Tag.ID : tag, word, row, col);
+			return new Token(tag == null ? Tag.ID : tag, word);
 		}
-		char c = peek();
-
-		Token to = new Token(c, c + "", row, col);
+		Token to = new Token(peek());
 		forward();
 		return to;
 	}
 	
-	
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		Lexer lexer = new Lexer();
-		lexer.load(U.read(new FileReader("example.sl")));
-		
-		Token token;
-		while ((token = lexer.scan()) != null) {
-			System.out.println(token);
+	public static void main(String[] args) throws IOException, IOException {
+		Lexer lexer = new Lexer(U.readFile("example.sl"));
+		Token tok;
+		while ((tok = lexer.scan()) != null) {
+			System.out.println(tok);
 		}
 	}
 }

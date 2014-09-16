@@ -1,27 +1,23 @@
 
+
 public class Token {
-	public final int tag;
+	public int tag;
+	public Object content;
 
-	public final Object content;
-	int row, col;
-
-	public int row() {
-		return row;
-	}
-
-	public int col() {
-		return col;
-	}
-
-	public Token(int tag, String content, int row, int col) {
+	public Token(int tag) {
 		this.tag = tag;
-		this.row = row;
-		this.col = col;
+
+	}
+
+	public Token(int tag, Object content) {
+		super();
+		this.tag = tag;
 		this.content = content;
 	}
 
 	@Override
 	public String toString() {
-		return content.toString();
+		//return String.format("<%c, %s>", (char)tag, content == null ? "" : content.toString());
+		return content == null ? "" : content.toString();
 	}
 }

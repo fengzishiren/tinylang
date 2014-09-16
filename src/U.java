@@ -1,5 +1,8 @@
 
+
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Field;
@@ -37,6 +40,34 @@ public class U {
 	 * 不同操作系统上的换行符号不统一 这里在读取文件的时候统一用’\n‘代替 在词法分析阶段被记录以便精确定位语法错误位置
 	 */
 	public static final char NEW_LINE = '\n';
+
+	public static boolean isPrimitive(Object o) {
+		try {
+			return ((Class<?>) o.getClass().getField("TYPE").get(null))
+					.isPrimitive();
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	private static String escape(String s) {
+		StringBuilder sb = new StringBuilder();
+		for (char c : s.toCharArray()) {
+			String str = escapeMap.get(c);
+			// if (str == null)
+			// S.syntaxError(String.format("Unrecognized \"%c\"", c));
+			sb.append(str == null ? c : str);
+		}
+		return sb.toString();
+	}
+
+	public static String toString(Object o) {
+		return escape(String.valueOf(o));
+	}
+
+	public static final String readFile(String file) throws IOException {
+		return read(new FileReader(file));
+	}
 
 	public static final String read(Reader _reader) throws IOException {
 		StringBuilder sb = new StringBuilder();

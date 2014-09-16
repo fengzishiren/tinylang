@@ -1,33 +1,84 @@
-import java.util.HashMap;
+
+
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Scope {
-	public Scope enclosing;
-	public Map<String, Symbol> symbols = new HashMap<>();
 
-	public Scope(Scope enclosing) {
-		this.enclosing = enclosing;
+	public Map<String, Object> table = new LinkedHashMap<>();
+
+	public Scope prev;
+
+	public Scope() {
 	}
 
-	public Scope getEnclosing() {
-		return enclosing;
+	public Scope(Scope s) {
+		prev = s;
 	}
 
-	public void define(Symbol symbol) {
-		symbols.put(symbol.name, symbol);
-		symbol.scope = this;
+	public void put(String name, Object value) {
+
+		table.put(name, value);
 	}
 
-	public Symbol resolve(String name) {
-		Symbol symbol = symbols.get(name);
-		if (symbol != null)
-			return symbol;
-		if (getEnclosing() != null)
-			return getEnclosing().resolve(name);
-		return null;
+	public Value get(String name) {
+		return lookup(name);
 	}
 
-	public String name() {
-		return "";
+	/**
+	 * 
+	 * value = "value" name ->map-> map.get(value)
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Value lookup(String name) {
+		Object v = lookupProperty(name, "value");
+		if (v == null)
+			return null;
+		else if (v instanceof Value)
+			return (Value) v;
+		else {
+			_.abort("value is not a Value, shouldn't happen: " + v);
+			return null;
+		}
+	}
+
+	public Value lookupLocal(String name) {
+		Object v = lookupPropertyLocal(name, "value");
+		if (v == null)
+			return null;
+		else if (v instanceof Value)
+			return (Value) v;
+		else {
+			_.abort("value is not a Value, shouldn't happen: " + v);
+			return null;
+		}
+	}
+
+	public Value lookupType(String name) {
+		Object v = lookupProperty(name, "type");
+		if (v == null)
+			return null;
+		else if (v instanceof Value)
+			return (Value) v;
+		else {
+			_.abort("value is not a Value, shouldn't happen: " + v);
+			return null;
+		}
+	}
+
+	public Object lookupProperty(String name, String key) {
+		Object v = lookupPropertyLocal(name, key);
+		if (v != null)
+			return v;
+		else if (prev != null)
+			return prev.lookupProperty(name, key);
+		else
+			return null;
+	}
+
+	public Object lookupPropertyLocal(String name, String key) {
+		return table.get(name);
 	}
 }
