@@ -161,6 +161,14 @@ public class Parser {
 		return x;
 	}
 
+	/**
+	 * 
+	 * int|float|bool|call|id|
+	 * 
+	 * Note: unsupport '('、','
+	 * 
+	 * @return
+	 */
 	private Node atom() {
 		Node x = null;
 		switch (look.tag) {
