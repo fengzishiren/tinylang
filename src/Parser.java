@@ -102,7 +102,7 @@ public class Parser {
 			return new Break();
 		case Tag.RETURN:
 			move();
-			Return ret = new Return(look.tag == ';' ? null : factor());
+			Return ret = new Return(look.tag == ';' ? null : bool());
 			match(';');
 			return ret;
 		default:
