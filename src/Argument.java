@@ -1,5 +1,6 @@
 
 
+import java.util.Collections;
 import java.util.List;
 
 public class Argument {
@@ -9,6 +10,10 @@ public class Argument {
 		this.elements = elements;
 	}
 
+	public static Argument noArgs() {
+		return new Argument(Collections.emptyList());
+	}
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
