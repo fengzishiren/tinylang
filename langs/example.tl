@@ -10,7 +10,11 @@ define main() {
 	a = a + 250;
 	if (a > 100) {
 		print("hello");
+		print("World");
 	}
+	
+	if (a > 0)
+		print("Hello World");
 	msg = echo("hello");
 	print(msg);
 	

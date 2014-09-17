@@ -1,5 +1,8 @@
+
+define getRetVal() {
+}
+
 define main() {
 	a = 10;
-	
-	return a;
+	getRetVal();
 }
