@@ -1,5 +1,5 @@
-tinylang
-
+The Tinylang Programming Language
+====
 
 我将用业余时间设计一门语言，这是我自编程以来一直的一个梦想。语言的名字还没想到，但我知道这至关重要，按照松本行弘先生的看法，一个名字起的很好的项目通常都会获得成功。
 
@@ -117,6 +117,12 @@ define main() {
 }
 
 ```
+
+
+###参考：
+
+* yin：https://github.com/yinwang0/yin
+* 编译原理：http://book.douban.com/subject/3296317/
 
 
 ###License
