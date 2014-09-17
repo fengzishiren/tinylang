@@ -1,5 +1,3 @@
-
-
 public class Arith extends Node {
 	public Node left, right;
 	public int op;
@@ -13,14 +11,85 @@ public class Arith extends Node {
 
 	@Override
 	public Value interp(Scope s) {
-		// TODO Auto-generated method stub
-		return null;
+		Value lv = left.interp(s);
+		Value rv = right.interp(s);
+		if (lv instanceof StringValue && rv instanceof StringValue) {
+			String l = ((StringValue) lv).value;
+			String r = ((StringValue) rv).value;
+			return new StringValue(l + r);
+		}
+		if (lv instanceof IntValue && rv instanceof IntValue) {
+			int l = ((IntValue) lv).value;
+			int r = ((IntValue) rv).value;
+			return new IntValue(op(l, r));
+		}
+		if (lv instanceof FloatValue && rv instanceof FloatValue) {
+			float l = ((FloatValue) lv).value;
+			float r = ((FloatValue) rv).value;
+			return new FloatValue(op(l, r));
+		}
+		//never touch
+		return Value.VOID;
+	}
+
+	private int op(int l, int r) {
+		int ret = 0;
+		switch (op) {
+		case '+':
+			ret = l + r;
+			break;
+		case '-':
+			ret = l - r;
+			break;
+		case '*':
+			ret = l * r;
+			break;
+		case '/':
+			ret = l / r;
+			break;
+		default:
+			S.error("不支持操作符: " + (char) op);
+		}
+		return ret;
+	}
+
+	private float op(float l, float r) {
+		float ret = 0;
+		switch (op) {
+		case '+':
+			ret = l + r;
+			break;
+		case '-':
+			ret = l - r;
+			break;
+		case '*':
+			ret = l * r;
+			break;
+		case '/':
+			ret = l / r;
+			break;
+		default:
+			S.error("不支持操作符: " + (char) op);
+		}
+		return ret;
 	}
 
 	@Override
 	public Value typecheck(Scope s) {
-		// TODO Auto-generated method stub
-		return null;
+		Value lv = left.interp(s);
+		Value rv = right.interp(s);
+		if (lv instanceof StringValue && rv instanceof StringValue) {
+			if (op != '+')
+				S.error("String不支持操作: " + (char) op);
+		}
+		if (lv instanceof FloatValue && rv instanceof FloatValue) {
+			return Type.Float;
+		}
+		if ((lv instanceof IntValue && rv instanceof IntValue)) {
+			return Type.INT;
+		}
+		S.error("类型不匹配的操作： " + (char) op);
+		return Value.ANY;
 	}
 
 }

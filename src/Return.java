@@ -1,17 +1,25 @@
-
-
 public class Return extends Stmt {
 
-	public Node expr;
+	public Node opexpr;
 
-	public Return(Node expr) {
+	public Return(Node opexpr) {
 		super();
-		this.expr = expr;
+		this.opexpr = opexpr;
 	}
 
 	@Override
 	public Value interp(Scope s) {
-		return expr.interp(s);
+		return opexpr == null ? Value.VOID : opexpr.interp(s);
+	}
+
+	@Override
+	public Value typecheck(Scope s) {
+		return opexpr == null ? Value.VOID : Value.ANY;
+	}
+
+	@Override
+	public String toString() {
+		return "return " + (opexpr == null ? "" : opexpr);
 	}
 
 }
