@@ -1,6 +1,3 @@
-
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Interpreter {
@@ -10,10 +7,12 @@ public class Interpreter {
 		this.file = file;
 	}
 
-	public void interp() throws FileNotFoundException, IOException {
+	public String interp() throws IOException {
 		Parser parser = new Parser(new Lexer(U.readFile(file)));
 		Node root = parser.parse();
-		root.interp(new Scope());
+		System.out.println(root.toString());
+		Value retval = root.interp(Scope.initScope());
+		return retval.toString();
 	}
 
 }
