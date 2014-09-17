@@ -9,6 +9,30 @@ JDK 1.7 +
 
 --------
 
+
+
+
+###tinylang语法：
+
+```
+program             -> (function + )+ EOF
+function 	    -> 'define' ID '(' (ID (',' ID)*)? ')' block
+block               -> '{' stmts '}'
+stmts               ->  stmts stmt
+                       | E
+stmt                -> 'print' expr ;
+                       | 'return' expr ;
+                       | call ;
+                       | assign ;
+                       | 'if' expr stmts ('else' stmts)?
+                       | 'while' expr stmts
+                       | E
+assign              -> ID '=' expr
+expr                -> expr (('+' | '-' | '*' | '/') expr)?
+factor              -> ID | INT | FLOAT | BOOL | STRING | call
+call                -> ID '(' (expr (',' expr)*)? ')'
+```
+
 如下为设计的语言：
 示例1：
 
