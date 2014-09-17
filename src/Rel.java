@@ -53,6 +53,8 @@ public class Rel extends Node {
 		case Tag.GE:
 			ret = l >= r;
 			break;
+		default:
+			S.error("不支持操作符: " + (char) op);
 		}
 		return ret;
 	}
@@ -66,6 +68,6 @@ public class Rel extends Node {
 				|| (lv instanceof StringValue && lv instanceof StringValue))
 			return Type.BOOL;
 		S.error("Type math error!");
-		return null;
+		return Value.ANY;
 	}
 }
