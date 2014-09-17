@@ -1,5 +1,9 @@
 
-
+/**
+ * 复制操作的本质是变量名name与值value的绑定 即：K,V 如果V有变化则为：K, V1....
+ * @author lunatic
+ *
+ */
 public class Assign extends Stmt {
 	public Name name;
 	public Node value;
