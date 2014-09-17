@@ -1,6 +1,6 @@
 
 
-public class FloatValue extends Value {
+public class FloatValue extends PrimValue {
     public float value;
 
 

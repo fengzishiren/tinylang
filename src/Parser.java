@@ -24,7 +24,7 @@ public class Parser {
 
 	public Node parse() {
 		Unit root = new Unit();
-		//必须以define打头
+		// 必须以define打头
 		do
 			root.addFun(function());
 		while (look != null && look.tag == Tag.DEFINE);
@@ -114,14 +114,7 @@ public class Parser {
 				match(';');
 				return assign;
 			}
-			Argument args = new Argument();
-			match('(');
-			while (look.tag != ')') {
-				args.addArg(expr());
-				if (look.tag != ')')
-					match(',');
-			}
-			match(')');
+			Argument args = _call();
 			match(';');
 			return new Call(name, args);
 		}
@@ -200,24 +193,70 @@ public class Parser {
 			Name name = new Name(id);
 			move();
 			if (look.tag == '(') {
-				match('(');
-				Argument args = new Argument();
-				while (look.tag != ')') {
-					args.addArg(expr());
-					if (look.tag != ')')
-						match(',');
-				}
-				match(')');
-				return new Call(name, args);
+				return new Call(name, _call());
 			}
+			if (look.tag == '[' || look.tag == '{');
+				//TODO
 			return name;
+
 		case Tag.STRING:
 			String str = look.toString();
 			move();
 			return new Str(str);
 		default:
-			error("unrecognize!" + look);
+			struct();
 		}
 		return null;
+	}
+
+	private Node struct() {
+		switch (look.tag) {
+		case '['://list = [1, 2, 3, "4"]
+			move();
+			List list = new List();
+			while (look.tag != ']') {
+				list.addNode(bool());
+				if (look.tag != ']')
+					match(',');
+			}
+			return list;
+		case '{':
+			// dict = {"zheng": 3, 1: "", ...}
+			move();
+			Dict dict = new Dict();
+			while (look.tag != '}') {
+				Node key = bool();
+				match(':');
+				Node val = bool();
+				dict.addKV(key, val);
+				if (look.tag != '}')
+					match(',');
+			}
+			return dict;
+		default:
+			error("unrecognize!" + look);
+			return null;
+		}
+	}
+
+	// //////////////////////////////
+	// helper
+	// /
+	
+	/**
+	 * call(a, b, c) - >list(a, b, c)
+	 * @return
+	 */
+	private Argument _call() {
+		Argument args = new Argument();
+		match('(');
+		while (look.tag != ')') {
+			args.addArg(expr());
+			if (look.tag != ')')
+				match(',');
+		}
+		match(')');
+		// match(';');
+		return args;
 	}
 }

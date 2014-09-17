@@ -1,7 +1,7 @@
 
 
 
-public class IntValue extends Value {
+public class IntValue extends PrimValue {
     public int value;
 
 

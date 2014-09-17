@@ -1,6 +1,6 @@
 
 
-public class StringValue extends Value {
+public class StringValue extends PrimValue {
 
 	public String value;
 
