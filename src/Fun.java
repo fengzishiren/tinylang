@@ -1,11 +1,10 @@
-import java.util.List;
 
 public class Fun extends Node {
 	public Name name;
-	public List<Name> params;
+	public Parameter params;
 	public Node body;
 
-	public Fun(Name name, List<Name> params, Node body) {
+	public Fun(Name name, Parameter params, Node body) {
 		super();
 		this.name = name;
 		this.params = params;
