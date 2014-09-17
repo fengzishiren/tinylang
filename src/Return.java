@@ -9,12 +9,15 @@ public class Return extends Stmt {
 
 	@Override
 	public Value interp(Scope s) {
-		return opexpr == null ? Value.VOID : opexpr.interp(s);
+		if (opexpr == null)
+			throw new ReturnJmp();
+		else
+			throw new ReturnJmp(opexpr.interp(s));
 	}
 
 	@Override
 	public Value typecheck(Scope s) {
-		return opexpr == null ? Value.VOID : Value.ANY;
+		return opexpr == null ? Value.VOID : opexpr.typecheck(s);
 	}
 
 	@Override

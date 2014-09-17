@@ -11,7 +11,9 @@ public class If extends Stmt {
 	@Override
 	public Value interp(Scope s) {
 		Value vt = test.interp(s);
-		if (vt != null || vt instanceof BoolValue && ((BoolValue) vt).value) {
+		if (!(vt instanceof BoolValue))
+			S.error("必须是boolean " + test);
+		if (((BoolValue) vt).value) {
 			stmt.interp(s);
 		}
 		return Value.VOID;

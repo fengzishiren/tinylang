@@ -1,13 +1,11 @@
 public class Break extends Stmt {
-	Stmt stmt;
 
 	public Break() {
-		stmt = Stmt.Enclosing;
 	}
 
 	@Override
 	public Value interp(Scope s) {
-		return Value.VOID;
+		throw new Goto();
 	}
 
 	@Override

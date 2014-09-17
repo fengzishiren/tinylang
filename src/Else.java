@@ -13,9 +13,13 @@ public class Else extends Stmt {
 	@Override
 	public Value interp(Scope s) {
 		Value vt = test.interp(s);
-		if (vt instanceof BoolValue && ((BoolValue) vt).value) {
+		if (!(vt instanceof BoolValue))
+			S.error("必须是boolean " + test);
+		if (((BoolValue) vt).value) {
+			//return then.interp(s);
 			then.interp(s);
 		} else {
+			//return other.interp(s);
 			other.interp(s);
 		}
 		return Value.VOID;
