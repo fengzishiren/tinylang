@@ -29,7 +29,8 @@ public class Rel extends Node {
 			int r = (int) ((FloatValue) rv).value;
 			return new BoolValue(op(l, r));
 		}
-		return Value.FALSE;
+		S.error("Type match error!");
+		return Value.FALSE; // never touch
 	}
 
 	private boolean op(int l, int r) {
@@ -67,7 +68,12 @@ public class Rel extends Node {
 				|| (lv instanceof IntValue && rv instanceof IntValue)
 				|| (lv instanceof StringValue && lv instanceof StringValue))
 			return Type.BOOL;
-		S.error("Type math error!");
+		S.error("Type match error!");
 		return Value.ANY;
+	}
+
+	@Override
+	public String toString() {
+		return left + " " + Tag.descOf(op) + " " + right;
 	}
 }

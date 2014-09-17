@@ -28,7 +28,7 @@ public class Arith extends Node {
 			float r = ((FloatValue) rv).value;
 			return new FloatValue(op(l, r));
 		}
-		//never touch
+		// never touch
 		return Value.VOID;
 	}
 
@@ -90,6 +90,11 @@ public class Arith extends Node {
 		}
 		S.error("类型不匹配的操作： " + (char) op);
 		return Value.ANY;
+	}
+
+	@Override
+	public String toString() {
+		return left + " " + Tag.descOf(op) + " " + right;
 	}
 
 }
