@@ -17,5 +17,10 @@ public class Float extends Node {
 	public Value typecheck(Scope s) {
 		return Type.Float;
 	}
+	
+	@Override
+	public String toString() {
+		return Double.toString(value);
+	}
 
 }
