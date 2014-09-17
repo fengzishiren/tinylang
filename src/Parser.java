@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class Parser {
 	private Token look;
@@ -25,7 +24,7 @@ public class Parser {
 	}
 
 	public Node parse() {
-		Funs root = new Funs();
+		Unit root = new Unit();
 		while (look != null)
 			root.addFun(function());
 		return root;
@@ -36,9 +35,9 @@ public class Parser {
 		String name = look.toString();
 		match(Tag.ID);
 		match('(');
-		ArrayList<Name> params = new ArrayList<Name>();
+		Parameter params = new Parameter();
 		while (look.tag != ')') {
-			params.add(new Name(look.toString()));
+			params.addParam(new Name(look.toString()));
 			match(Tag.ID);
 			if (look.tag != ')')
 				match(',');
@@ -100,7 +99,7 @@ public class Parser {
 			return new Break();
 		case Tag.RETURN:
 			move();
-			Return ret = new Return(look.tag == ';' ? null : atom());
+			Return ret = new Return(look.tag == ';' ? null : factor());
 			match(';');
 			return ret;
 		default:
@@ -112,21 +111,21 @@ public class Parser {
 				match(';');
 				return assign;
 			}
-			ArrayList<Node> params = new ArrayList<>();
+			Argument args = new Argument();
 			match('(');
 			while (look.tag != ')') {
-				params.add(expr());
+				args.addArg(expr());
 				if (look.tag != ')')
 					match(',');
 			}
 			match(')');
 			match(';');
-			return new Call(name, new Argument(params));
+			return new Call(name, args);
 		}
 	}
 
 	private Node bool() {
-		Node x = atom();
+		Node x = factor();
 		switch (look.tag) {
 		case '<':
 		case '>':
@@ -136,7 +135,7 @@ public class Parser {
 		case Tag.GE:
 			Token tok = look;
 			move();
-			return new Rel(tok.tag, x, atom());
+			return new Rel(tok.tag, x, factor());
 		default:
 			return x;
 		}
@@ -154,11 +153,11 @@ public class Parser {
 	}
 
 	private Node term() {
-		Node x = atom();
+		Node x = factor();
 		while (look.tag == '*' || look.tag == '/') {
 			Token tok = look;
 			move();
-			x = new Arith(x, tok.tag, atom());
+			x = new Arith(x, tok.tag, factor());
 		}
 		return x;
 	}
@@ -171,7 +170,7 @@ public class Parser {
 	 * 
 	 * @return
 	 */
-	private Node atom() {
+	private Node factor() {
 		Node x = null;
 		switch (look.tag) {
 		case Tag.INT:
@@ -193,14 +192,14 @@ public class Parser {
 			move();
 			if (look.tag == '(') {
 				match('(');
-				ArrayList<Node> params = new ArrayList<>();
+				Argument args = new Argument();
 				while (look.tag != ')') {
-					params.add(atom());
+					args.addArg(expr());
 					if (look.tag != ')')
 						match(',');
 				}
 				match(')');
-				return new Call(name, new Argument(params));
+				return new Call(name, args);
 			}
 			return name;
 		case Tag.STRING:
