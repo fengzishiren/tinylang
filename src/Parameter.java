@@ -24,7 +24,8 @@ public class Parameter {
 	}
 
 	public static Parameter noParams() {
-		return new Parameter(Collections.emptyList());
+		List<Name> empty = Collections.emptyList();
+		return new Parameter(empty);
 	}
 
 	public String toString() {

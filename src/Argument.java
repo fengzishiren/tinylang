@@ -24,7 +24,8 @@ public class Argument {
 	}
 
 	public static Argument noArgs() {
-		return new Argument(Collections.emptyList());
+		 List<Node> empty = Collections.emptyList();
+		return new Argument(empty);
 	}
 
 	public String toString() {
