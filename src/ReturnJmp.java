@@ -4,11 +4,12 @@
  * @author lunatic
  *
  */
-public class ReturnJmp extends Goto {
+public class ReturnJmp extends RuntimeException {
 	public Value value = Value.VOID;
 
 	/**
 	 * return ; 则返回Void
+	 * 
 	 * @return
 	 */
 	public Value attatchment() {
