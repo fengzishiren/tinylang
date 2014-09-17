@@ -8,4 +8,11 @@ public class Binder {
 		else
 			scope.putValue(name.id, value);
 	}
+
+	public static void define(Name name, Value value, Scope s) {
+		Value v = s.lookupLocal(name.id);
+		if (v != null) 
+			S.error("函数重定义： %s", name);
+		s.putValue(name.id, value);
+	}
 }
