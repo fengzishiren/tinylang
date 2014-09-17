@@ -45,7 +45,9 @@ call                -> ID '(' (expr (',' expr)*)? ')'
 
 
 
+----------
 如下为设计的语言：
+
 示例1：
 
 ```
@@ -56,6 +58,7 @@ define main() {
 	return a;
 }
 ```
+
 
 示例2
 
@@ -71,7 +74,10 @@ define main() {
 }
 
 ```
+
+
 示例3
+
 ```
 
 define echo(msg) {
