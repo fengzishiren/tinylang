@@ -27,8 +27,10 @@ stmt                -> 'print' expr ;
                        | 'if' expr stmts ('else' stmts)?
                        | 'while' expr stmts
                        | E
-assign              -> ID '=' expr
-expr                -> expr (('+' | '-' | '*' | '/') expr)?
+assign              -> ID '=' bool
+bool                -> > expr (( < | == | >= | <=) expr)?
+expr                -> term (('+' | '-') term)?
+term                -> factor ('*' | '/') factor)?
 factor              -> ID | INT | FLOAT | BOOL | STRING | call
 call                -> ID '(' (expr (',' expr)*)? ')'
 ```
