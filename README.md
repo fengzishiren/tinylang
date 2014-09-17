@@ -14,7 +14,8 @@ JDK 1.7 +
 
 
 
-###语言风格：
+语言风格：
+--------
 几乎是我心目中语言的样子： 
 
 函数定义以关键字 “define”开头，借鉴了Lisp方言Scheme的定义方式，以后陆续会有限制的加入一些函数式语言的东西。
@@ -29,7 +30,8 @@ JDK 1.7 +
 
 
 
-###tinylang语法：
+tinylang语法：
+--------
 
 ```
 program             -> (function + )+ EOF
@@ -54,7 +56,8 @@ call                -> ID '(' (expr (',' expr)*)? ')'
 
 
 
-###语言特性：
+语言特性：
+--------
 目前被设计为趋近于函数式风格
 * 执行例程从代码中搜索main函数（无参）并执行
 * 内置 print函数
@@ -64,8 +67,8 @@ call                -> ID '(' (expr (',' expr)*)? ')'
 
 
 
-####代码示例：
-
+代码示例：
+--------
 示例1：
 
 ```
@@ -119,14 +122,14 @@ define main() {
 ```
 
 
-###参考：
-
+参考：
+--------
 * yin：https://github.com/yinwang0/yin
 * 编译原理：http://book.douban.com/subject/3296317/
 
 
-###License
-
+License
+--------
 
 The MIT License (MIT)
 
