@@ -6,6 +6,8 @@ define main() {
 		print(a);
 		
 		if (a > 15) break;
+		
+		if (a > 14) return 23;
 	}
 	
 	return a;
