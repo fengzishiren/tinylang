@@ -1,12 +1,11 @@
-
 import java.util.List;
 
 public class Fun extends Node {
-	public String name;
+	public Name name;
 	public List<Name> params;
 	public Node body;
 
-	public Fun(String name, List<Name> params, Node body) {
+	public Fun(Name name, List<Name> params, Node body) {
 		super();
 		this.name = name;
 		this.params = params;
@@ -15,17 +14,20 @@ public class Fun extends Node {
 
 	@Override
 	public Value interp(Scope s) {
-		return new Closure(this, s);
+		// Closure closure = new Closure(this, s);
+		// Binder.define(name, closure, s);
+		return s.lookup(name.id);
+		// return closure;
 	}
 
 	@Override
 	public Value typecheck(Scope s) {
-		return null;
+		return new FunType(this, s);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString();
+		return name + "(" + U.join(", ", params) + ") " + body;
 	}
 
 }

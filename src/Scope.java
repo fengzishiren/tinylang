@@ -146,4 +146,16 @@ public class Scope {
 		return table.get(name);
 	}
 
+	public static Scope initScope() {
+		Scope scope = new Scope();
+		scope.putValue("print", new Print());
+		return scope;
+	}
+	
+	public static void main(String[] args) {
+		Scope scope = Scope.initScope();
+		Value v = scope.lookup("print");
+		System.out.println(v);
+	}
+
 }
