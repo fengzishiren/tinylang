@@ -1,18 +1,13 @@
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * 
@@ -53,8 +48,6 @@ public class U {
 		StringBuilder sb = new StringBuilder();
 		for (char c : s.toCharArray()) {
 			String str = escapeMap.get(c);
-			// if (str == null)
-			// S.syntaxError(String.format("Unrecognized \"%c\"", c));
 			sb.append(str == null ? c : str);
 		}
 		return sb.toString();
@@ -102,14 +95,9 @@ public class U {
 		return sb.toString();
 	}
 
+	@SafeVarargs
 	public static final <T> String join(String sep, T... args) {
 		return join(sep, Arrays.asList(args));
-	}
-
-	public static void main(String[] args) {
-		String join = U.join(" ", "a", "b" );
-
-		System.out.println(join);
 	}
 
 }
