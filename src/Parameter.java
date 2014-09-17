@@ -3,28 +3,28 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 实参
+ * 形参
  * 
  * @author lunatic
  *
  */
-public class Argument {
-	public List<Node> elements;
+public class Parameter {
+	public List<Name> elements;
 
-	public Argument(List<Node> elements) {
+	public Parameter(List<Name> elements) {
 		this.elements = elements;
 	}
 
-	public Argument() {
+	public Parameter() {
 		this.elements = new ArrayList<>();
 	}
 
-	public void addArg(Node arg) {
-		this.elements.add(arg);
+	public void addParam(Name param) {
+		this.elements.add(param);
 	}
 
-	public static Argument noArgs() {
-		return new Argument(Collections.emptyList());
+	public static Parameter noParams() {
+		return new Parameter(Collections.emptyList());
 	}
 
 	public String toString() {
@@ -35,7 +35,7 @@ public class Argument {
 		return elements.size();
 	}
 
-	public Node get(int index) {
+	public Name get(int index) {
 		return elements.get(index);
 	}
 }
