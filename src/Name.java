@@ -1,6 +1,5 @@
 
 
-
 public class Name extends Node {
 	public String id;
 
@@ -25,7 +24,8 @@ public class Name extends Node {
 		if (v != null) {
 			return v;
 		} else {
-			_.abort(this, "unbound variable: " + id);
+			S.error("变量未定义： " + id);
+			//_.abort(this, "unbound variable: " + id);
 			return Value.VOID;
 		}
 	}
