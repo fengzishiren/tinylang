@@ -1,5 +1,4 @@
 
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
@@ -137,7 +136,8 @@ public class Lexer {
 			} while (offset != text.length() && (peek() != '"'));
 			if (offset != text.length())
 				forward();
-			return new Token(Tag.STRING, text.substring(start, offset));
+			return new Token(Tag.STRING, text.substring(start, offset - 1)); // note:
+																				// "
 		}
 		if (Character.isLetter(peek()) || peek() == '_') {
 			int start = offset;
@@ -153,7 +153,7 @@ public class Lexer {
 		forward();
 		return to;
 	}
-	
+
 	public static void main(String[] args) throws IOException, IOException {
 		Lexer lexer = new Lexer(U.readFile("example.sl"));
 		Token tok;
