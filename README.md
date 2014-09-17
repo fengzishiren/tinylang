@@ -16,7 +16,7 @@ JDK 1.7 +
 
 ```
 program             -> (function + )+ EOF
-function 	    -> 'define' ID '(' (ID (',' ID)*)? ')' block
+function            -> 'define' ID '(' (ID (',' ID)*)? ')' block
 block               -> '{' stmts '}'
 stmts               ->  stmts stmt
                        | E
