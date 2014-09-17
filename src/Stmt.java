@@ -1,17 +1,16 @@
+public abstract class Stmt extends Node {
 
-
-public class Stmt extends Node {
-
-	public static Stmt Null = new Stmt();
+	public static Stmt Null = new Null();
 	public static Stmt Enclosing = Null;
 
 	@Override
-	public Value interp(Scope s) {
-		return null;
-	}
+	public abstract Value interp(Scope s);
 
 	@Override
-	public Value typecheck(Scope s) {
-		return null;
+	public abstract Value typecheck(Scope s);
+
+	@Override
+	public String toString() {
+		return "";
 	}
 }

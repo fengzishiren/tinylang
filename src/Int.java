@@ -15,5 +15,10 @@ public class Int extends Node {
 	public Value typecheck(Scope s) {
 		return Type.INT;
 	}
+	
+	@Override
+	public String toString() {
+		return String.valueOf(value);
+	}
 
 }
