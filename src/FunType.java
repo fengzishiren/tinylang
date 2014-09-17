@@ -10,6 +10,6 @@ public class FunType extends Value {
 
 	@Override
 	public String toString() {
-		return env.toString();
+		return "function";
 	}
 }
