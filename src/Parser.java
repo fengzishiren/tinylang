@@ -25,7 +25,7 @@ public class Parser {
 	}
 
 	public Node parse() {
-		Funcs root = new Funcs();
+		Funs root = new Funs();
 		while (look != null)
 			root.addFun(function());
 		return root;
@@ -44,7 +44,7 @@ public class Parser {
 				match(',');
 		}
 		match(')');
-		Fun fun = new Fun(name, params, block());
+		Fun fun = new Fun(new Name(name), params, block());
 		return fun;
 	}
 
@@ -100,7 +100,7 @@ public class Parser {
 			return new Break();
 		case Tag.RETURN:
 			move();
-			Return ret = new Return(atom());
+			Return ret = new Return(look.tag == ';' ? null : atom());
 			match(';');
 			return ret;
 		default:
