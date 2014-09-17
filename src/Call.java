@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Call extends Stmt {
-	public Node op;
+	public Name op;
 	public Argument args;
 
-	public Call(Node op, Argument args) {
+	public Call(Name op, Argument args) {
 		super();
 		this.op = op;
 		this.args = args;
@@ -16,6 +16,7 @@ public class Call extends Stmt {
 		Value opv = op.interp(s);
 		if (opv instanceof Closure) {
 			Closure closure = (Closure) opv;
+			//注意继承每个函数共享的初始envScope
 			Scope funScope = new Scope(closure.env);
 			for (int i = 0; i < closure.fun.params.size(); i++) {
 				Value v = args.elements.get(i).interp(s);
@@ -37,13 +38,17 @@ public class Call extends Stmt {
 
 	@Override
 	public Value typecheck(Scope s) {
-		// TODO Auto-generated method stub
-		return null;
+		Value opv = op.interp(s);
+		if (opv instanceof BuiltinFun || opv instanceof Closure)
+			return opv;
+		else
+			S.error("不支持的调用类型：" + opv);
+		return Value.VOID; // never touch
 	}
 
 	@Override
 	public String toString() {
-		return op + "(" + U.join(", ", args) + ")";
+		return op + "(" + args + ")";
 	}
 
 }
