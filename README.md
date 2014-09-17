@@ -2,7 +2,32 @@ tinylang 微型语言解释器
 ========
 
 如下为设计的语言：
+示例1：
 
+```
+define main() {
+	a = 10;
+	print(a);
+	
+	return a;
+}
+```
+
+示例2
+
+```
+define main() {
+	a = 10;
+	print(a);
+	print("hello");
+	print("bye bye");
+	print(8);
+	print(9.2);
+	return a;
+}
+
+```
+示例3
 ```
 
 define echo(msg) {
@@ -22,6 +47,5 @@ define main() {
 	
 	return a;
 }
-
-
+:
 ```
