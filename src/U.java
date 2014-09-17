@@ -1,5 +1,4 @@
 
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -88,11 +87,11 @@ public class U {
 		return sb.toString();
 	}
 
-	public static final String join(String sep, List<String> ss) {
+	public static final <T> String join(String sep, List<T> ss) {
 		if (ss.isEmpty())
 			return "";
 		StringBuilder sb = new StringBuilder();
-		Iterator<String> it = ss.iterator();
+		Iterator<T> it = ss.iterator();
 		while (true) {
 			sb.append(it.next());
 			if (it.hasNext())
@@ -103,12 +102,12 @@ public class U {
 		return sb.toString();
 	}
 
-	public static final String join(String sep, String... ss) {
-		return join(sep, Arrays.asList(ss));
+	public static final <T> String join(String sep, T... args) {
+		return join(sep, Arrays.asList(args));
 	}
 
 	public static void main(String[] args) {
-		String join = U.join(" ", Arrays.asList("a", "b"));
+		String join = U.join(" ", "a", "b" );
 
 		System.out.println(join);
 	}
