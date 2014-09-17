@@ -1,4 +1,3 @@
-
 public class Parser {
 	private Token look;
 	private Lexer lexer;
@@ -25,8 +24,12 @@ public class Parser {
 
 	public Node parse() {
 		Unit root = new Unit();
-		while (look != null)
+		//必须以define打头
+		do
 			root.addFun(function());
+		while (look != null && look.tag == Tag.DEFINE);
+		if (look != null)
+			error("Expect EOF");
 		return root;
 	}
 
@@ -107,7 +110,7 @@ public class Parser {
 			match(Tag.ID);
 			if (look.tag == '=') {
 				move();
-				Assign assign = new Assign(name, expr());
+				Assign assign = new Assign(name, bool());
 				match(';');
 				return assign;
 			}
@@ -124,8 +127,14 @@ public class Parser {
 		}
 	}
 
+	/**
+	 * unsupport: ||、&&
+	 * 
+	 * @return
+	 */
 	private Node bool() {
-		Node x = factor();
+		// TODO support ||, &&
+		Node x = expr();
 		switch (look.tag) {
 		case '<':
 		case '>':
@@ -135,7 +144,7 @@ public class Parser {
 		case Tag.GE:
 			Token tok = look;
 			move();
-			return new Rel(tok.tag, x, factor());
+			return new Rel(tok.tag, x, expr());
 		default:
 			return x;
 		}
