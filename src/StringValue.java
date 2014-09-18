@@ -23,4 +23,9 @@ public class StringValue extends PrimValue {
 		return obj instanceof StringValue ? value.equals(((StringValue) obj).value)
 				: false;
 	}
+
+	@Override
+	public Type type() {
+		return Type.STRING;
+	}
 }

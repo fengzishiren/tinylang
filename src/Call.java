@@ -12,9 +12,6 @@ public class Call extends Stmt {
 	@Override
 	public Value interp(Scope s) {
 		Value opv = op.interp(s);
-		if (opv == null) {
-			S.error("找不到函数的定义：" + op);
-		}
 		if (opv instanceof Closure) {
 			Closure closure = (Closure) opv;
 			// 注意继承每个函数共享的初始envScope
@@ -40,19 +37,9 @@ public class Call extends Stmt {
 			}
 			return fun.apply(args.interp(s).values);
 		} else {
-			S.error("不支持的调用" + opv);
+			S.error("非法的函数调用： " + opv);
 			return Value.VOID; // never touch
 		}
-	}
-
-	@Override
-	public Value typecheck(Scope s) {
-		Value opv = op.interp(s);
-		if (opv instanceof BuiltinFun || opv instanceof Closure)
-			return opv;
-		else
-			S.error("不支持的调用类型：" + opv);
-		return Value.VOID; // never touch
 	}
 
 	@Override

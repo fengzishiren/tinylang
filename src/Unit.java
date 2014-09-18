@@ -31,11 +31,6 @@ public class Unit extends Node {
 	}
 
 	@Override
-	public Value typecheck(Scope s) {
-		return Type.ANY;
-	}
-
-	@Override
 	public String toString() {
 		return U.join("\n", funcs);
 	}

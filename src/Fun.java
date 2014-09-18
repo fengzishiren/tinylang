@@ -19,10 +19,6 @@ public class Fun extends Node {
 		// return closure;
 	}
 
-	@Override
-	public Value typecheck(Scope s) {
-		return new FunType(this, s);
-	}
 
 	@Override
 	public String toString() {

@@ -61,18 +61,6 @@ public class Rel extends Node {
 	}
 
 	@Override
-	public Value typecheck(Scope s) {
-		Value lv = left.interp(s);
-		Value rv = right.interp(s);
-		if ((lv instanceof FloatValue && rv instanceof FloatValue)
-				|| (lv instanceof IntValue && rv instanceof IntValue)
-				|| (lv instanceof StringValue && lv instanceof StringValue))
-			return Type.BOOL;
-		S.error("Type match error!");
-		return Type.ANY;
-	}
-
-	@Override
 	public String toString() {
 		return left + " " + Tag.descOf(op) + " " + right;
 	}

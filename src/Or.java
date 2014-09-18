@@ -22,15 +22,6 @@ public class Or extends Node {
 		return Value.FALSE; // never touch
 	}
 
-	@Override
-	public Value typecheck(Scope s) {
-		Value lv = left.interp(s);
-		Value rv = right.interp(s);
-		if (lv instanceof BoolValue && rv instanceof BoolValue)
-			return Type.BOOL;
-		S.error("Type match error!");
-		return Type.BOOL;
-	}
 
 	@Override
 	public String toString() {

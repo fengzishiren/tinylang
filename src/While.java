@@ -28,13 +28,6 @@ public class While extends Stmt {
 		return Value.VOID;
 	}
 
-	@Override
-	public Value typecheck(Scope s) {
-		Value v = test.typecheck(s);
-		if (!(v instanceof BoolType))
-			S.error("必须是boolean " + test);
-		return v;
-	}
 
 	@Override
 	public String toString() {

@@ -21,4 +21,9 @@ public class FloatValue extends PrimValue {
 		return Double.hashCode(value);
 	}
 
+	@Override
+	public Type type() {
+		return Type.Float;
+	}
+
 }

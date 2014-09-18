@@ -1,16 +1,30 @@
 
+public class BoolValue extends PrimValue {
+	public boolean value;
 
+	public BoolValue(boolean value) {
+		this.value = value;
+	}
 
-public class BoolValue extends Value {
-    public boolean value;
+	public String toString() {
+		return value ? "true" : "false";
+	}
 
+	@Override
+	public Type type() {
+		return Type.BOOL;
+	}
 
-    public BoolValue(boolean value) {
-        this.value = value;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof BoolValue ? value == (((BoolValue) obj).value)
+				: false;
+	}
 
-    public String toString() {
-        return value ? "true" : "false";
-    }
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return Boolean.hashCode(value);
+	}
 
 }

@@ -12,9 +12,5 @@ public class Bool extends Node {
 		return new BoolValue(value);
 	}
 
-	@Override
-	public Value typecheck(Scope s) {
-		return new BoolType();
-	}
-
+ 
 }

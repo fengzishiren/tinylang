@@ -25,11 +25,6 @@ public class Dict extends Node {
 	}
 
 	@Override
-	public Value typecheck(Scope s) {
-		return Type.Dict;
-	}
-	
-	@Override
 	public String toString() {
 		return nodeMap.toString();
 	}
