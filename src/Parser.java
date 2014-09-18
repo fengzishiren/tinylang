@@ -72,7 +72,7 @@ public class Parser {
 		switch (look.tag) {
 		case '{':
 			return block();
-		case ';':
+		case ';'://意义在于： ; 独占一行 什么也别做 类似python：pass
 			move();
 			return Stmt.End;
 		case Tag.IF:
@@ -145,20 +145,52 @@ public class Parser {
 		// match(';');
 		return args;
 	}
+	
+	/**
+	 * 注意优先级递归
+	 * 
+	 * || -> && -> == > != -> <>
+	 * @return
+	 */
+	private Node bool() {
+		Node x = join();
+		while (look.tag == Tag.OR) {
+			move();
+			x = new Or(Tag.OR, x, join());
+		}
+		return x;
+	}
+
+	private Node join() {
+		Node x = equality();
+		while (look.tag == Tag.AND) {
+			move();
+			x = new And(Tag.AND, x, equality());
+		}
+		return x;
+	}
+
+	private Node equality() {
+		Node x = rel();
+		while (look.tag == Tag.EQ || look.tag == Tag.NE) {
+			Token tok = look;
+			move();
+			x = new Rel(tok.tag, x, rel());
+		}
+		return x;
+	}
 
 	/**
 	 * unsupport: ||、&&
 	 * 
 	 * @return
 	 */
-	private Node bool() {
+	private Node rel() {
 		// TODO support ||, &&
 		Node x = expr();
 		switch (look.tag) {
 		case '<':
 		case '>':
-		case Tag.EQ:
-		case Tag.NE:
 		case Tag.LE:
 		case Tag.GE:
 			Token tok = look;
