@@ -57,8 +57,7 @@ expr                -> term (('+' | '-') term)?
 term                -> factor ('*' | '/') factor)?
 factor              -> ID | INT | FLOAT | BOOL | STRING | call | struct | access
 call                -> ID '(' (expr (',' expr)*)? ')'
-struct              -> list
-                       |dict
+struct              -> list | dict
 list                -> '[' (bool)* ']'
 dict                -> '{' (INT | FLOAT | BOOL | STRING) ':' bool '}'
 access              -> ID ('[' ',' ']')+ 
