@@ -1,9 +1,9 @@
 import java.util.List;
 
-public class Start extends BuiltinFun {
+public class Append extends BuiltinFun {
 
-	public Start() {
-		super("start", 0);
+	public Append() {
+		super("append", 0);
 	}
 
 	@Override
