@@ -13,10 +13,10 @@ define main() {
 		print("World");
 	}
 	
-	if (a > 0)
+	if (a < 0 || true)
 		print("Hello World");
 	msg = echo("hello");
 	print(msg);
 	
-	return null;
+	return version() == "V1.0.1";
 }
