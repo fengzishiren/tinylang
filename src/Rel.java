@@ -29,7 +29,10 @@ public class Rel extends Node {
 			int r = (int) ((FloatValue) rv).value;
 			return new BoolValue(op(l, r));
 		}
-		S.error("Type match error!");
+		// // eg. Type.Dict == Type.dict
+		if (lv instanceof Type && rv instanceof Type)
+			return new BoolValue(lv == rv);
+		S.error("Type compare unsupport error: %s, %s", lv, rv);
 		return Value.FALSE; // never touch
 	}
 
