@@ -46,14 +46,14 @@ tinylang语法：
 program             -> (function + )+ EOF
 function            -> 'define' ID '(' (ID (',' ID)*)? ')' block
 block               -> '{' stmts '}'
-stmts               ->  stmts stmt
+stmts               ->  stmts1 stmt
                        | E
 stmt                -> 'print' '(' expr ')';
                        | 'return' expr ;
                        | call ;
                        | assign ;
-                       | 'if' '(' expr ')' stmts ('else' stmts)?
-                       | 'while' '(' expr ')' stmts
+                       | 'if' '(' expr ')' stmts1 ('else' stmts1)?
+                       | 'while' '(' expr ')' stmts1
                        | E
 assign              -> ID '=' bool
 bool                -> > expr (( < | == | >= | <=) expr)?
