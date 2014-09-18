@@ -5,5 +5,8 @@ define main() {
 	print("bye bye");
 	print(8);
 	print(9.2);
-	return a;
+	a = [1, 2, 3, 4, "keyu"];
+	print(a);
+	a = {"1": 2, "s": 323, 1: "xxxxxxxxxxx"};
+	print(a);
 }

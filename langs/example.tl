@@ -5,7 +5,7 @@ define echo(msg) {
 }
 
 define main() {
-	a = 10;
+	a = 222;
 	
 	a = a + 250;
 	if (a > 100) {
@@ -18,5 +18,5 @@ define main() {
 	msg = echo("hello");
 	print(msg);
 	
-	return a;
+	return null;
 }
