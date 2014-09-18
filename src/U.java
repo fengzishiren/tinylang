@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -66,16 +65,15 @@ public class U {
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(_reader);
-
 			String line;
 			while ((line = reader.readLine()) != null) {
 				sb.append(line).append(U.NEW_LINE);
 			}
-			sb.deleteCharAt(sb.length() - 1);
+			if (sb.length() > 0)
+				sb.deleteCharAt(sb.length() - 1);
 		} finally {
 			if (reader != null)
 				reader.close();
-
 		}
 		return sb.toString();
 	}
@@ -96,8 +94,9 @@ public class U {
 	}
 
 	@SafeVarargs
-	public static final <T> String join(String sep, T... args) {
+	public static final String join(String sep, Object... args) {
 		return join(sep, Arrays.asList(args));
 	}
+	
 
 }
