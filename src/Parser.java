@@ -57,6 +57,10 @@ public class Parser {
 		return stmt;
 	}
 
+	/**
+	 * Note:左递归 Seq(stmts(), stmt())
+	 * @return
+	 */
 	private Stmt stmts() {
 		return look.tag == '}' ? Stmt.End : new Seq(stmt(), stmts());
 	}
