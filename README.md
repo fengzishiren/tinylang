@@ -44,19 +44,24 @@ function            -> 'define' ID '(' (ID (',' ID)*)? ')' block
 block               -> '{' stmts '}'
 stmts               ->  stmts stmt
                        | E
-stmt                -> 'print' expr ;
+stmt                -> 'print' '(' expr ')';
                        | 'return' expr ;
                        | call ;
                        | assign ;
-                       | 'if' expr stmts ('else' stmts)?
-                       | 'while' expr stmts
+                       | 'if' '(' expr ')' stmts ('else' stmts)?
+                       | 'while' '(' expr ')' stmts
                        | E
 assign              -> ID '=' bool
 bool                -> > expr (( < | == | >= | <=) expr)?
 expr                -> term (('+' | '-') term)?
 term                -> factor ('*' | '/') factor)?
-factor              -> ID | INT | FLOAT | BOOL | STRING | call
+factor              -> ID | INT | FLOAT | BOOL | STRING | call | struct | access
 call                -> ID '(' (expr (',' expr)*)? ')'
+struct              -> list
+                       |dict
+list                -> '[' (bool)* ']'
+dict                -> '{' (INT | FLOAT | BOOL | STRING) ':' bool '}'
+access              -> ID ('[' ',' ']')+ 
 ```
 
 
@@ -91,14 +96,30 @@ define main() {
 示例2
 
 ```
+
+define return1() {
+	return 8;
+}
+
+define return2() {
+	return return1() + 1;
+}
+
+define return3() {
+	return return2();
+}
+
+define return4() {
+	return return3();
+}
+
+define getRetVal() {
+	return return4();
+}
+
 define main() {
 	a = 10;
-	print(a);
-	print("hello");
-	print("bye bye");
-	print(8);
-	print(9.2);
-	return a;
+	return getRetVal();
 }
 
 ```
@@ -114,20 +135,40 @@ define echo(msg) {
 }
 
 define main() {
-	a = 10;
+	a = 222;
 	
 	a = a + 250;
 	if (a > 100) {
 		print("hello");
+		print("World");
 	}
 	
-	print(echo("hello"));
+	if (a > 0)
+		print("Hello World");
+	msg = echo("hello");
+	print(msg);
 	
-	return a;
+	return null;
 }
+
 
 ```
 
+示例4：
+```
+define main() {
+	a = [1, 2, 3, 4, 5, 6];
+	return a[3];
+}
+```
+
+示例5：
+```
+define main() {
+	b = {"zlh": "zhenglinhai", 9 : "xiaoyaogege", 1: {"kety": "value"}};
+	return b[1]["kety"];
+}
+```
 
 参考：
 --------
