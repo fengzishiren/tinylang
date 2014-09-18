@@ -14,7 +14,10 @@ JDK 1.7 +
 
 当前状态：
 --------
-目前已经支持函数的调用，包括参数的传递和返回，以及if、else、while、break、return语句。下一步将支持list和dict
+目前已经支持的功能：
+* 函数的调用，包括参数的传递和返回
+* if、else、while、break、return语句
+* 内置数据结构：list和dict。
 
 
 
@@ -26,7 +29,8 @@ JDK 1.7 +
 函数定义以关键字 “define”开头，借鉴了Lisp方言Scheme的定义方式，以后陆续会有限制的加入一些函数式语言的东西。
 和C语言相比，最直观的区别是没有类型系统。跟python倒很相似，除了“:”和缩进改为“{”， “}”和“;”，当然跟javascript也很像。
 
-另：关于语言的数据结构正在思虑中。。。
+另：数据结构以List和Dict为主，使用方式和python类似。
+
 
 
 
@@ -44,19 +48,23 @@ function            -> 'define' ID '(' (ID (',' ID)*)? ')' block
 block               -> '{' stmts '}'
 stmts               ->  stmts stmt
                        | E
-stmt                -> 'print' expr ;
+stmt                -> 'print' '(' expr ')';
                        | 'return' expr ;
                        | call ;
                        | assign ;
-                       | 'if' expr stmts ('else' stmts)?
-                       | 'while' expr stmts
+                       | 'if' '(' expr ')' stmts ('else' stmts)?
+                       | 'while' '(' expr ')' stmts
                        | E
 assign              -> ID '=' bool
 bool                -> > expr (( < | == | >= | <=) expr)?
 expr                -> term (('+' | '-') term)?
 term                -> factor ('*' | '/') factor)?
-factor              -> ID | INT | FLOAT | BOOL | STRING | call
+factor              -> ID | INT | FLOAT | BOOL | STRING | call | struct | access
 call                -> ID '(' (expr (',' expr)*)? ')'
+struct              -> list | dict
+list                -> '[' (bool)* ']'
+dict                -> '{' (INT | FLOAT | BOOL | STRING) ':' bool '}'
+access              -> ID ('[' ',' ']')+ 
 ```
 
 
@@ -76,6 +84,7 @@ call                -> ID '(' (expr (',' expr)*)? ')'
 --------
 
 以下示例代码在tinylang/langs目录下，全部通过测试成功运行并正确返回
+
 示例1：
 
 ```
@@ -88,23 +97,39 @@ define main() {
 ```
 
 
-示例2
+示例2:
 
 ```
+
+define return1() {
+	return 8;
+}
+
+define return2() {
+	return return1() + 1;
+}
+
+define return3() {
+	return return2();
+}
+
+define return4() {
+	return return3();
+}
+
+define getRetVal() {
+	return return4();
+}
+
 define main() {
 	a = 10;
-	print(a);
-	print("hello");
-	print("bye bye");
-	print(8);
-	print(9.2);
-	return a;
+	return getRetVal();
 }
 
 ```
 
 
-示例3
+示例3:
 
 ```
 
@@ -114,20 +139,40 @@ define echo(msg) {
 }
 
 define main() {
-	a = 10;
+	a = 222;
 	
 	a = a + 250;
 	if (a > 100) {
 		print("hello");
+		print("World");
 	}
 	
-	print(echo("hello"));
+	if (a > 0)
+		print("Hello World");
+	msg = echo("hello");
+	print(msg);
 	
-	return a;
+	return null;
 }
+
 
 ```
 
+示例4：
+```
+define main() {
+	a = [1, 2, 3, 4, 5, 6];
+	return a[3];
+}
+```
+
+示例5：
+```
+define main() {
+	b = {"zlh": "zhenglinhai", 9 : "xiaoyaogege", 1: {"kety": "value"}};
+	return b[1]["kety"];
+}
+```
 
 参考：
 --------
