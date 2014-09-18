@@ -25,21 +25,16 @@ public class Call extends Stmt {
 				funScope.putValue(closure.fun.params.get(i).id, lv.get(i));
 			}
 			// 所有return语句的地方都以异常ReturnJmp传递返回值
-			Value v = Value.VOID;
 			try {
-				closure.fun.body.interp(funScope);
-			} catch (ReturnJmp e) { // 返回值 通过异常可以使return语句在某一个函数内的任意block中都能成功返回
-									// 唉 实是无奈之举啊
-				return e.attatchment();//
+				return closure.fun.body.interp(funScope);
+			} catch (ReturnJmp e) { // 返回值 通过异常可以使return语句在某一个函数内的任意block中都能成功返回(包括结尾)
+				return e.attatchment();//// 唉 实是无奈之举啊
 			}
-			return v;
 		} else if (opv instanceof BuiltinFun) {
 			BuiltinFun fun = (BuiltinFun) opv;
-			//
-			// List<Value> args = new ArrayList<>(this.args.elements.size());
-			// for (Node node : this.args.elements) {
-			// args.add(node.interp(s));
-			// }
+			if (fun.arity != args.size()) {
+				S.error("调用参数不匹配: " + this);
+			}
 			return fun.apply(args.interp(s).values);
 		} else {
 			S.error("不支持的调用" + opv);
