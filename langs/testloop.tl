@@ -7,7 +7,7 @@ define main() {
 		
 		if (a > 15) break;
 		
-		if (a > 14) return 23;
+		if (a > 14) return 23; 
 	}
 	
 	return a;

@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,12 +36,23 @@ public class Lexer {
 		return oldPos != offset;
 	}
 
+	/**
+	 * comment 2 style: 
+	 *  #xxxx
+	 *  //xxxxxx
+	 * @return
+	 */
 	private boolean skipComment() {
 		int old = offset;
 		if (offset != text.length() && text.charAt(offset) == '#')
 			do
 				forward();
 			while (offset != text.length() && text.charAt(offset) != '\n');
+		if (offset != text.length() && text.charAt(offset) == '/')
+			if (offset != text.length() && text.charAt(offset) == '/')
+				do
+					forward();
+				while (offset != text.length() && text.charAt(offset) != '\n');
 		return offset != old;
 	}
 

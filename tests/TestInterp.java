@@ -25,7 +25,7 @@ public class TestInterp {
 
 	@Test
 	public void testInterp() throws IOException {
-		Interpreter interpreter = new Interpreter("langs/testtype");
+		Interpreter interpreter = new Interpreter("langs/testcomment");
 		Value ret = interpreter.interp();
 		System.out.println(ret);
 	}
