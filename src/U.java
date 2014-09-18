@@ -98,5 +98,19 @@ public class U {
 		return join(sep, Arrays.asList(args));
 	}
 	
-
+	/**
+	 * 剥壳 xffx x => ff
+	 * @param str
+	 * @param shell
+	 * @return
+	 */
+	public static final String shell(String str, String shell) {
+		int start = 0, end = 0;
+		if (str.startsWith(shell))
+			start = shell.length();
+		if (str.endsWith(shell))
+			end = str.length() - shell.length();
+		return str.substring(start, end);
+	}
+	
 }
