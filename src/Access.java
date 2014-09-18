@@ -34,7 +34,7 @@ public class Access extends Node {
 					S.error("Dict %s 索引必须是基本类型值 %s", this, idx);
 				}
 				if (!(ret instanceof DictValue)) {
-					S.error("不是list类型 不支持索引 %s", this, idx);
+					S.error("不是Dict类型 不支持索引 %s", this, idx);
 				}
 				ret = ((DictValue) ret).get(((PrimValue) idx));
 			}
