@@ -26,7 +26,7 @@ public class Dict extends Node {
 
 	@Override
 	public Value typecheck(Scope s) {
-		return Value.Dict;
+		return Type.Dict;
 	}
 	
 	@Override

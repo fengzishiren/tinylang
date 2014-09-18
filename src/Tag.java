@@ -19,7 +19,7 @@ public class Tag {
 	public static final int TRUE = 272;
 	public static final int DEFINE = 273;
 	public static final int RETURN = 274;
-
+	public static final int NULL = 275;
 	public static final String[] desc = {
 		"int",
 		"string",
@@ -40,11 +40,12 @@ public class Tag {
 		"true",
 		"define",
 		"return",
-		"desc" 
+		"desc",
+		"null"
 	};
 
 	public static String descOf(int tag) {
-		if (tag < 0 || tag > Tag.RETURN)
+		if (tag < 0 || tag > Tag.NULL)
 			throw new IllegalArgumentException("无法识别： " + tag);
 		return tag > 255 ? desc[tag - 256]: String.valueOf((char)tag);
 	}

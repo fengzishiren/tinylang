@@ -28,7 +28,7 @@ public class List extends Node implements Iterable<Node> {
 	}
 	@Override
 	public Value typecheck(Scope s) {
-		return Value.List;
+		return Type.List;
 	}
 	
 	@Override

@@ -26,6 +26,7 @@ public class Lexer {
 		reserves.put("true", Tag.TRUE);
 		reserves.put("false", Tag.FALSE);
 		reserves.put("return", Tag.RETURN);
+		reserves.put("null", Tag.NULL);
 	}
 
 	private boolean skipSpace() {

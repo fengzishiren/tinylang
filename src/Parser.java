@@ -15,7 +15,7 @@ public class Parser {
 		if (look.tag == c)
 			move();
 		else
-			error("expect '%c'", c);
+			error("expect '%c'", Tag.toString(c));
 	}
 
 	private void error(String msg, Object... args) {
@@ -58,7 +58,7 @@ public class Parser {
 	}
 
 	private Stmt stmts() {
-		return look.tag == '}' ? Stmt.Null : new Seq(stmt(), stmts());
+		return look.tag == '}' ? Stmt.End : new Seq(stmt(), stmts());
 	}
 
 	private Stmt stmt() {
@@ -70,7 +70,7 @@ public class Parser {
 			return block();
 		case ';':
 			move();
-			return Stmt.Null;
+			return Stmt.End;
 		case Tag.IF:
 			move();
 			match('(');
@@ -95,7 +95,7 @@ public class Parser {
 			Stmt.Enclosing = savedStmt;
 			return whileNode;
 		case Tag.BREAK:
-			if (Stmt.Enclosing == Stmt.Null)
+			if (Stmt.Enclosing == Stmt.End)
 				error("unenclosed break");
 			match(Tag.BREAK);
 			match(';');
@@ -197,10 +197,18 @@ public class Parser {
 	private Node factor() {
 		Node x = null;
 		switch (look.tag) {
+		case '+':
+		case '-':
+			//support: +3, -3 = > 0 + 3, 0 - 3
+			return Node.zero;
 		case '(':
 			move();
 			x = bool();
 			match(')');
+			return x;
+		case Tag.NULL:
+			x =  Node.Null;
+			move();
 			return x;
 		case Tag.INT:
 			x = new Int(look.content);
@@ -225,7 +233,6 @@ public class Parser {
 			if (look.tag == '[')
 				return new Access(name, access());
 			return name;
-
 		case Tag.STRING:
 			String str = look.toString();
 			move();

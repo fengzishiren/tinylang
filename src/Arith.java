@@ -106,7 +106,7 @@ public class Arith extends Node {
 			return Type.Float;
 		}
 		S.error("类型不匹配的操作： " + (char) op);
-		return Value.ANY;
+		return Type.ANY;
 	}
 
 	@Override

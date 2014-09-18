@@ -69,7 +69,7 @@ public class Rel extends Node {
 				|| (lv instanceof StringValue && lv instanceof StringValue))
 			return Type.BOOL;
 		S.error("Type match error!");
-		return Value.ANY;
+		return Type.ANY;
 	}
 
 	@Override

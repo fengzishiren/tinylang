@@ -32,7 +32,7 @@ public class Unit extends Node {
 
 	@Override
 	public Value typecheck(Scope s) {
-		return Value.ANY;
+		return Type.ANY;
 	}
 
 	@Override

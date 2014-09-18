@@ -1,5 +1,5 @@
 public abstract class Node {
-
+	public static Node Null = new Null();
 	/**
 	 * 
 	 *  -3, -8, +3 => 0 - 3, 0 - 8, 0 + 3
