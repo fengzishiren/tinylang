@@ -22,24 +22,13 @@ public class Seq extends Stmt {
 	public Value interp(Scope s) {
 		stmt1.interp(s);
 		stmt2.interp(s);
-		return Value.VOID;
-//		Value v1 = stmt1.interp(s);
-////		if (stmt1 instanceof Return)
-////			//return v1;
-////			throw new Return
-// 		if (stmt2 == Stmt.Null)
-// 			return v1;
-	//	return stmt2.interp(s);
+		return Value.VOID; //没有return语句则默认返回void
 	}
 
 	@Override
 	public Value typecheck(Scope s) {
-//		Value t1 = stmt1.typecheck(s);
-//		if (stmt1 instanceof Return)
-//			return t1;
-//		if (stmt2 == Stmt.Null)
-//			return t1;
-//		return stmt1.typecheck(s);
+		stmt1.typecheck(s);
+		stmt1.typecheck(s);
 		return Value.VOID;
 	}
 
