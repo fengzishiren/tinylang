@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] argss) {
 		try {
-			Interpreter interpreter = new Interpreter("langs/example.tl");
+			Interpreter interpreter = new Interpreter("langs/testfunction.tl");
 			Value ret = interpreter.interp();
 			System.out.println(ret);
 		} catch (IOException e) {

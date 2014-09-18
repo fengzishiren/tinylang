@@ -12,6 +12,9 @@ public class Call extends Stmt {
 	@Override
 	public Value interp(Scope s) {
 		Value opv = op.interp(s);
+		if (opv == null) {
+			S.error("找不到函数的定义：" + op);
+		}
 		if (opv instanceof Closure) {
 			Closure closure = (Closure) opv;
 			// 注意继承每个函数共享的初始envScope
