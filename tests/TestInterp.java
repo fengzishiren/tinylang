@@ -13,6 +13,7 @@ public class TestInterp {
 		Value ret = interpreter.interp();
 		System.out.println(ret);
 	}
+
 	@Test
 	public void testAuto() throws IOException {
 		File dir = new File("langs");
@@ -20,5 +21,12 @@ public class TestInterp {
 		for (File file : fs) {
 			testInterp(file.toString());
 		}
+	}
+
+	@Test
+	public void testInterp() throws IOException {
+		Interpreter interpreter = new Interpreter("langs/testtype");
+		Value ret = interpreter.interp();
+		System.out.println(ret);
 	}
 }
