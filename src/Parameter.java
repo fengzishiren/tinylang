@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * 形参
@@ -8,35 +5,41 @@ import java.util.List;
  * @author lunatic
  *
  */
-public class Parameter {
-	public List<Name> elements;
-
-	public Parameter(List<Name> elements) {
-		this.elements = elements;
-	}
-
-	public Parameter() {
-		this.elements = new ArrayList<>();
-	}
+public class Parameter extends Node {
+	public List params = new List();
 
 	public void addParam(Name param) {
-		this.elements.add(param);
+		this.params.addNode(param);
 	}
 
 	public static Parameter noParams() {
-		List<Name> empty = Collections.emptyList();
-		return new Parameter(empty);
+		return new Parameter( );
 	}
 
 	public String toString() {
-		return U.join(", ", elements);
+		return U.join(", ", params.nodes);
 	}
 
 	public int size() {
-		return elements.size();
+		return params.size();
 	}
 
 	public Name get(int index) {
-		return elements.get(index);
+		return (Name) params.get(index);
+	}
+
+	/**
+	 * 形参不允许求值
+	 */
+	@Override
+	public Value interp(Scope s) {
+		S.error("unsupport formal parameter eval!");
+		return Value.VOID;
+	}
+
+	@Override
+	public Value typecheck(Scope s) {
+		S.error("unsupport formal parameter eval!");
+		return Value.VOID;
 	}
 }

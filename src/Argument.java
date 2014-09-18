@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * 实参
@@ -8,35 +5,18 @@ import java.util.List;
  * @author lunatic
  *
  */
-public class Argument {
-	public List<Node> elements;
-
-	public Argument(List<Node> elements) {
-		this.elements = elements;
-	}
-
-	public Argument() {
-		this.elements = new ArrayList<>();
-	}
-
+public class Argument extends List {
+ 
 	public void addArg(Node arg) {
-		this.elements.add(arg);
+		this.addNode(arg);
 	}
 
 	public static Argument noArgs() {
-		 List<Node> empty = Collections.emptyList();
-		return new Argument(empty);
+		return new Argument( );
 	}
 
 	public String toString() {
-		return U.join(", ", elements);
+		return U.join(", ", nodes);
 	}
-
-	public int size() {
-		return elements.size();
-	}
-
-	public Node get(int index) {
-		return elements.get(index);
-	}
+ 
 }

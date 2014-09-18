@@ -106,18 +106,40 @@ public class Parser {
 			match(';');
 			return ret;
 		default:
-			Name name = new Name(look.toString());
-			match(Tag.ID);
-			if (look.tag == '=') {
-				move();
-				Assign assign = new Assign(name, bool());
-				match(';');
-				return assign;
-			}
-			Argument args = _call();
-			match(';');
-			return new Call(name, args);
+			return assign();
 		}
+	}
+
+	private Stmt assign() {
+		Name name = new Name(look.toString());
+		match(Tag.ID);
+		if (look.tag == '=') {
+			move();
+			Assign assign = new Assign(name, bool());
+			match(';');
+			return assign;
+		}
+		Argument args = argument();
+		match(';');
+		return new Call(name, args);
+	}
+
+	/**
+	 * call(a, b, c) - >list(a, b, c)
+	 * 
+	 * @return
+	 */
+	private Argument argument() {
+		Argument args = new Argument();
+		match('(');
+		while (look.tag != ')') {
+			args.addArg(expr());
+			if (look.tag != ')')
+				match(',');
+		}
+		match(')');
+		// match(';');
+		return args;
 	}
 
 	/**
@@ -175,6 +197,11 @@ public class Parser {
 	private Node factor() {
 		Node x = null;
 		switch (look.tag) {
+		case '(':
+			move();
+			x = bool();
+			match(')');
+			return x;
 		case Tag.INT:
 			x = new Int(look.content);
 			move();
@@ -193,10 +220,10 @@ public class Parser {
 			Name name = new Name(id);
 			move();
 			if (look.tag == '(') {
-				return new Call(name, _call());
+				return new Call(name, argument());
 			}
-			if (look.tag == '[' || look.tag == '{');
-				//TODO
+			if (look.tag == '[')
+				return new Access(name, access());
 			return name;
 
 		case Tag.STRING:
@@ -204,14 +231,28 @@ public class Parser {
 			move();
 			return new Str(str);
 		default:
-			struct();
+			return struct();
 		}
-		return null;
+	}
+
+	/**
+	 * a[3], a[3][4][xxx] a[""]
+	 * 
+	 * @return
+	 */
+	private Index access() {
+		Index idx = new Index();
+		do {
+			match('[');
+			idx.addNode(bool());
+			match(']');
+		} while (look.tag == '[');
+		return idx;
 	}
 
 	private Node struct() {
 		switch (look.tag) {
-		case '['://list = [1, 2, 3, "4"]
+		case '[':// list = [1, 2, 3, "4"]
 			move();
 			List list = new List();
 			while (look.tag != ']') {
@@ -219,6 +260,7 @@ public class Parser {
 				if (look.tag != ']')
 					match(',');
 			}
+			match(']');
 			return list;
 		case '{':
 			// dict = {"zheng": 3, 1: "", ...}
@@ -232,6 +274,7 @@ public class Parser {
 				if (look.tag != '}')
 					match(',');
 			}
+			match('}');
 			return dict;
 		default:
 			error("unrecognize!" + look);
@@ -239,24 +282,4 @@ public class Parser {
 		}
 	}
 
-	// //////////////////////////////
-	// helper
-	// /
-	
-	/**
-	 * call(a, b, c) - >list(a, b, c)
-	 * @return
-	 */
-	private Argument _call() {
-		Argument args = new Argument();
-		match('(');
-		while (look.tag != ')') {
-			args.addArg(expr());
-			if (look.tag != ')')
-				match(',');
-		}
-		match(')');
-		// match(';');
-		return args;
-	}
 }

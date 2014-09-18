@@ -1,7 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class DictValue extends ComplexValue {
 	public Map<PrimValue, Value> dict = new HashMap<>();
 
@@ -9,10 +8,14 @@ public class DictValue extends ComplexValue {
 		super();
 		this.dict = dict;
 	}
-	
+
+	public Value get(PrimValue pv) {
+		return dict.get(pv);
+	}
+
 	@Override
 	public String toString() {
 		return dict.toString();
 	}
-	
+
 }
