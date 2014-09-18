@@ -14,6 +14,8 @@ public class Arith extends Node {
 		Value lv = left.interp(s);
 		Value rv = right.interp(s);
 		if (lv instanceof StringValue && rv instanceof StringValue) {
+			if (op != '+')
+				S.error("String不支持操作: " + (char) op);
 			String l = ((StringValue) lv).value;
 			String r = ((StringValue) rv).value;
 			return new StringValue(l + r);
@@ -28,8 +30,19 @@ public class Arith extends Node {
 			float r = ((FloatValue) rv).value;
 			return new FloatValue(op(l, r));
 		}
-		// never touch
-		return Value.VOID;
+		if (lv instanceof FloatValue && rv instanceof IntValue) {
+			float l = ((FloatValue) lv).value;
+			int r = ((IntValue) rv).value;
+			return new FloatValue(op(l, r));
+		}
+		if (lv instanceof IntValue && rv instanceof FloatValue) {
+			int l = ((IntValue) lv).value;
+			float r = ((FloatValue) rv).value;
+			return new FloatValue(op(l, r));
+		}
+
+		S.error("类型不匹配的操作： " + this);
+		return Value.VOID; //never touch
 	}
 
 	private int op(int l, int r) {
@@ -87,6 +100,10 @@ public class Arith extends Node {
 		}
 		if ((lv instanceof IntValue && rv instanceof IntValue)) {
 			return Type.INT;
+		}
+		if ((lv instanceof IntValue && rv instanceof FloatValue)
+				|| (lv instanceof FloatValue && rv instanceof IntValue)) {
+			return Type.Float;
 		}
 		S.error("类型不匹配的操作： " + (char) op);
 		return Value.ANY;
