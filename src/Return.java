@@ -9,7 +9,7 @@ public class Return extends Stmt {
 
 	@Override
 	public Value interp(Scope s) {
-		if (opexpr == null)
+		if (opexpr == End)
 			throw new ReturnJmp();
 		else
 			throw new ReturnJmp(opexpr.interp(s));
@@ -17,7 +17,7 @@ public class Return extends Stmt {
 
 	@Override
 	public Value typecheck(Scope s) {
-		return opexpr == null ? Value.VOID : opexpr.typecheck(s);
+		return opexpr == End ? Value.VOID : opexpr.typecheck(s);
 	}
 
 	@Override
