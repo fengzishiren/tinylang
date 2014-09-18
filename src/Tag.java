@@ -44,7 +44,13 @@ public class Tag {
 	};
 
 	public static String descOf(int tag) {
+		if (tag < 0 || tag > Tag.RETURN)
+			throw new IllegalArgumentException("无法识别： " + tag);
 		return tag > 255 ? desc[tag - 256]: String.valueOf((char)tag);
+	}
+	
+	public static String toString(int tag) {
+		return descOf(tag);
 	}
 
 }
