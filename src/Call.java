@@ -30,7 +30,7 @@ public class Call extends Stmt {
 			}
 		} else if (opv instanceof BuiltinFun) {
 			BuiltinFun fun = (BuiltinFun) opv;
-			if (fun.arity != args.size()) {
+			if (fun.arity != -1 && fun.arity != args.size()) {
 				S.error("调用参数不匹配: " + this);
 			}
 			return fun.apply(args.interp(s).values);

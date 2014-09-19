@@ -4,7 +4,7 @@ import java.util.List;
 public abstract class BuiltinFun extends Value {
 
 	public String name;
-	public int arity;
+	public int arity;//ignore if -1
 
 	public BuiltinFun(String name, int arity) {
 		super();
