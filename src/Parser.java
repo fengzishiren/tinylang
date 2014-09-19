@@ -15,7 +15,7 @@ public class Parser {
 		if (look.tag == c)
 			move();
 		else
-			error("expect '%c'", Tag.toString(c));
+			error("expect '%s'", Tag.toString(c));
 	}
 
 	private void error(String msg, Object... args) {

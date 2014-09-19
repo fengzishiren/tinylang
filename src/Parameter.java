@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 /**
  * 形参
@@ -6,18 +7,18 @@
  *
  */
 public class Parameter extends Node {
-	public List params = new List();
+	public ArrayList<Name> params = new ArrayList<>();
 
 	public void addParam(Name param) {
-		this.params.addNode(param);
+		this.params.add(param);
 	}
 
 	public static Parameter noParams() {
-		return new Parameter( );
+		return new Parameter();
 	}
 
 	public String toString() {
-		return U.join(", ", params.nodes);
+		return U.join(", ", params);
 	}
 
 	public int size() {

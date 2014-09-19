@@ -19,6 +19,7 @@ public class Lexer {
 	{
 		reserves.put("define", Tag.DEFINE);
 		reserves.put("if", Tag.IF);
+		reserves.put("else", Tag.ELSE);
 		reserves.put("while", Tag.WHILE);
 		reserves.put("break", Tag.BREAK);
 		reserves.put("do", Tag.DO);
@@ -36,23 +37,28 @@ public class Lexer {
 		return oldPos != offset;
 	}
 
+	private boolean lookequal(char c) {
+		return offset != text.length() && text.charAt(offset) == c;
+	}
+
 	/**
-	 * comment 2 style: 
-	 *  #xxxx
-	 *  //xxxxxx
+	 * comment 2 style: #xxxx //xxxxxx
+	 * 
 	 * @return
 	 */
 	private boolean skipComment() {
 		int old = offset;
-		if (offset != text.length() && text.charAt(offset) == '#')
+		if (lookequal('#'))
 			do
 				forward();
-			while (offset != text.length() && text.charAt(offset) != '\n');
-		if (offset != text.length() && text.charAt(offset) == '/')
-			if (offset != text.length() && text.charAt(offset) == '/')
+			while (!lookequal('\n'));
+		if (lookequal('/')) {
+			forward();
+			if (lookequal('/'))
 				do
 					forward();
-				while (offset != text.length() && text.charAt(offset) != '\n');
+				while (!lookequal('\n'));
+		}
 		return offset != old;
 	}
 
@@ -60,10 +66,6 @@ public class Lexer {
 		if (text.charAt(offset++) == '\n') {
 		} else
 			;
-	}
-
-	private boolean lookequal(char c) {
-		return offset != text.length() && text.charAt(offset) == c;
 	}
 
 	private char peek() {

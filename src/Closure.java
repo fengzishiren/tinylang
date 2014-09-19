@@ -1,5 +1,10 @@
 
-
+/**
+ * 函数Fun和上下文env
+ * 
+ * @author lunatic
+ *
+ */
 public class Closure extends Value {
 	public Fun fun;
 	public Scope env;
@@ -9,6 +14,7 @@ public class Closure extends Value {
 		this.env = env;
 	}
 
+	@Override
 	public String toString() {
 		return fun.toString();
 	}

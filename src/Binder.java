@@ -10,9 +10,14 @@ public class Binder {
 	}
 
 	public static void define(Name name, Value value, Scope s) {
-		Value v = s.lookupLocal(name.id);
-		if (v != null) 
+		Value v = s.lookup(name.id);
+		if (v != null)
 			S.error("函数重定义： %s", name);
 		s.putValue(name.id, value);
+	}
+
+	public static void define(Fun fun, Scope s) {
+		Closure closure = new Closure(fun, s);
+		Binder.define(fun.name, closure, s);
 	}
 }

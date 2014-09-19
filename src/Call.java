@@ -1,4 +1,3 @@
-
 public class Call extends Stmt {
 	public Name op;
 	public Argument args;
@@ -20,15 +19,14 @@ public class Call extends Stmt {
 				S.error("调用参数不匹配: " + this);
 			}
 			ListValue lv = args.interp(funScope);
-
 			for (int i = 0; i < closure.fun.params.size(); i++) {
 				funScope.putValue(closure.fun.params.get(i).id, lv.get(i));
 			}
-			
 			try {
-				return closure.fun.body.interp(funScope);// 所有return语句的地方都以异常ReturnJmp传递返回值
-			} catch (ReturnJmp e) { // 返回值 通过异常可以使return语句在某一个函数内的任意block中都能成功返回(包括结尾)
-				return e.attatchment();//// 唉 实是无奈之举啊
+				return closure.fun.interp(funScope);// 所有return语句的地方都以异常ReturnJmp传递返回值
+			} catch (ReturnJmp e) { // 返回值
+									// 通过异常可以使return语句在某一个函数内的任意block中都能成功返回(包括结尾)
+				return e.attatchment();// // 唉 实是无奈之举啊
 			}
 		} else if (opv instanceof BuiltinFun) {
 			BuiltinFun fun = (BuiltinFun) opv;

@@ -1,9 +1,5 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
 
 import org.junit.Test;
 
@@ -25,7 +21,7 @@ public class TestInterp {
 
 	@Test
 	public void testInterp() throws IOException {
-		Interpreter interpreter = new Interpreter("langs/testcomment");
+		Interpreter interpreter = new Interpreter("langs/example.tl");
 		Value ret = interpreter.interp();
 		System.out.println(ret);
 	}

@@ -1,17 +1,9 @@
 
-
 public class Name extends Node {
 	public String id;
 
 	public Name(String id) {
 		this.id = id;
-	}
-
-	/**
-	 * Generate a name without location info
-	 */
-	public static Name genName(String id) {
-		return new Name(id );
 	}
 
 	public Value interp(Scope s) {
@@ -23,7 +15,6 @@ public class Name extends Node {
 			return Value.NULL;
 		}
 	}
-
 
 	public String toString() {
 		return id;

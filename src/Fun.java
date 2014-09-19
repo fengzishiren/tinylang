@@ -1,4 +1,3 @@
-
 public class Fun extends Node {
 	public Name name;
 	public Parameter params;
@@ -13,12 +12,11 @@ public class Fun extends Node {
 
 	@Override
 	public Value interp(Scope s) {
-		// Closure closure = new Closure(this, s);
-		// Binder.define(name, closure, s);
-		return s.lookup(name.id);
-		// return closure;
+//		Closure closure = new Closure(this, s);
+//		Binder.define(name, closure, s);
+//		return closure;
+		return body.interp(s);
 	}
-
 
 	@Override
 	public String toString() {

@@ -1,3 +1,5 @@
+//注释
+//xxxxxxxxxx
 
 define echo(msg) {
 	print(msg);

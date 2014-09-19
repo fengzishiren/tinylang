@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * 执行单元
  * 
@@ -16,15 +17,16 @@ public class Unit extends Node {
 	public Value interp(Scope s) {
 		int count = 0;
 		Name main = null;
-		//每个closure共享初始Scope
-		//在此注册每个函数式是有意义的 
-		//尤其对于函数的定义在调用之后
-		//eg:
-		//  xxx echo();xxx 
-		//  define echo(){}
+		// 每个closure共享初始Scope
+		// 在此注册每个函数式是有意义的
+		// 尤其对于函数的定义在调用之后
+		// eg:
+		// xxx echo();xxx
+		// define echo(){}
 		//
 		for (Fun fun : funcs) {
-			Binder.define(fun.name, new Closure(fun, s), s);
+			// reg closure
+			Binder.define(fun, s);
 			if ("main".equals(fun.name.id)) {
 				count++;
 				main = fun.name;
