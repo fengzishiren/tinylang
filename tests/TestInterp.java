@@ -21,7 +21,7 @@ public class TestInterp {
 
 	@Test
 	public void testInterp() throws IOException {
-		Interpreter interpreter = new Interpreter("langs/testloop.tl");
+		Interpreter interpreter = new Interpreter("langs/list.tl");
 		Value ret = interpreter.interp();
 		System.out.println(ret);
 	}
