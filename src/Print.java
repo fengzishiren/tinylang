@@ -14,7 +14,7 @@ public class Print extends BuiltinFun {
 
 	@Override
 	public Type type() {
-		return Type.builtinFuntion;
+		return Type.BuiltinFuntion;
 	}
 
 }

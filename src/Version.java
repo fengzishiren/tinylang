@@ -15,7 +15,7 @@ public class Version extends BuiltinFun {
 	@Override
 	public Type type() {
 		// TODO Auto-generated method stub
-		return Type.builtinFuntion;
+		return Type.BuiltinFuntion;
 	}
 
 }
