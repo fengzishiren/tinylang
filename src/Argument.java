@@ -10,6 +10,10 @@ public class Argument extends List {
 	public void addArg(Node arg) {
 		this.addNode(arg);
 	}
+	
+	public void addFirst(Node arg) {
+		this.nodes.add(0, arg);
+	}
 
 	public static Argument noArgs() {
 		return new Argument( );
