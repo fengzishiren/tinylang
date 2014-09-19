@@ -15,8 +15,9 @@ public class Type extends Value {
 	public static final Type NULL = new Type("null");
 	//public static final Type ANY = new Type("any");
 	public static final Type VOID = new Type("void");
-	public static final Type builtinFuntion = new Type("function");
-	public static final Type Funtion = new Type("Built-in function");
+	public static final Type BuiltinFuntion = new Type("Built-in function");
+	public static final Type Funtion = new Type("function");
+	public static final Type CONS = new Type("cons");
 
 	@Override
 	public Type type() {
