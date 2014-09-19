@@ -41,6 +41,9 @@ public class Scope {
 		scope.putValue("print", new Print());
 		scope.putValue("type", new TypeFun());
 		scope.putValue("version", new Version());
+		scope.putValue("len", new LenFun());
+		scope.putValue("remove", new Remove());
+		scope.putValue("append", new Append());
 		return scope;
 	}
 	
