@@ -21,6 +21,7 @@ public class Lexer {
 		reserves.put("if", Tag.IF);
 		reserves.put("else", Tag.ELSE);
 		reserves.put("while", Tag.WHILE);
+		reserves.put("for", Tag.For);
 		reserves.put("break", Tag.BREAK);
 		reserves.put("do", Tag.DO);
 		reserves.put("true", Tag.TRUE);

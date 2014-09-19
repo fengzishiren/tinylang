@@ -15,7 +15,7 @@ public class Parser {
 		if (look.tag == c)
 			move();
 		else
-			error("expect '%s'", Tag.toString(c));
+			error("expect '%s', but given %s", Tag.toString(look.tag), Tag.toString(c));
 	}
 
 	private void error(String msg, Object... args) {
@@ -98,6 +98,33 @@ public class Parser {
 			whileNode.init(x, s1);
 			Stmt.Enclosing = savedStmt;
 			return whileNode;
+		case Tag.For:
+			move();
+			//它的一般形式为： for(;;) 语句；
+			//初始化总是一个赋值语句，它用来给循环控制变量赋初值；
+			//条件表达式是一个关系表达式，它决定什么时候退出循环；
+			//增量定义循环控制变量每循环一次后按什么方式变化。
+			//这三个部分之间用";"分开
+			For forNode = new For();
+			savedStmt = Stmt.Enclosing;
+			Stmt.Enclosing = forNode;
+			Stmt init = Stmt.End;
+			match('(');
+			if (look.tag != ';') {
+				init = assign();
+				match(';');
+			}
+			x = bool();
+			match(';');
+			Stmt update = Stmt.End;
+			if (look.tag != ')') {
+				update = assign();
+			}
+			match(')');
+			s1 = stmt();
+			Stmt.Enclosing = savedStmt;
+			forNode.init(init, x, update, s1);
+			return forNode;
 		case Tag.BREAK:
 			if (Stmt.Enclosing == Stmt.End)
 				error("unenclosed break");
@@ -110,7 +137,9 @@ public class Parser {
 			match(';');
 			return ret;
 		default:
-			return assign();
+			s1 =  assign();
+			match(';');
+			return s1;
 		}
 	}
 
@@ -120,11 +149,11 @@ public class Parser {
 		if (look.tag == '=') {
 			move();
 			Assign assign = new Assign(name, bool());
-			match(';');
+			//match(';');
 			return assign;
 		}
 		Argument args = argument();
-		match(';');
+		//match(';');
 		return new Call(name, args);
 	}
 
@@ -186,7 +215,7 @@ public class Parser {
 	 * @return
 	 */
 	private Node rel() {
-		// TODO support ||, &&
+		//   support ||, &&
 		Node x = expr();
 		switch (look.tag) {
 		case '<':
