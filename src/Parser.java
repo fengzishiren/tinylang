@@ -15,7 +15,8 @@ public class Parser {
 		if (look.tag == c)
 			move();
 		else
-			error("expect '%s', but given %s", Tag.toString(look.tag), Tag.toString(c));
+			error("expect '%s', but given '%s'.", Tag.toString(look.tag),
+					Tag.toString(c));
 	}
 
 	private void error(String msg, Object... args) {
@@ -59,6 +60,7 @@ public class Parser {
 
 	/**
 	 * Note:左递归 Seq(stmts(), stmt())
+	 * 
 	 * @return
 	 */
 	private Stmt stmts() {
@@ -72,7 +74,7 @@ public class Parser {
 		switch (look.tag) {
 		case '{':
 			return block();
-		case ';'://意义在于： ; 独占一行 什么也别做 类似python：pass
+		case ';':// 意义在于： ; 独占一行 什么也别做 类似python：pass
 			move();
 			return Stmt.End;
 		case Tag.IF:
@@ -100,15 +102,15 @@ public class Parser {
 			return whileNode;
 		case Tag.For:
 			move();
-			//它的一般形式为： for(;;) 语句；
-			//初始化总是一个赋值语句，它用来给循环控制变量赋初值；
-			//条件表达式是一个关系表达式，它决定什么时候退出循环；
-			//增量定义循环控制变量每循环一次后按什么方式变化。
-			//这三个部分之间用";"分开
+			// 它的一般形式为： for(;;) 语句；
+			// 初始化总是一个赋值语句，它用来给循环控制变量赋初值；
+			// 条件表达式是一个关系表达式，它决定什么时候退出循环；
+			// 增量定义循环控制变量每循环一次后按什么方式变化。
+			// 这三个部分之间用";"分开
 			For forNode = new For();
 			savedStmt = Stmt.Enclosing;
 			Stmt.Enclosing = forNode;
-			Stmt init = Stmt.End;
+			Stmt init = Stmt.Null;
 			match('(');
 			if (look.tag != ';') {
 				init = assign();
@@ -116,7 +118,7 @@ public class Parser {
 			}
 			x = bool();
 			match(';');
-			Stmt update = Stmt.End;
+			Stmt update = Stmt.Null;
 			if (look.tag != ')') {
 				update = assign();
 			}
@@ -125,6 +127,28 @@ public class Parser {
 			Stmt.Enclosing = savedStmt;
 			forNode.init(init, x, update, s1);
 			return forNode;
+		case Tag.Foreach:// foreach (item in list) foreach (k, v in dict)
+			move();
+			Foreach foreachNode = new Foreach();
+			savedStmt = Stmt.Enclosing;
+			Stmt.Enclosing = foreachNode;
+			match('(');
+			Name k = new Name(look.toString());
+			match(Tag.ID);
+			Name v = Name.Null;
+			// Name v= Node.Null;
+			if (look.tag == ',') {
+				match(',');
+				v = new Name(look.toString());
+				match(Tag.ID);
+			}
+			match(Tag.IN);
+			Node cols = factor();
+			match(')');
+			s1 = stmt();
+			Stmt.Enclosing = savedStmt;
+			foreachNode.init(k, v, cols, s1);
+			return foreachNode;
 		case Tag.BREAK:
 			if (Stmt.Enclosing == Stmt.End)
 				error("unenclosed break");
@@ -137,24 +161,48 @@ public class Parser {
 			match(';');
 			return ret;
 		default:
-			s1 =  assign();
+			s1 = assign();
 			match(';');
 			return s1;
 		}
 	}
 
+	/**
+	 * xx = xxx xx[xx] = xxx
+	 * 
+	 * @return
+	 */
 	private Stmt assign() {
 		Name name = new Name(look.toString());
 		match(Tag.ID);
-		if (look.tag == '=') {
+		Argument args;
+		Access ac = null;
+		switch (look.tag) {
+		case '=':
 			move();
 			Assign assign = new Assign(name, bool());
-			//match(';');
+			// match(';');
 			return assign;
+		case '[': // a[2][3] = xxxx
+			Index idx = access();
+			if (look.tag == '=') {
+				match('=');
+				return new IndexAssign(name, idx, bool());
+			}
+			ac = new Access(name, idx);
+			// case through: ls[0][0].append()....
+		case '.':// eg: ls.append(x) => append(ls, x)
+			move();
+			Name oname = new Name(look.toString());
+			match(Tag.ID);
+			args = argument();
+			args.addFirst(ac == null ? name : ac);
+			return new Call(oname, args);
+		default:
+			args = argument();
+			// match(';');
+			return new Call(name, args);
 		}
-		Argument args = argument();
-		//match(';');
-		return new Call(name, args);
 	}
 
 	/**
@@ -174,11 +222,12 @@ public class Parser {
 		// match(';');
 		return args;
 	}
-	
+
 	/**
 	 * 注意优先级递归
 	 * 
 	 * || -> && -> == > != -> <>
+	 * 
 	 * @return
 	 */
 	private Node bool() {
@@ -215,7 +264,7 @@ public class Parser {
 	 * @return
 	 */
 	private Node rel() {
-		//   support ||, &&
+		// support ||, &&
 		Node x = expr();
 		switch (look.tag) {
 		case '<':
@@ -226,7 +275,7 @@ public class Parser {
 			move();
 			return new Rel(tok.tag, x, expr());
 		default:
-			return x;
+			return x;// eg: if(true) -： x = true
 		}
 
 	}
@@ -264,7 +313,7 @@ public class Parser {
 		switch (look.tag) {
 		case '+':
 		case '-':
-			//support: +3, -3 = > 0 + 3, 0 - 3
+			// support: +3, -3 = > 0 + 3, 0 - 3
 			return Node.zero;
 		case '(':
 			move();
@@ -272,7 +321,7 @@ public class Parser {
 			match(')');
 			return x;
 		case Tag.NULL:
-			x =  Node.Null;
+			x = Node.Null;
 			move();
 			return x;
 		case Tag.INT:

@@ -5,6 +5,8 @@ public class Name extends Node {
 	public Name(String id) {
 		this.id = id;
 	}
+	
+	public static final Name Null = new Name(null);
 
 	public Value interp(Scope s) {
 		Value v = s.lookup(id);
@@ -19,4 +21,5 @@ public class Name extends Node {
 	public String toString() {
 		return id;
 	}
+ 
 }
