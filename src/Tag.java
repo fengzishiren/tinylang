@@ -21,6 +21,8 @@ public class Tag {
 	public static final int RETURN = 274;
 	public static final int NULL = 275;
 	public static final int For = 276;
+	public static final int Foreach = 277;
+	public static final int IN = 278;
 	public static final String[] desc = {
 		"int",
 		"string",
@@ -43,12 +45,13 @@ public class Tag {
 		"return",
 		"desc",
 		"null",
-		"for"
+		"for",
+		"in"
 	};
 
 
 	public static String descOf(int tag) {
-		if (tag < 0 || tag > Tag.For)
+		if (tag < 0 || tag > Tag.IN)
 			throw new IllegalArgumentException("无法识别： " + tag);
 		return tag > 255 ? desc[tag - 256]: String.valueOf((char)tag);
 	}
