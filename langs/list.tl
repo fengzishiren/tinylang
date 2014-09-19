@@ -6,6 +6,9 @@ define main() {
 		print("----------");
 		}
 		
+	for (i = 0; i < len(a); i= i+1) {
+		print("**************");
+	}
 	a[0] = 1000;
 	print(a);
 	
