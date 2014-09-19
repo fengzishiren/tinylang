@@ -25,4 +25,9 @@ public class IntValue extends PrimValue {
 		return Integer.hashCode(value);
 	}
 
+	@Override
+	public Type type() {
+		return Type.INT;
+	}
+
 }

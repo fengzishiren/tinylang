@@ -13,8 +13,8 @@ public class Append extends BuiltinFun {
 	}
 
 	@Override
-	public Value typecheck(List<Value> args) {
-		return Value.VOID;
+	public Type type() {
+		return Type.builtinFuntion;
 	}
 
 }

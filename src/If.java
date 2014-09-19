@@ -20,15 +20,6 @@ public class If extends Stmt {
 	}
 
 	@Override
-	public Value typecheck(Scope s) {
-		Value vt = test.typecheck(s);
-		if (!(vt instanceof BoolType)) {
-			S.error("必须是boolean " + test);
-		}
-		return vt;
-	}
-
-	@Override
 	public String toString() {
 		return String.format("if (%s) %s", test, stmt);
 	}

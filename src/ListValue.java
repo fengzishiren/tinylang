@@ -22,5 +22,10 @@ public class ListValue extends ComplexValue implements Iterable<Value> {
 	public Iterator<Value> iterator() {
 		return values.iterator();
 	}
+
+	@Override
+	public Type type() {
+		return Type.List;
+	}
 	
 }

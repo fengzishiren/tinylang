@@ -26,13 +26,6 @@ public class Seq extends Stmt {
 	}
 
 	@Override
-	public Value typecheck(Scope s) {
-		stmt1.typecheck(s);
-		stmt1.typecheck(s);
-		return Value.VOID;
-	}
-
-	@Override
 	public String toString() {
 
 		return U.join(" ", stmt1, stmt2);

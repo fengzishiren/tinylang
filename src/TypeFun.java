@@ -1,20 +1,20 @@
 import java.util.List;
 
-public class Print extends BuiltinFun {
+public class TypeFun extends BuiltinFun {
 
-	public Print() {
-		super("print", 1);
+	public TypeFun() {
+		super("type", 1);
 	}
 
 	@Override
 	public Value apply(List<Value> args) {
-		System.out.println(U.join(",", args));
-		return Value.VOID;
+		return args.get(0).type();
 	}
 
 	@Override
 	public Type type() {
 		return Type.builtinFuntion;
 	}
+
 
 }

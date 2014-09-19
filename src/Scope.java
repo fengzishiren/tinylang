@@ -149,6 +149,7 @@ public class Scope {
 	public static Scope initScope() {
 		Scope scope = new Scope();
 		scope.putValue("print", new Print());
+		scope.putValue("type", new TypeFun());
 		scope.putValue("version", new Version());
 		return scope;
 	}

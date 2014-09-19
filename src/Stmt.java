@@ -5,8 +5,6 @@ public abstract class Stmt extends Node {
 	@Override
 	public abstract Value interp(Scope s);
 
-	@Override
-	public abstract Value typecheck(Scope s);
 
 	@Override
 	public String toString() {

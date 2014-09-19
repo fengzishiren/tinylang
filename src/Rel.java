@@ -29,7 +29,10 @@ public class Rel extends Node {
 			int r = (int) ((FloatValue) rv).value;
 			return new BoolValue(op(l, r));
 		}
-		S.error("Type match error!");
+		// // eg. Type.Dict == Type.dict
+		if (lv instanceof Type && rv instanceof Type)
+			return new BoolValue(lv == rv);
+		S.error("Type compare unsupport error: %s, %s", lv, rv);
 		return Value.FALSE; // never touch
 	}
 
@@ -58,18 +61,6 @@ public class Rel extends Node {
 			S.error("不支持操作符: " + (char) op);
 		}
 		return ret;
-	}
-
-	@Override
-	public Value typecheck(Scope s) {
-		Value lv = left.interp(s);
-		Value rv = right.interp(s);
-		if ((lv instanceof FloatValue && rv instanceof FloatValue)
-				|| (lv instanceof IntValue && rv instanceof IntValue)
-				|| (lv instanceof StringValue && lv instanceof StringValue))
-			return Type.BOOL;
-		S.error("Type match error!");
-		return Type.ANY;
 	}
 
 	@Override

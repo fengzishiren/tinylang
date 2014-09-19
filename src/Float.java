@@ -12,11 +12,6 @@ public class Float extends Node {
 	public Value interp(Scope s) {
 		return new FloatValue(value);
 	}
-
-	@Override
-	public Value typecheck(Scope s) {
-		return Type.Float;
-	}
 	
 	@Override
 	public String toString() {

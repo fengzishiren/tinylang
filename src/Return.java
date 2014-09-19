@@ -16,11 +16,6 @@ public class Return extends Stmt {
 	}
 
 	@Override
-	public Value typecheck(Scope s) {
-		return opexpr == End ? Value.VOID : opexpr.typecheck(s);
-	}
-
-	@Override
 	public String toString() {
 		return "return " + (opexpr == null ? "" : opexpr);
 	}

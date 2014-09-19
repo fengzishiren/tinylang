@@ -1,4 +1,8 @@
-
+/**
+ * 处理有符号数字
+ * @author lunatic
+ * 2014年9月18日
+ */
 public class Zero extends Node {
 
 	@Override
@@ -6,11 +10,6 @@ public class Zero extends Node {
 		return new IntValue(0);
 	}
 
-	@Override
-	public Value typecheck(Scope s) {
-		return Type.INT;
-	}
-	
 	@Override
 	public String toString() {
 		return "0";

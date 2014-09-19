@@ -15,20 +15,15 @@ public class Name extends Node {
 	}
 
 	public Value interp(Scope s) {
-		return s.lookup(id);
-	}
-
-	@Override
-	public Value typecheck(Scope s) {
 		Value v = s.lookup(id);
 		if (v != null) {
 			return v;
 		} else {
-			S.error("变量未定义： " + id);
-			//_.abort(this, "unbound variable: " + id);
-			return Value.VOID;
+			S.error("找不到定义： " + id);
+			return Value.NULL;
 		}
 	}
+
 
 	public String toString() {
 		return id;

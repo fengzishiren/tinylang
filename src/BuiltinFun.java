@@ -14,7 +14,6 @@ public abstract class BuiltinFun extends Value {
 
 	public abstract Value apply(List<Value> args);
 
-	public abstract Value typecheck(List<Value> args);
 
 	@Override
 	public String toString() {

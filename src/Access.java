@@ -43,12 +43,6 @@ public class Access extends Node {
 		S.error("不是list类型 不支持索引 %s", this, idxs);
 		return Value.VOID; // never touch
 	}
-
-	@Override
-	public Value typecheck(Scope s) {
-		return Value.VOID;
-	}
-	
 	@Override
 	public String toString() {
 		return name.toString() + idxs;

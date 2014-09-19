@@ -36,10 +36,4 @@ public class Parameter extends Node {
 		S.error("unsupport formal parameter eval!");
 		return Value.VOID;
 	}
-
-	@Override
-	public Value typecheck(Scope s) {
-		S.error("unsupport formal parameter eval!");
-		return Value.VOID;
-	}
 }

@@ -24,13 +24,4 @@ public class Else extends Stmt {
 		}
 		return Value.VOID;
 	}
-
-	@Override
-	public Value typecheck(Scope s) {
-		Value vt = test.typecheck(s);
-		if (!(vt instanceof BoolType)) {
-			S.error("必须是boolean " + test);
-		}
-		return vt;
-	}
 }

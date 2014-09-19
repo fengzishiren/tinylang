@@ -43,16 +43,6 @@ public class Call extends Stmt {
 	}
 
 	@Override
-	public Value typecheck(Scope s) {
-		Value opv = op.interp(s);
-		if (opv instanceof BuiltinFun || opv instanceof Closure)
-			return opv;
-		else
-			S.error("不支持的调用类型：" + opv);
-		return Value.VOID; // never touch
-	}
-
-	@Override
 	public String toString() {
 		return op + "(" + args + ")";
 	}

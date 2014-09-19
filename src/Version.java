@@ -13,8 +13,9 @@ public class Version extends BuiltinFun {
 	}
 
 	@Override
-	public Value typecheck(List<Value> args) {
-		return Type.STRING;
+	public Type type() {
+		// TODO Auto-generated method stub
+		return Type.builtinFuntion;
 	}
- 
+
 }

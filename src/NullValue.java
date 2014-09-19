@@ -18,4 +18,9 @@ public class NullValue extends PrimValue {
 		return "null";
 	}
 
+	@Override
+	public Type type() {
+		return Type.NULL;
+	}
+
 }

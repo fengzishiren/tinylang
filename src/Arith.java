@@ -87,27 +87,6 @@ public class Arith extends Node {
 		return ret;
 	}
 
-	@Override
-	public Value typecheck(Scope s) {
-		Value lv = left.interp(s);
-		Value rv = right.interp(s);
-		if (lv instanceof StringValue && rv instanceof StringValue) {
-			if (op != '+')
-				S.error("String不支持操作: " + (char) op);
-		}
-		if (lv instanceof FloatValue && rv instanceof FloatValue) {
-			return Type.Float;
-		}
-		if ((lv instanceof IntValue && rv instanceof IntValue)) {
-			return Type.INT;
-		}
-		if ((lv instanceof IntValue && rv instanceof FloatValue)
-				|| (lv instanceof FloatValue && rv instanceof IntValue)) {
-			return Type.Float;
-		}
-		S.error("类型不匹配的操作： " + (char) op);
-		return Type.ANY;
-	}
 
 	@Override
 	public String toString() {

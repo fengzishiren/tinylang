@@ -27,11 +27,6 @@ public class List extends Node implements Iterable<Node> {
 		return nodes.get(index);
 	}
 	@Override
-	public Value typecheck(Scope s) {
-		return Type.List;
-	}
-	
-	@Override
 	public String toString() {
 		return nodes.toString();
 	}

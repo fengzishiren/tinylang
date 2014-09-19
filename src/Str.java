@@ -12,11 +12,6 @@ public class Str extends Node {
 	}
 
 	@Override
-	public Value typecheck(Scope s) {
-		return Type.STRING;
-	}
-
-	@Override
 	public String toString() {
 		return "\"" + value + "\"";
 	}

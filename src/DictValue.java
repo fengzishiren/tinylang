@@ -18,4 +18,10 @@ public class DictValue extends ComplexValue {
 		return dict.toString();
 	}
 
+	@Override
+	public Type type() {
+		// TODO Auto-generated method stub
+		return Type.Dict;
+	}
+
 }

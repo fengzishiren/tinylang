@@ -5,10 +5,6 @@ public class End extends Stmt {
 		return Value.VOID;
 	}
 
-	@Override
-	public Value typecheck(Scope s) {
-		return Type.VOID;
-	}
 
 	/**
 	 * 

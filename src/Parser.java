@@ -137,7 +137,7 @@ public class Parser {
 		Argument args = new Argument();
 		match('(');
 		while (look.tag != ')') {
-			args.addArg(expr());
+			args.addArg(bool());
 			if (look.tag != ')')
 				match(',');
 		}

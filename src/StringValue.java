@@ -9,7 +9,8 @@ public class StringValue extends PrimValue {
 
 	@Override
 	public String toString() {
-		return "\"" + value + "\"";
+		//return "\"" + value + "\"";
+		return value;
 	}
 
 	@Override
@@ -21,5 +22,10 @@ public class StringValue extends PrimValue {
 	public boolean equals(Object obj) {
 		return obj instanceof StringValue ? value.equals(((StringValue) obj).value)
 				: false;
+	}
+
+	@Override
+	public Type type() {
+		return Type.STRING;
 	}
 }
