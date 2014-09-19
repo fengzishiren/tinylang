@@ -16,8 +16,9 @@ JDK 1.7 +
 --------
 目前已经支持的功能：
 * 函数的调用，包括参数的传递和返回
-* if、else、while、break、return语句
+* if、else、while、for、foreach、break、return语句
 * 内置数据结构：list和dict。
+* 支持高阶函数
 
 
 
@@ -54,8 +55,10 @@ stmt                -> 'print' '(' expr ')';
                        | assign ;
                        | 'if' '(' expr ')' stmts1 ('else' stmts1)?
                        | 'while' '(' expr ')' stmts1
+                       | 'for' '(' opexpr ';' opexpr ';' opexpr ')'
+                       | 'for' '(' ID (',' ID)? in factor ')'
                        | E
-assign              -> ID '=' bool
+assign              -> ID '=' bool | ID ('[' index ']')+ '=' bool | ID ('[' index ']')*  '.' call
 bool                -> > expr (( < | == | >= | <=) expr)?
 expr                -> term (('+' | '-') term)?
 term                -> factor ('*' | '/') factor)?
@@ -73,10 +76,9 @@ access              -> ID ('[' ',' ']')+
 --------
 目前被设计为趋近于函数式风格
 * 执行例程从代码中搜索main函数（无参）并执行
-* 内置 print函数
+* 内置 print, len, remove(list, dict), append(list), type, version函数
 * 不支持全局变量（暂时）
 * main函数可以返回任意值给解释器
-
 
 
 
@@ -132,29 +134,23 @@ define main() {
 示例3:
 
 ```
+define hign_order(a, how) {
+	how(a);
+	return how;
+}
 
-define echo(msg) {
-	print(msg);
-	return msg;
+define test() {
+	print("print");
 }
 
 define main() {
-	a = 222;
-	
-	a = a + 250;
-	if (a > 100) {
-		print("hello");
-		print("World");
-	}
-	
-	if (a > 0)
-		print("Hello World");
-	msg = echo("hello");
-	print(msg);
-	
-	return null;
+	t = test;
+	t();
+	print(9);
+	how = hign_order(100, print);
+	how(100000000);
+	return how;
 }
-
 
 ```
 
@@ -162,7 +158,25 @@ define main() {
 ```
 define main() {
 	a = [1, 2, 3, 4, 5, 6];
-	return a[3];
+	
+	foreach( e in a) {
+		print(e);
+		print("----------");
+		}
+		
+	for (i = 0; i < len(a); i= i+1) {
+		print("**************");
+	}
+	a[0] = 1000;
+	print(a);
+	
+	a.append(7);
+	print(a);
+	
+	a.remove(6)
+	;
+	print(a);
+	return len(a);
 }
 ```
 
@@ -170,7 +184,22 @@ define main() {
 ```
 define main() {
 	b = {"zlh": "zhenglinhai", 9 : "xiaoyaogege", 1: {"kety": "value"}};
-	return b[1]["kety"];
+	b[9999] = "fengzishiren";
+	print(b);
+	
+	b.remove(9);
+	b[1].remove("kety");
+	
+	print(b);
+	
+	foreach(k ,v in b) {
+		print(k);
+		 print(v);
+		 print("-----");
+		 
+	}
+	
+	return b["zlh"];
 }
 ```
 
