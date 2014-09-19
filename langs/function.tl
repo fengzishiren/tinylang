@@ -15,5 +15,7 @@ define main() {
 	print(9);
 	how = hign_order(100, print);
 	how(100000000);
+	//lambda x : 2*x;
+	//c++ []cc {}
 	return how;
 }
