@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 执行单元
+ * 
+ */
 public class Unit extends Node {
 
 	private List<Fun> funcs = new ArrayList<>();
@@ -11,19 +14,25 @@ public class Unit extends Node {
 
 	@Override
 	public Value interp(Scope s) {
-		int idx = 0;
+		int count = 0;
 		Name main = null;
 		//每个closure共享初始Scope
+		//在此注册每个函数式是有意义的 
+		//尤其对于函数的定义在调用之后
+		//eg:
+		//  xxx echo();xxx 
+		//  define echo(){}
+		//
 		for (Fun fun : funcs) {
 			Binder.define(fun.name, new Closure(fun, s), s);
 			if ("main".equals(fun.name.id)) {
-				idx++;
+				count++;
 				main = fun.name;
 			}
 		}
-		if (idx == 0) {
+		if (count == 0) {
 			S.error("找不到main函数");
-		} else if (idx > 1) {
+		} else if (count > 1) {
 			S.error("main函数重复定义在多处");
 		}
 		Call call = new Call(main, Argument.noArgs());

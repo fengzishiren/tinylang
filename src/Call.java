@@ -24,9 +24,9 @@ public class Call extends Stmt {
 			for (int i = 0; i < closure.fun.params.size(); i++) {
 				funScope.putValue(closure.fun.params.get(i).id, lv.get(i));
 			}
-			// 所有return语句的地方都以异常ReturnJmp传递返回值
+			
 			try {
-				return closure.fun.body.interp(funScope);
+				return closure.fun.body.interp(funScope);// 所有return语句的地方都以异常ReturnJmp传递返回值
 			} catch (ReturnJmp e) { // 返回值 通过异常可以使return语句在某一个函数内的任意block中都能成功返回(包括结尾)
 				return e.attatchment();//// 唉 实是无奈之举啊
 			}
@@ -37,7 +37,7 @@ public class Call extends Stmt {
 			}
 			return fun.apply(args.interp(s).values);
 		} else {
-			S.error("不支持的调用" + opv);
+			S.error("不支持的调用" + this + " " + opv);
 			return Value.VOID; // never touch
 		}
 	}
