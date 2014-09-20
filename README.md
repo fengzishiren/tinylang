@@ -56,7 +56,7 @@ stmt                -> 'print' '(' expr ')';
                        | 'if' '(' expr ')' stmts1 ('else' stmts1)?
                        | 'while' '(' expr ')' stmts1
                        | 'for' '(' opexpr ';' opexpr ';' opexpr ')'
-                       | 'for' '(' ID (',' ID)? in factor ')'
+                       | 'foreach' '(' ID (',' ID)? in factor ')'
                        | E
 assign              -> ID '=' bool | ID ('[' index ']')+ '=' bool | (ID ('[' index ']')*  '.')? call 
 bool                -> > expr (( < | == | >= | <=) expr)?
