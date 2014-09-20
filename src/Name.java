@@ -1,13 +1,15 @@
 
 public class Name extends Node {
+	
+	public static final Name Null = new Name(null);
+	public static final Name Lambda = new Name("lambda");
+	
 	public String id;
 
 	public Name(String id) {
 		this.id = id;
 	}
 	
-	public static final Name Null = new Name(null);
-
 	public Value interp(Scope s) {
 		Value v = s.lookup(id);
 		if (v != null) {

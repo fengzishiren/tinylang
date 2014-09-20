@@ -38,6 +38,11 @@ public class Parser {
 		match(Tag.DEFINE);
 		String name = look.toString();
 		match(Tag.ID);
+		Fun fun = new Fun(new Name(name),  param(), block());
+		return fun;
+	}
+
+	private Parameter param() {
 		match('(');
 		Parameter params = new Parameter();
 		while (look.tag != ')') {
@@ -47,8 +52,7 @@ public class Parser {
 				match(',');
 		}
 		match(')');
-		Fun fun = new Fun(new Name(name), params, block());
-		return fun;
+		return params;
 	}
 
 	private Stmt block() {
@@ -351,6 +355,9 @@ public class Parser {
 			String str = look.toString();
 			move();
 			return new Str(str);
+		case Tag.Lambda: //eg: Lambda (x, y){x+y}
+			match(Tag.Lambda);
+			return new Lambda(param(), block());
 		default:
 			return struct();
 		}

@@ -12,10 +12,7 @@ public class Fun extends Node {
 
 	@Override
 	public Value interp(Scope s) {
-//		Closure closure = new Closure(this, s);
-//		Binder.define(name, closure, s);
-//		return closure;
-		return body.interp(s);
+		return new Closure(this, s);
 	}
 
 	@Override

@@ -30,6 +30,7 @@ public class Lexer {
 		reserves.put("null", Tag.NULL);
 		reserves.put("foreach", Tag.Foreach);
 		reserves.put("in", Tag.IN);
+		reserves.put("lambda", Tag.Lambda);
 	}
 
 	private boolean skipSpace() {

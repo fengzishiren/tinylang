@@ -1,14 +1,27 @@
 public class Binder {
 
+//	public static void assign(Name name, Value value, Scope s) {
+//		Scope scope = s.findDefineScope(name.id);
+//		if (scope == null)
+//			s.putValue(name.id, value);
+//		else
+//			scope.putValue(name.id, value);
+//	}
+//	
 	public static void assign(Name name, Value value, Scope s) {
-		Scope scope = s.findDefineScope(name.id);
-		if (scope == null)
-			// S.error("变量未定义！" + name.id);
+//		Scope scope = s.findDefineScope(name.id);
+//		if (scope == null)
+//			// S.error("变量未定义！" + name.id);
+//			s.putValue(name.id, value);
+//		else
 			s.putValue(name.id, value);
-		else
-			scope.putValue(name.id, value);
 	}
 
+	public static void bind(Name name, Value value, Scope s) {
+			s.putValue(name.id, value);
+	}
+
+	
 	public static void define(Name name, Value value, Scope s) {
 		Value v = s.lookup(name.id);
 		if (v != null)
@@ -16,8 +29,4 @@ public class Binder {
 		s.putValue(name.id, value);
 	}
 
-	public static void define(Fun fun, Scope s) {
-		Closure closure = new Closure(fun, s);
-		Binder.define(fun.name, closure, s);
-	}
 }

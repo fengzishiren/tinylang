@@ -26,7 +26,8 @@ public class Unit extends Node {
 		//
 		for (Fun fun : funcs) {
 			// reg closure
-			Binder.define(fun, s);
+			Binder.define(fun.name, fun.interp(s), s);
+			// Binder.define(fun, s);
 			if ("main".equals(fun.name.id)) {
 				count++;
 				main = fun.name;
