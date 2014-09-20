@@ -17,7 +17,7 @@ public class Fun extends Node {
 
 	@Override
 	public String toString() {
-		return name + "(" + U.join(", ", params) + ") " + body;
+		return name + "(" + params + ") " + body;
 	}
 
 }
