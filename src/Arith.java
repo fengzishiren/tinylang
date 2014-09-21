@@ -42,7 +42,7 @@ public class Arith extends Node {
 		}
 
 		S.error("类型不匹配的操作： " + this);
-		return Value.VOID; //never touch
+		return Value.VOID; // never touch
 	}
 
 	private int op(int l, int r) {
@@ -58,6 +58,8 @@ public class Arith extends Node {
 			ret = l * r;
 			break;
 		case '/':
+			if (r == 0x00)
+				S.error("除0错误:" + this);
 			ret = l / r;
 			break;
 		default:
@@ -86,7 +88,6 @@ public class Arith extends Node {
 		}
 		return ret;
 	}
-
 
 	@Override
 	public String toString() {
