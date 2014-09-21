@@ -18,7 +18,7 @@ JDK 1.7 +
 * 函数的调用，包括参数的传递和返回
 * if、else、while、for、foreach、break、return语句
 * 内置数据结构：list和dict。
-* 支持高阶函数
+* 支持高阶、lambda和闭包
 
 
 
@@ -56,18 +56,19 @@ stmt                -> 'print' '(' expr ')';
                        | 'if' '(' expr ')' stmts1 ('else' stmts1)?
                        | 'while' '(' expr ')' stmts1
                        | 'for' '(' opexpr ';' opexpr ';' opexpr ')'
-                       | 'for' '(' ID (',' ID)? in factor ')'
+                       | 'foreach' '(' ID (',' ID)? in factor ')'
                        | E
-assign              -> ID '=' bool | ID ('[' index ']')+ '=' bool | ID ('[' index ']')*  '.' call
+assign              -> ID '=' bool | ID ('[' index ']')+ '=' bool | (ID ('[' index ']')*  '.')? call 
 bool                -> > expr (( < | == | >= | <=) expr)?
 expr                -> term (('+' | '-') term)?
 term                -> factor ('*' | '/') factor)?
-factor              -> ID | INT | FLOAT | BOOL | STRING | call | struct | access
+factor              -> ID | INT | FLOAT | BOOL | STRING | call | struct | access | lambda
 call                -> ID '(' (expr (',' expr)*)? ')'
 struct              -> list | dict
 list                -> '[' (bool)* ']'
 dict                -> '{' (INT | FLOAT | BOOL | STRING) ':' bool '}'
 access              -> ID ('[' ',' ']')+ 
+lambda              -> 'lambda' '(' (ID (',' ID)*)? ')' block
 ```
 
 
@@ -200,6 +201,24 @@ define main() {
 	}
 	
 	return b["zlh"];
+}
+```
+
+示例6：
+```
+
+
+define handle(a, hd) {
+	hd(a, 10000);
+}
+
+define main() {
+
+	a = 10;
+	handle(a, lambda (x, y) {print(x, y);});
+	
+	f = lambda (x) {print(x);};
+	f("lambda test");
 }
 ```
 
