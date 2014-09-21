@@ -1,5 +1,6 @@
 
 public class Tag {
+	public static final int EOF = -1;
 	public static final int INT = 256;
 	public static final int STRING = 257;
 	public static final int FLOAT = 258;
@@ -24,6 +25,7 @@ public class Tag {
 	public static final int Foreach = 277;
 	public static final int IN = 278;
 	public static final int Lambda = 279;
+	
 	public static final String[] desc = {
 		"int",
 		"string",
@@ -53,8 +55,7 @@ public class Tag {
 
 
 	public static String descOf(int tag) {
-		if (tag < 0 || tag > Tag.Lambda)
-			throw new IllegalArgumentException("无法识别： " + tag);
+		if (tag == -1) return "EOF";
 		return tag > 255 ? desc[tag - 256]: String.valueOf((char)tag);
 	}
 	

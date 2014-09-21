@@ -12,45 +12,27 @@ public class Parser {
 	}
 
 	private void match(int c) {
-		if (look != null && tag() == c)
+		if (look.tag == c)
 			move();
 		else
 			error("expect '%s', but given '%s'.", Tag.toString(c),
-					look == null ? "EOF" : Tag.toString(tag()));
+					Tag.toString(look.tag));
 	}
 
 	private void error(String msg, Object... args) {
 		S.error(String.format(msg, args));
 	}
 
-	private int tag() {
-		if (look != null)
-			return look.tag;
-		else {
-			error("Expect '%s', but given 'EOF'", U.join("|", Tag.desc));
-			return -1;// never touch
-		}
-	}
-
-	private String id() {
-		if (look != null)
-			return look.content.toString();
-		else {
-			error("Expect identify symbol, but given 'EOF'");
-			return null;
-		}
-	}
-
 	public Node parse() {
 		Unit root = new Unit();
-		while (look != null)
+		while (look != Token.EOF)
 			root.addFun(function());
 		return root;
 	}
 
 	private Fun function() {
 		match(Tag.DEFINE);
-		String name = id();
+		String name = look.content();
 		match(Tag.ID);
 		Fun fun = new Fun(new Name(name), param(), block());
 		return fun;
@@ -59,10 +41,10 @@ public class Parser {
 	private Parameter param() {
 		match('(');
 		Parameter params = new Parameter();
-		while (tag() != ')') {
-			params.addParam(new Name(id()));
+		while (look.tag != ')') {
+			params.addParam(new Name(look.content()));
 			match(Tag.ID);
-			if (tag() != ')')
+			if (look.tag != ')')
 				match(',');
 		}
 		match(')');
@@ -82,14 +64,14 @@ public class Parser {
 	 * @return
 	 */
 	private Stmt stmts() {
-		return tag() == '}' ? Stmt.End : new Seq(stmt(), stmts());
+		return look.tag == '}' ? Stmt.End : new Seq(stmt(), stmts());
 	}
 
 	private Stmt stmt() {
 		Node x;
 		Stmt s1, s2;
 		Stmt savedStmt;
-		switch (tag()) {
+		switch (look.tag) {
 		case '{':
 			return block();
 		case ';':// 意义在于： ; 独占一行 什么也别做 类似python：pass
@@ -101,7 +83,7 @@ public class Parser {
 			x = bool();
 			match(')');
 			s1 = stmt();
-			if (tag() != Tag.ELSE)
+			if (look.tag != Tag.ELSE)
 				return new If(x, s1);
 			match(Tag.ELSE);
 			s2 = stmt();
@@ -130,14 +112,14 @@ public class Parser {
 			Stmt.Enclosing = forNode;
 			Stmt init = Stmt.Null;
 			match('(');
-			if (tag() != ';') {
+			if (look.tag != ';') {
 				init = assign();
 				match(';');
 			}
 			x = bool();
 			match(';');
 			Stmt update = Stmt.Null;
-			if (tag() != ')') {
+			if (look.tag != ')') {
 				update = assign();
 			}
 			match(')');
@@ -151,13 +133,13 @@ public class Parser {
 			savedStmt = Stmt.Enclosing;
 			Stmt.Enclosing = foreachNode;
 			match('(');
-			Name k = new Name(id());
+			Name k = new Name(look.content());
 			match(Tag.ID);
 			Name v = Name.Null;
 			// Name v= Node.Null;
-			if (tag() == ',') {
+			if (look.tag == ',') {
 				match(',');
-				v = new Name(id());
+				v = new Name(look.content());
 				match(Tag.ID);
 			}
 			match(Tag.IN);
@@ -175,7 +157,7 @@ public class Parser {
 			return new Break();
 		case Tag.RETURN:
 			move();
-			Return ret = new Return(tag() == ';' ? Stmt.End : bool());
+			Return ret = new Return(look.tag == ';' ? Stmt.End : bool());
 			match(';');
 			return ret;
 		case Tag.ID:
@@ -194,11 +176,11 @@ public class Parser {
 	 * @return
 	 */
 	private Stmt assign() {
-		Name name = new Name(id());
+		Name name = new Name(look.content());
 		match(Tag.ID);
 		Argument args;
 		Access ac = null;
-		switch (tag()) {
+		switch (look.tag) {
 		case '=':
 			move();
 			Assign assign = new Assign(name, bool());
@@ -206,7 +188,7 @@ public class Parser {
 			return assign;
 		case '[': // a[2][3] = xxxx
 			Index idx = access();
-			if (tag() == '=') {
+			if (look.tag == '=') {
 				match('=');
 				return new IndexAssign(name, idx, bool());
 			}
@@ -214,7 +196,7 @@ public class Parser {
 			// case through: ls[0][0].append()....
 		case '.':// eg: ls.append(x) => append(ls, x)
 			move();
-			Name oname = new Name(id());
+			Name oname = new Name(look.content());
 			match(Tag.ID);
 			args = argument();
 			args.addFirst(ac == null ? name : ac);
@@ -234,9 +216,9 @@ public class Parser {
 	private Argument argument() {
 		Argument args = new Argument();
 		match('(');
-		while (tag() != ')') {
+		while (look.tag != ')') {
 			args.addArg(bool());
-			if (tag() != ')')
+			if (look.tag != ')')
 				match(',');
 		}
 		match(')');
@@ -253,7 +235,7 @@ public class Parser {
 	 */
 	private Node bool() {
 		Node x = join();
-		while (tag() == Tag.OR) {
+		while (look.tag == Tag.OR) {
 			move();
 			x = new Or(Tag.OR, x, join());
 		}
@@ -262,7 +244,7 @@ public class Parser {
 
 	private Node join() {
 		Node x = equality();
-		while (tag() == Tag.AND) {
+		while (look.tag == Tag.AND) {
 			move();
 			x = new And(Tag.AND, x, equality());
 		}
@@ -271,7 +253,7 @@ public class Parser {
 
 	private Node equality() {
 		Node x = rel();
-		while (tag() == Tag.EQ || tag() == Tag.NE) {
+		while (look.tag == Tag.EQ || look.tag == Tag.NE) {
 			Token tok = look;
 			move();
 			x = new Rel(tok.tag, x, rel());
@@ -287,7 +269,7 @@ public class Parser {
 	private Node rel() {
 		// support ||, &&
 		Node x = expr();
-		switch (tag()) {
+		switch (look.tag) {
 		case '<':
 		case '>':
 		case Tag.LE:
@@ -303,7 +285,7 @@ public class Parser {
 
 	private Node expr() {
 		Node x = term();
-		while (tag() == '+' || tag() == '-') {
+		while (look.tag == '+' || look.tag == '-') {
 			Token tok = look;
 			move();
 			x = new Arith(x, tok.tag, term());
@@ -313,7 +295,7 @@ public class Parser {
 
 	private Node term() {
 		Node x = factor();
-		while (tag() == '*' || tag() == '/') {
+		while (look.tag == '*' || look.tag == '/') {
 			Token tok = look;
 			move();
 			x = new Arith(x, tok.tag, factor());
@@ -331,7 +313,7 @@ public class Parser {
 	 */
 	private Node factor() {
 		Node x = null;
-		switch (tag()) {
+		switch (look.tag) {
 		case '+':
 		case '-':
 			// support: +3, -3 = > 0 + 3, 0 - 3
@@ -358,18 +340,18 @@ public class Parser {
 			x = new Bool(look.content);
 			move();
 			return x;
-		case Tag.ID://可能是变量
-			String id = id();
+		case Tag.ID:// 可能是变量
+			String id = look.content();
 			Name name = new Name(id);
 			move();
-			if (tag() == '(') {//函数调用
+			if (look.tag == '(') {// 函数调用
 				return new Call(name, argument());
 			}
-			if (tag() == '[')//下标访问
+			if (look.tag == '[')// 下标访问
 				return new Access(name, access());
-			return name;//变量
+			return name;// 变量
 		case Tag.STRING:
-			String str = id();
+			String str = look.content();
 			move();
 			return new Str(str);
 		case Tag.Lambda: // eg: Lambda (x, y){x+y}
@@ -391,18 +373,18 @@ public class Parser {
 			match('[');
 			idx.addNode(bool());
 			match(']');
-		} while (tag() == '[');
+		} while (look.tag == '[');
 		return idx;
 	}
 
 	private Node struct() {
-		switch (tag()) {
+		switch (look.tag) {
 		case '[':// list = [1, 2, 3, "4"]
 			move();
 			List list = new List();
-			while (tag() != ']') {
+			while (look.tag != ']') {
 				list.addNode(bool());
-				if (tag() != ']')
+				if (look.tag != ']')
 					match(',');
 			}
 			match(']');
@@ -411,12 +393,12 @@ public class Parser {
 			// dict = {"zheng": 3, 1: "", ...}
 			move();
 			Dict dict = new Dict();
-			while (tag() != '}') {
+			while (look.tag != '}') {
 				Node key = bool();
 				match(':');
 				Node val = bool();
 				dict.addKV(key, val);
-				if (tag() != '}')
+				if (look.tag != '}')
 					match(',');
 			}
 			match('}');

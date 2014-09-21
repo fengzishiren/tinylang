@@ -83,7 +83,7 @@ public class Lexer {
 		while (skipSpace() || skipComment())
 			;
 		if (text.length() == offset)
-			return null;
+			return Token.EOF;
 
 		switch (peek()) {
 		case '&':
