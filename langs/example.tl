@@ -1,6 +1,4 @@
-//注释
-//xxxxxxxxxx
-
+//comment
 define echo(msg) {
 	print(msg);
 	return msg;

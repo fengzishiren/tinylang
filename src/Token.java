@@ -1,8 +1,7 @@
 
-
 public class Token {
 	public int tag;
-	public Object content;
+	public Object content = "";
 
 	public Token(int tag) {
 		this.tag = tag;
@@ -17,7 +16,7 @@ public class Token {
 
 	@Override
 	public String toString() {
-		//return String.format("<%c, %s>", (char)tag, content == null ? "" : content.toString());
-		return content == null ? "" : content.toString();
+		return String.format("<%s, %s>", Tag.toString(tag), content.toString());
+		// return content == null ? "" : content.toString();
 	}
 }

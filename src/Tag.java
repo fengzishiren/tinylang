@@ -44,9 +44,9 @@ public class Tag {
 		"true",
 		"define",
 		"return",
-		"desc",
 		"null",
 		"for",
+		"foreach",
 		"in",
 		"lambda"
 	};

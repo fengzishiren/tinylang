@@ -45,6 +45,10 @@ public class Lexer {
 		return offset != text.length() && text.charAt(offset) == c;
 	}
 
+	private boolean lookequal(int n, char c) {
+		return offset + n < text.length() && text.charAt(offset + n) == c;
+	}
+
 	/**
 	 * comment 2 style: #xxxx //xxxxxx
 	 * 
@@ -56,12 +60,11 @@ public class Lexer {
 			do
 				forward();
 			while (!lookequal('\n'));
-		if (lookequal('/')) {
+		if (lookequal('/') && lookequal(1, '/')) {
 			forward();
-			if (lookequal('/'))
-				do
-					forward();
-				while (!lookequal('\n'));
+			do
+				forward();
+			while (!lookequal('\n'));
 		}
 		return offset != old;
 	}

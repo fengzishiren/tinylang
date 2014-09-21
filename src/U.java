@@ -94,12 +94,13 @@ public class U {
 	}
 
 	@SafeVarargs
-	public static final String join(String sep, Object... args) {
+	public static final <T> String join(String sep, T... args) {
 		return join(sep, Arrays.asList(args));
 	}
-	
+
 	/**
 	 * 剥壳 xffx x => ff
+	 * 
 	 * @param str
 	 * @param shell
 	 * @return
@@ -112,5 +113,5 @@ public class U {
 			end = str.length() - shell.length();
 		return str.substring(start, end);
 	}
-	
+
 }
