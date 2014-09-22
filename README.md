@@ -206,7 +206,7 @@ define main() {
 ```
 
 示例6：
-```
+```python
 define eval(a,b) {
 	t = a;
 	a = a + b;
