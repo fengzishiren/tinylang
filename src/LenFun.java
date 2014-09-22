@@ -22,10 +22,5 @@ public class LenFun extends BuiltinFun {
 		return Value.VOID;  
 	}
 
-	@Override
-	public Type type() {
-		return Type.BuiltinFuntion;
-	}
-
 
 }

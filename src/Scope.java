@@ -38,12 +38,15 @@ public class Scope {
 
 	public static Scope initScope() {
 		Scope scope = new Scope();
-		scope.putValue("print", new Print());
+		scope.putValue("print", new PrintFun());
 		scope.putValue("type", new TypeFun());
-		scope.putValue("version", new Version());
+		scope.putValue("version", new VersionFun());
 		scope.putValue("len", new LenFun());
-		scope.putValue("remove", new Remove());
-		scope.putValue("append", new Append());
+		scope.putValue("remove", new RemoveFun());
+		scope.putValue("append", new AppendFun());
+		scope.putValue("cons", new ConsFun());
+		scope.putValue("car", new CarFun());
+		scope.putValue("cdr", new CdrFun());
 		return scope;
 	}
 	

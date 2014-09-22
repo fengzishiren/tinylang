@@ -11,10 +11,4 @@ public class TypeFun extends BuiltinFun {
 		return args.get(0).type();
 	}
 
-	@Override
-	public Type type() {
-		return Type.BuiltinFuntion;
-	}
-
-
 }
