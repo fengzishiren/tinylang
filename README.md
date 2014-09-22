@@ -17,8 +17,9 @@ JDK 1.7 +
 目前已经支持的功能：
 * 函数的调用，包括参数的传递和返回
 * if、else、while、for、foreach、break、return语句
-* 内置数据结构：list和dict。
+* 内置数据结构：list(ArrayList)和dict。
 * 支持高阶、lambda和闭包
+* 内置lisp系函数cons、car和cdr
 
 
 
@@ -77,7 +78,7 @@ lambda              -> 'lambda' '(' (ID (',' ID)*)? ')' block
 --------
 目前被设计为趋近于函数式风格
 * 执行例程从代码中搜索main函数（无参）并执行
-* 内置 print, len, remove(list, dict), append(list), type, version函数
+* 内置 print, len, remove(list, dict), append(list), type, version和lisp函数：cons, car, cdr函数
 * 不支持全局变量（暂时）
 * main函数可以返回任意值给解释器
 
@@ -163,7 +164,7 @@ define main() {
 	foreach( e in a) {
 		print(e);
 		print("----------");
-		}
+	}
 		
 	for (i = 0; i < len(a); i= i+1) {
 		print("**************");
@@ -219,6 +220,20 @@ define main() {
 	
 	f = lambda (x) {print(x);};
 	f("lambda test");
+	define main() {
+
+	a = 10;
+	b = 200;
+	//cons, car, cdr用来模拟Lisp：
+	//(define (cons x y)
+  	//	(lambda (m) (m x y)))
+	//(define (car z)
+	//  (z (lambda (p q) p)))
+	//(define (cdr z)
+	//  (z (lambda (p q) q)))
+	pair = cons(a, cons(a, b ));
+	print(pair);
+	return cdr(pair);
 }
 ```
 
