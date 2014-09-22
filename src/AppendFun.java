@@ -1,8 +1,8 @@
 import java.util.List;
 
-public class Append extends BuiltinFun {
+public class AppendFun extends BuiltinFun {
 
-	public Append() {
+	public AppendFun() {
 		super("append", 2);
 	}
 
@@ -18,11 +18,6 @@ public class Append extends BuiltinFun {
 		}
 		S.error("只有list类型支持append方法");
 		return Value.VOID;
-	}
-
-	@Override
-	public Type type() {
-		return Type.BuiltinFuntion;
 	}
 
 }

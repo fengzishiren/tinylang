@@ -1,8 +1,8 @@
 import java.util.List;
 
-public class Remove extends BuiltinFun {
+public class RemoveFun extends BuiltinFun {
 
-	public Remove() {
+	public RemoveFun() {
 		super("remove", 2);
 	}
 
@@ -25,10 +25,4 @@ public class Remove extends BuiltinFun {
 			S.error("不支持remove函数");
 		return Value.VOID;
 	}
-
-	@Override
-	public Type type() {
-		return Type.BuiltinFuntion;
-	}
-
 }
