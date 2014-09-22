@@ -250,10 +250,6 @@ define main() {
 	
 	f = lambda (x) {print(x);};
 	f("lambda test");
-	define main() {
-
-	a = 10;
-	b = 200;
  
 	return cadr();
 }
