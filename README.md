@@ -207,7 +207,37 @@ define main() {
 
 示例6：
 ```
+define eval(a,b) {
+	t = a;
+	a = a + b;
+	b = t - b;
+	return cons(a, b);
+}
 
+//cons, car, cdr用来模拟Lisp：
+//(define (cons x y)
+//	(lambda (m) (m x y)))
+//(define (car z)
+//  (z (lambda (p q) p)))
+//(define (cdr z)
+//  (z (lambda (p q) q)))
+
+define cadr() {
+
+	a = 10;
+	b = 200;
+	pair = cons(a, cons(a, b ));
+	print(pair);
+	print(cdr(pair));
+	
+	print("a:", a, " b:", b);
+	
+	val = eval(a, b);
+	
+	print("a:", car(val), " b:", cdr(val));
+	
+	return 0;
+}
 
 define handle(a, hd) {
 	hd(a, 10000);
@@ -224,16 +254,8 @@ define main() {
 
 	a = 10;
 	b = 200;
-	//cons, car, cdr用来模拟Lisp：
-	//(define (cons x y)
-  	//	(lambda (m) (m x y)))
-	//(define (car z)
-	//  (z (lambda (p q) p)))
-	//(define (cdr z)
-	//  (z (lambda (p q) q)))
-	pair = cons(a, cons(a, b ));
-	print(pair);
-	return cdr(pair);
+ 
+	return cadr();
 }
 ```
 
