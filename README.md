@@ -91,7 +91,7 @@ lambda              -> 'lambda' '(' (ID (',' ID)*)? ')' block
 
 示例1：
 
-```
+```python
 define main() {
 	a = 10;
 	print(a);
@@ -103,7 +103,7 @@ define main() {
 
 示例2:
 
-```
+```python
 
 define return1() {
 	return 8;
@@ -135,7 +135,7 @@ define main() {
 
 示例3:
 
-```
+```python
 define hign_order(a, how) {
 	how(a);
 	return how;
@@ -157,7 +157,7 @@ define main() {
 ```
 
 示例4：
-```
+```python
 define main() {
 	a = [1, 2, 3, 4, 5, 6];
 	
@@ -183,7 +183,7 @@ define main() {
 ```
 
 示例5：
-```
+```python
 define main() {
 	b = {"zlh": "zhenglinhai", 9 : "xiaoyaogege", 1: {"kety": "value"}};
 	b[9999] = "fengzishiren";
