@@ -44,6 +44,12 @@ public class U {
 		// escape.put("\\u", '\u5845')
 	}
 
+	/**
+	 * 无法识别返回 " "
+	 * 
+	 * @param ec
+	 * @return
+	 */
 	public static final Character unescape(char ec) {
 		Character c = null;
 		if ((c = unescapeMap.get(ec)) == null) {
