@@ -1,6 +1,4 @@
 define main() {
-//divide zero
-	a=1;
-	b = 1;
-	return a/b;
+	print("你好，世界！");
+	return 0;
 }

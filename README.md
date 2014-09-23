@@ -93,10 +93,8 @@ lambda              -> 'lambda' '(' (ID (',' ID)*)? ')' block
 
 ```python
 define main() {
-	a = 10;
-	print(a);
-	
-	return a;
+	print("你好，世界！");
+	return 0;
 }
 ```
 
@@ -214,7 +212,7 @@ define eval(a,b) {
 	return cons(a, b);
 }
 
-//cons, car, cdr用来模拟Lisp：
+//cons, car, cdr用来模拟Lisp's cadr：
 //(define (cons x y)
 //	(lambda (m) (m x y)))
 //(define (car z)
@@ -239,19 +237,18 @@ define cadr() {
 	return 0;
 }
 
-define handle(a, hd) {
-	hd(a, 10000);
+define handle(a,  hd) {
+	fun = hd(111, 10000);
+	fun(print);
 }
 
 define main() {
 
-	a = 10;
-	handle(a, lambda (x, y) {print(x, y);});
+	a = 10;b  = 110;
+	handle(a,  lambda (x, y) {return lambda(how) { how(a, b);};});
 	
-	f = lambda (x) {print(x);};
+	f = lambda (x) {print(x, a);};
 	f("lambda test");
- 
-	return cadr();
 }
 ```
 
