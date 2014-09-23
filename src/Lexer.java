@@ -15,8 +15,8 @@ public class Lexer {
 		text = s;
 	}
 
-	private Map<String, Integer> reserves = new HashMap<String, Integer>();
-	{
+	private static Map<String, Integer> reserves = new HashMap<String, Integer>();
+	static {
 		reserves.put("define", Tag.DEFINE);
 		reserves.put("if", Tag.IF);
 		reserves.put("else", Tag.ELSE);
@@ -148,15 +148,24 @@ public class Lexer {
 			}
 			return new Token(Tag.FLOAT, x);
 		}
-		if (lookequal('"')) {
-			int start = offset + 1;
+		if (lookequal('"') || lookequal('\'')) {
+			StringBuilder buf = new StringBuilder();
 			do {
 				forward();
-			} while (offset != text.length() && (peek() != '"'));
+				if (lookequal('\\')) {// escape character
+					forward();
+					if (offset != text.length()) {
+						Character c = U.unescape(text.charAt(offset));
+						buf.append(c);
+					}
+				} else if (offset != text.length() && (peek() != '"'))
+					buf.append(peek());
+				else
+					break;
+			} while (true);
 			if (offset != text.length())
 				forward();
-			return new Token(Tag.STRING, text.substring(start, offset - 1)); // note:
-																				// "
+			return new Token(Tag.STRING, buf.toString()); // note:
 		}
 		if (Character.isLetter(peek()) || peek() == '_') {
 			int start = offset;

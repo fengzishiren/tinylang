@@ -350,7 +350,7 @@ public class Parser {
 			if (look.tag == '[')// 下标访问
 				return new Access(name, access());
 			return name;// 变量
-		case Tag.STRING:
+		case Tag.STRING://"xxxx"
 			String str = look.content();
 			move();
 			return new Str(str);
