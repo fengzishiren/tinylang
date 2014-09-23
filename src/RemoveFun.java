@@ -19,10 +19,10 @@ public class RemoveFun extends BuiltinFun {
 		} else if (value instanceof DictValue) {
 			Value val = args.get(1);
 			if (!(val instanceof PrimValue))
-				S.error("key必须是原始类型");
+				S.error(this + " key必须是原始类型");
 			((DictValue) value).remove((PrimValue) val);
 		} else
-			S.error("不支持remove函数");
+			S.error(value.type() + " 不支持remove函数");
 		return Value.VOID;
 	}
 }

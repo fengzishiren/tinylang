@@ -7,7 +7,6 @@ public class VoidValue extends Value {
 
 	@Override
 	public Type type() {
-		// TODO Auto-generated method stub
 		return Type.VOID;
 	}
 }

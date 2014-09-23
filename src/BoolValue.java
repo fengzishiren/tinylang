@@ -23,7 +23,6 @@ public class BoolValue extends PrimValue {
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
 		return Boolean.hashCode(value);
 	}
 

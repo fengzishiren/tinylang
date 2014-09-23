@@ -13,12 +13,11 @@ public class Arith extends Node {
 	public Value interp(Scope s) {
 		Value lv = left.interp(s);
 		Value rv = right.interp(s);
-		if (lv instanceof StringValue && rv instanceof StringValue) {
+		//
+		if (lv instanceof StringValue || rv instanceof StringValue) {
 			if (op != '+')
-				S.error("String不支持操作: " + (char) op);
-			String l = ((StringValue) lv).value;
-			String r = ((StringValue) rv).value;
-			return new StringValue(l + r);
+				S.error("String连接不支持操作: " + Tag.toString(op));
+			return new StringValue(lv + "" + rv);
 		}
 		if (lv instanceof IntValue && rv instanceof IntValue) {
 			int l = ((IntValue) lv).value;
@@ -63,7 +62,7 @@ public class Arith extends Node {
 			ret = l / r;
 			break;
 		default:
-			S.error("不支持操作符: " + (char) op);
+			S.error("不支持操作符: " + Tag.toString(op));
 		}
 		return ret;
 	}
@@ -84,14 +83,14 @@ public class Arith extends Node {
 			ret = l / r;
 			break;
 		default:
-			S.error("不支持操作符: " + (char) op);
+			S.error("不支持操作符: " + Tag.toString(op));
 		}
 		return ret;
 	}
 
 	@Override
 	public String toString() {
-		return left + " " + Tag.descOf(op) + " " + right;
+		return left + " " + Tag.toString(op) + " " + right;
 	}
 
 }

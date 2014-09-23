@@ -16,10 +16,24 @@ public class U {
 	private U() {
 	}
 
+	/**
+	 * 不同操作系统上的换行符号不统一 这里在读取文件的时候统一用’\n‘代替 在词法分析阶段被记录以便精确定位语法错误位置
+	 */
+	public static final char NEW_LINE = '\n';
+	private static Map<Character, Character> unescapeMap = new HashMap<Character, Character>();
 	private static Map<Character, String> escapeMap = new HashMap<Character, String>();
 
 	static {
-		escapeMap.put('\"', "\\\"");
+		unescapeMap.put('\"', '\"');
+		unescapeMap.put('\\', '\\');
+		unescapeMap.put('/', '/');
+		unescapeMap.put('b', '\b');
+		unescapeMap.put('f', '\f');
+		unescapeMap.put('n', '\n');
+		unescapeMap.put('r', '\r');
+		unescapeMap.put('t', '\t');
+
+		// escapeMap.put('\"', "\\\"");
 		escapeMap.put('\\', "\\\\");
 		escapeMap.put('/', "\\/");
 		escapeMap.put('\b', "\\b");
@@ -29,21 +43,17 @@ public class U {
 		escapeMap.put('\t', "\\t");
 		// escape.put("\\u", '\u5845')
 	}
-	/**
-	 * 不同操作系统上的换行符号不统一 这里在读取文件的时候统一用’\n‘代替 在词法分析阶段被记录以便精确定位语法错误位置
-	 */
-	public static final char NEW_LINE = '\n';
 
-	public static boolean isPrimitive(Object o) {
-		try {
-			return ((Class<?>) o.getClass().getField("TYPE").get(null))
-					.isPrimitive();
-		} catch (Exception e) {
-			return false;
+	public static final Character unescape(char ec) {
+		Character c = null;
+		if ((c = unescapeMap.get(ec)) == null) {
+			// S.error("无法识别的转义字符: '\\%c'", ec);
+			return Character.valueOf(' ');
 		}
+		return c;
 	}
 
-	private static String escape(String s) {
+	public static String escape(String s) {
 		StringBuilder sb = new StringBuilder();
 		for (char c : s.toCharArray()) {
 			String str = escapeMap.get(c);
@@ -52,6 +62,12 @@ public class U {
 		return sb.toString();
 	}
 
+	/**
+	 * 支持处理转义字符: ge. '\t' => '\', 't'
+	 * 
+	 * @param o
+	 * @return
+	 */
 	public static String toString(Object o) {
 		return escape(String.valueOf(o));
 	}

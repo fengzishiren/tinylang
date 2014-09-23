@@ -11,7 +11,7 @@ public class Scope {
 	 * global var share
 	 */
 	public static Scope share = new Scope();
- 
+
 	public Scope() {
 	}
 
@@ -43,9 +43,11 @@ public class Scope {
 
 	public static Scope initScope() {// init share
 		share.putValue("print", new PrintFun());
+		share.putValue("sprintf", new SprintfFun());
 		share.putValue("type", new TypeFun());
 		share.putValue("version", new VersionFun());
 		share.putValue("len", new LenFun());
+		share.putValue("str", new StrFun());
 		share.putValue("remove", new RemoveFun());
 		share.putValue("append", new AppendFun());
 		share.putValue("cons", new ConsFun());
@@ -53,6 +55,7 @@ public class Scope {
 		share.putValue("cdr", new CdrFun());
 		return share;
 	}
+
 	public static void cleanScope() {
 		share.table.clear();
 	}

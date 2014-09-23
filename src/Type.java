@@ -30,8 +30,19 @@ public class Type extends Value {
 		this.type = t;
 	}
 
+	/**
+	 * python style:
+	 * >>> f = lambda :a
+	 * >>> f()
+	 * 10
+	 * >>> type(f)
+	 * <type 'function'>
+	 * >>> type(type(f))
+	 * <type 'type'>
+	 * >>> 
+	 */
 	@Override
 	public String toString() {
-		return type + (this != TYPE ? " type" : "");
+		return String.format("<type '%s'>", this != TYPE ? type : "type");
 	}
 }
