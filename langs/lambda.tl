@@ -1,14 +1,15 @@
 
 
-define handle(a, hd) {
-	hd(a, 10000);
+define handle(a,  hd) {
+	fun = hd(111, 10000);
+	fun(print);
 }
 
 define main() {
 
-	a = 10;
-	handle(a, lambda (x, y) {print(x, y);});
+	a = 10;b  = 110;
+	handle(a,  lambda (x, y) {return lambda(how) { how(a, b);};});
 	
-	f = lambda (x) {print(x);};
-	f("lambda test");
+	//f = lambda (x) {print(x, a);};
+	//f("lambda test");
 }

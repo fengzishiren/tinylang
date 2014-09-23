@@ -13,7 +13,8 @@ public class Call extends Stmt {
 		Value opv = op.interp(s);
 		if (opv instanceof Closure) {
 			Closure closure = (Closure) opv;
-			// 注意继承每个函数共享的初始envScope
+			// 闭包upvalue在lambda时有效
+			// 其他情形只需要共享sharescope
 			Scope funScope = new Scope(closure.env);
 			if (args.size() != closure.fun.params.size()) {
 				S.error("调用参数不匹配: " + this);
@@ -30,6 +31,7 @@ public class Call extends Stmt {
 			}
 		} else if (opv instanceof BuiltinFun) {
 			BuiltinFun fun = (BuiltinFun) opv;
+
 			if (fun.arity != -1 && fun.arity != args.size()) {
 				S.error("调用参数不匹配: " + this);
 			}

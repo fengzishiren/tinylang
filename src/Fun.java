@@ -1,3 +1,8 @@
+/**
+ * 
+ * @author lunatic
+ *
+ */
 public class Fun extends Node {
 	public Name name;
 	public Parameter params;
@@ -12,7 +17,8 @@ public class Fun extends Node {
 
 	@Override
 	public Value interp(Scope s) {
-		return new Closure(this, s);
+		//Note:所有函数都是全局性的 一次bind Scope:share
+		return new Closure(this, Scope.share);
 	}
 
 	@Override

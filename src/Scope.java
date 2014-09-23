@@ -7,6 +7,11 @@ public class Scope {
 
 	public Scope prev;
 
+	/**
+	 * global var share
+	 */
+	public static Scope share = new Scope();
+ 
 	public Scope() {
 	}
 
@@ -36,23 +41,27 @@ public class Scope {
 		return null;
 	}
 
-	public static Scope initScope() {
-		Scope scope = new Scope();
-		scope.putValue("print", new PrintFun());
-		scope.putValue("type", new TypeFun());
-		scope.putValue("version", new VersionFun());
-		scope.putValue("len", new LenFun());
-		scope.putValue("remove", new RemoveFun());
-		scope.putValue("append", new AppendFun());
-		scope.putValue("cons", new ConsFun());
-		scope.putValue("car", new CarFun());
-		scope.putValue("cdr", new CdrFun());
-		return scope;
+	public static Scope initScope() {// init share
+		share.putValue("print", new PrintFun());
+		share.putValue("type", new TypeFun());
+		share.putValue("version", new VersionFun());
+		share.putValue("len", new LenFun());
+		share.putValue("remove", new RemoveFun());
+		share.putValue("append", new AppendFun());
+		share.putValue("cons", new ConsFun());
+		share.putValue("car", new CarFun());
+		share.putValue("cdr", new CdrFun());
+		return share;
 	}
-	
-	@Override
-	public String toString() {
-		return table.toString();
+	public static void cleanScope() {
+		share.table.clear();
 	}
 
+	/**
+	 * 
+	 */
+	@Override
+	public String toString() {
+		return (prev == null ? "" : (prev + ",")) + table;
+	}
 }

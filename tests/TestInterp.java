@@ -15,14 +15,17 @@ public class TestInterp {
 		File dir = new File("langs");
 		File[] fs = dir.listFiles();
 		for (File file : fs) {
+			System.out.println("invoke " + file.toString() + " ......");
 			testInterp(file.toString());
+			Scope.cleanScope();
 		}
 	}
 
 	@Test
 	public void testInterp() throws IOException {
-		Interpreter interpreter = new Interpreter("langs/cadr.tl");
+		Interpreter interpreter = new Interpreter("langs/calc.tl");
 		Value ret = interpreter.interp();
+		// print return value
 		System.out.println(ret);
 	}
 }

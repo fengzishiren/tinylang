@@ -1,4 +1,3 @@
-
 /**
  * 函数Fun和上下文env
  * 
@@ -7,11 +6,16 @@
  */
 public class Closure extends Value {
 	public Fun fun;
+	/**
+	 * env: local{contains global} or gloabl
+	 * 
+	 * Note upvalue bind when closure creating
+	 */
 	public Scope env;
 
-	public Closure(Fun fun, Scope env) {
+	public Closure(Fun fun, Scope upvalue) {
 		this.fun = fun;
-		this.env = env;
+		this.env = upvalue;
 	}
 
 	@Override

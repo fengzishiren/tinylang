@@ -10,6 +10,7 @@ public class Interpreter {
 	public Value interp() throws IOException {
 		Parser parser = new Parser(new Lexer(U.readFile(file)));
 		Node root = parser.parse();
+		//print ast
 		System.out.println(root.toString());
 		Value retval = root.interp(Scope.initScope());
 		return retval;

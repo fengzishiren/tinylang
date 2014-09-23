@@ -35,8 +35,6 @@ public class Unit extends Node {
 		}
 		if (count == 0) {
 			S.error("找不到main函数");
-		} else if (count > 1) {
-			S.error("main函数重复定义在多处");
 		}
 		Call call = new Call(main, Argument.noArgs());
 		return call.interp(s);
