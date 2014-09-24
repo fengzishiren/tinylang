@@ -56,4 +56,8 @@ public class IndexAssign extends Stmt {
 		return Value.VOID; // never touch
 	}
 
+	@Override
+	public String toString() {
+		return name.toString() + idxs + " = " + value;
+	}
 }

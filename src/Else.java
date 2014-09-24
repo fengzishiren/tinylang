@@ -24,4 +24,9 @@ public class Else extends Stmt {
 		}
 		return Value.VOID;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("if (%s) %s else %s", test, then, other);
+	}
 }
