@@ -34,7 +34,4 @@ public class SprintfFun extends BuiltinFun {
 		return new StringValue(s);
 	}
 
-	public static void main(String[] args) {
-		System.out.printf("%d\n", (Object) Integer.valueOf(10));
-	}
 }
