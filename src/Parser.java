@@ -203,10 +203,13 @@ public class Parser {
 			args = argument();
 			args.addFirst(ac == null ? name : ac);
 			return new Call(oname, args);
-		default:
+		case '(':
 			args = argument();
 			// match(';');
 			return new Call(name, args);
+		default:
+			error("unexpected '%s'", Tag.toString(look.tag));
+			return null;
 		}
 	}
 

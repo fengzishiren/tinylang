@@ -7,6 +7,7 @@ public class BoolValue extends PrimValue {
 	}
 
 	public String toString() {
+		//Boolean.toString(value)
 		return value ? "true" : "false";
 	}
 
