@@ -12,12 +12,12 @@ public class DictValue extends ComplexValue implements Iterable<Entry<PrimValue,
 	}
 
 	//x[] = v
-	public Value get(PrimValue pv) {
+	public Value get(PrimValue pv, Position pos) {
 		Value ret = dict.get(pv);
 		return ret == null ? Value.NULL : ret;
 	}
 
-	public Value remove(PrimValue pv) {
+	public Value remove(PrimValue pv, Position pos) {
 		Value rm = dict.remove(pv);
 		return rm == null ? Value.NULL : rm;
 	}

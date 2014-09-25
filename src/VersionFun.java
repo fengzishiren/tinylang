@@ -8,7 +8,7 @@ public class VersionFun extends BuiltinFun {
 	}
 
 	@Override
-	public Value apply(List<Value> args) {
+	public Value apply(List<Value> args, Position pos) {
 		return new StringValue("V1.0.1");
 	}
 

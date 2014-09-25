@@ -1,8 +1,8 @@
 
 public class Index extends List {
 
-	public Index() {
-		super();
+	public Index(Position pos) {
+		super(pos);
 	}
 
 	@Override

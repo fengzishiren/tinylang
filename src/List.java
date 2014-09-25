@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class List extends Node implements Iterable<Node> {
+	public List(Position pos) {
+		super(pos);
+	}
 	public ArrayList<Node> nodes = new ArrayList<>();
 
 	@Override

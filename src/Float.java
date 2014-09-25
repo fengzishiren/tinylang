@@ -4,7 +4,8 @@ public class Float extends Node {
 
 	public float value;
 
-	public Float(Object content) {
+	public Float(Position pos, Object content) {
+		super(pos);
 		this.value = (float) content;
 	}
 

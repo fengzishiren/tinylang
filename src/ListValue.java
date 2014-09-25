@@ -9,37 +9,35 @@ public class ListValue extends ComplexValue implements Iterable<Value> {
 		this.values = values;
 	}
 
-	public Value get(IntValue index) {
-		check(index.value, values.size());
+	public Value get(IntValue index, Position pos) {
+		check(index.value, values.size(), pos);
 		return values.get(index.value);
 	}
 
-	public Value get(int index) {
-		check(index, values.size());
+	public Value get(int index, Position pos) {
+		check(index, values.size(), pos);
 		return values.get(index);
 	}
 
-	public void remove(IntValue index) {
-		check(index.value, values.size());
+	public void remove(IntValue index, Position pos) {
+		check(index.value, values.size(), pos);
 		values.remove(index.value);
 	}
 
-	public void remove(Value v) {
-		values.remove(v);
-	}
+ 
 
-	public void append(Value v) {
+	public void append(Value v, Position pos) {
 		values.add(v);
 	}
 
 	// x[] = v
-	public void set(IntValue index, Value v) {
+	public void set(IntValue index, Value v, Position pos) {
 		values.set(index.value, v);
 	}
 
-	private void check(int index, int size) {
+	private void check(int index, int size, Position pos) {
 		if (index < 0 || index >= size) {
-			S.error("list下标越界: %d", index);
+			S.error(pos, "list下标越界: %d", index);
 		}
 	}
 

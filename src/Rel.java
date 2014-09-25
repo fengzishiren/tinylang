@@ -3,7 +3,8 @@ public class Rel extends Node {
 	public Node left, right;
 	public int op;
 
-	public Rel(int op, Node left, Node right) {
+	public Rel(Position pos, int op, Node left, Node right) {
+		super(pos);
 		this.op = op;
 		this.left = left;
 		this.right = right;
@@ -32,7 +33,7 @@ public class Rel extends Node {
 		// // eg. Type.Dict == Type.dict
 		if (lv instanceof Type && rv instanceof Type)
 			return new BoolValue(lv == rv);
-		S.error("Type compare unsupport error: %s, %s", lv, rv);
+		S.error(pos, "Type compare unsupport error: %s, %s", lv, rv);
 		return Value.FALSE; // never touch
 	}
 
@@ -58,7 +59,7 @@ public class Rel extends Node {
 			ret = l >= r;
 			break;
 		default:
-			S.error("不支持操作符: " + (char) op);
+			S.error(pos, "不支持操作符: " + (char) op);
 		}
 		return ret;
 	}

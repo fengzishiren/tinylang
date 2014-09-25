@@ -24,7 +24,7 @@ public class U {
 	private static Map<Character, String> escapeMap = new HashMap<Character, String>();
 
 	static {
-		unescapeMap.put('\"', '\"');
+		//unescapeMap.put('\"', '\"');
 		unescapeMap.put('\\', '\\');
 		unescapeMap.put('/', '/');
 		unescapeMap.put('b', '\b');

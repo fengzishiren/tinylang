@@ -7,10 +7,10 @@ public class CdrFun extends BuiltinFun {
 	}
 
 	@Override
-	public Value apply(List<Value> args) {
+	public Value apply(List<Value> args ,Position pos) {
 		Value cons = args.get(0);
 		if (!(cons instanceof ConsValue)) 
-			S.error("cdr只能操作cons类型数据");
+			S.error(pos, "cdr只能操作cons类型数据");
 		return ((ConsValue)cons).second;
 	}
 }

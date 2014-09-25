@@ -10,8 +10,8 @@ public class If extends Stmt {
 	public Node test;
 	public Node stmt;
 
-	public If(Node test, Node stmt) {
-		super();
+	public If(Position pos, Node test, Node stmt) {
+		super(pos);
 		this.test = test;
 		this.stmt = stmt;
 	}
@@ -21,7 +21,7 @@ public class If extends Stmt {
 		Value vt = test.interp(s);
 		//拒绝yoga表示法
 		if (!(vt instanceof BoolValue))
-			S.error("必须是boolean " + test);
+			S.error(pos,"必须是boolean " + test);
 		if (((BoolValue) vt).value) {
 			stmt.interp(s);
 		}

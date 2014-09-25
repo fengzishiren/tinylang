@@ -1,7 +1,7 @@
 public class Lambda extends Fun {
 
-	public Lambda(Parameter params, Node body) {
-		super(Name.Lambda, params, body);
+	public Lambda(Position pos, Parameter params, Node body) {
+		super(pos, Name.Lambda, params, body);
 	}
 	@Override
 	public Value interp(Scope s) {

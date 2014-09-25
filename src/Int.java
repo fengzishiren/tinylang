@@ -2,7 +2,8 @@
 public class Int extends Node {
 	public int value;
 
-	public Int(Object content) {
+	public Int(Position pos, Object content) {
+		super(pos);
 		this.value = (int) content;
 	}
 

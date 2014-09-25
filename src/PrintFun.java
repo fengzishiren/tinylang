@@ -7,7 +7,7 @@ public class PrintFun extends BuiltinFun {
 	}
 
 	@Override
-	public Value apply(List<Value> args) {
+	public Value apply(List<Value> args, Position pos) {
 		System.out.println(U.join(" ", args));
 		return Value.VOID;
 	}

@@ -4,7 +4,8 @@ public class For extends Stmt {
 	public Node update;
 	public Node stmt;
 
-	public For() {
+	public For(Position pos) {
+		super(pos);
 	}
 
 	public void init(Node test, Node stmt) {
@@ -26,7 +27,7 @@ public class For extends Stmt {
 			do {
 				Value vt = test.interp(s);
 				if (!(vt instanceof BoolValue))
-					S.error("必须是boolean " + test);
+					S.error(pos, "必须是boolean " + test);
 				if (((BoolValue) vt).value) {
 					stmt.interp(s);
 					update.interp(s);

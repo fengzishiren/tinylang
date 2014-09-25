@@ -1,9 +1,13 @@
 /**
  * 处理有符号数字
- * @author lunatic
- * 2014年9月18日
+ * 
+ * @author lunatic 2014年9月18日
  */
 public class Zero extends Node {
+
+	public Zero() {
+		super(Position.IGNORE);
+	}
 
 	@Override
 	public Value interp(Scope s) {

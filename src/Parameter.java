@@ -7,14 +7,18 @@ import java.util.ArrayList;
  *
  */
 public class Parameter extends Node {
+	public Parameter(Position pos) {
+		super(pos);
+	}
+
 	public ArrayList<Name> params = new ArrayList<>();
 
 	public void addParam(Name param) {
 		this.params.add(param);
 	}
 
-	public static Parameter noParams() {
-		return new Parameter();
+	public static Parameter noParams(Position pos) {
+		return new Parameter(pos);
 	}
 
 	public String toString() {
@@ -34,7 +38,7 @@ public class Parameter extends Node {
 	 */
 	@Override
 	public Value interp(Scope s) {
-		S.error("unsupport formal parameter eval!");
+		S.error(pos, "unsupport formal parameter eval!", pos);
 		return Value.VOID;
 	}
 }

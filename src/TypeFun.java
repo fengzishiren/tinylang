@@ -7,7 +7,7 @@ public class TypeFun extends BuiltinFun {
 	}
 
 	@Override
-	public Value apply(List<Value> args) {
+	public Value apply(List<Value> args, Position pos) {
 		return args.get(0).type();
 	}
 

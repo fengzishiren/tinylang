@@ -2,8 +2,8 @@ public class Call extends Stmt {
 	public Name op;
 	public Argument args;
 
-	public Call(Name op, Argument args) {
-		super();
+	public Call(Position pos, Name op, Argument args) {
+		super(pos);
 		this.op = op;
 		this.args = args;
 	}
@@ -17,11 +17,11 @@ public class Call extends Stmt {
 			// 其他情形只需要共享sharescope
 			Scope funScope = new Scope(closure.env);
 			if (args.size() != closure.fun.params.size()) {
-				S.error("调用参数不匹配: " + this);
+				S.error(pos, "调用参数不匹配: " + this);
 			}
 			ListValue lv = args.interp(s);
 			for (int i = 0; i < closure.fun.params.size(); i++) {
-				Binder.bind(closure.fun.params.get(i), lv.get(i), funScope);
+				Binder.bind(closure.fun.params.get(i), lv.get(i, args.pos), funScope);
 			}
 			try {
 				return closure.fun.body.interp(funScope);// 所有return语句的地方都以异常ReturnJmp传递返回值
@@ -33,11 +33,11 @@ public class Call extends Stmt {
 			BuiltinFun fun = (BuiltinFun) opv;
 
 			if (fun.arity != -1 && fun.arity != args.size()) {
-				S.error("调用参数不匹配: " + this);
+				S.error(pos, "调用参数不匹配: " + this);
 			}
-			return fun.apply(args.interp(s).values);
+			return fun.apply(args.interp(s).values, pos);
 		} else {
-			S.error("不支持的调用" + this + " " + opv);
+			S.error(pos, "不支持的调用" + this + " " + opv);
 			return Value.VOID; // never touch
 		}
 	}

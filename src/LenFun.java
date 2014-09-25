@@ -7,7 +7,7 @@ public class LenFun extends BuiltinFun {
 	}
 
 	@Override
-	public Value apply(List<Value> args) {
+	public Value apply(List<Value> args, Position pos) {
 		Value value = args.get(0);
 		if ( value instanceof ComplexValue) {
 			ComplexValue cv = (ComplexValue) value;
@@ -18,7 +18,7 @@ public class LenFun extends BuiltinFun {
 			StringValue cv = (StringValue) value;
 			return new IntValue(cv.value.length());
 		}
-		S.error("%s不支持len函数", value.type());
+		S.error(pos,"%s不支持len函数", value.type());
 		return Value.VOID;  
 	}
 

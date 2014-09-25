@@ -8,7 +8,8 @@ public class Assign extends Stmt {
 	public Name name;
 	public Node value;
 
-	public Assign(Name name, Node value) {
+	public Assign(Position pos, Name name, Node value) {
+		super(pos);
 		this.name = name;
 		this.value = value;
 	}

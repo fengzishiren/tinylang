@@ -1,29 +1,25 @@
 public class Token {
-	public static final Token EOF = new Token(Tag.EOF);// avoid null pointer
+	public static final Token EOF = new Token(Tag.EOF, -1, -1);// avoid null pointer
 
 	public int tag;
 	public Object content = "";
 
-	public Token(int tag) {
+	public Position pos;
+
+	public Token(int tag, int row, int col) {
 		this.tag = tag;
+		this.pos = new Position(row, col);
 	}
 
-	public Token(int tag, Object content) {
+	public Token(int tag, Object content, int row, int col) {
 		super();
 		this.tag = tag;
 		this.content = content;
-	}
-
-	public String content() {
-		if (Tag.EOF == this.tag) {
-			S.error("unexpected %s", Tag.toString(Tag.EOF));
-		}
-		return content.toString();
+		this.pos = new Position(row, col);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("<%s, %s>", Tag.toString(tag), content.toString());
-		// return content == null ? "" : content.toString();
+		return String.format("<%s, %s> %s", Tag.toString(tag), content.toString(), pos);
 	}
 }

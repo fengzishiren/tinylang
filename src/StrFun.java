@@ -7,7 +7,7 @@ public class StrFun extends BuiltinFun {
 	}
 
 	@Override
-	public Value apply(List<Value> args) {
+	public Value apply(List<Value> args, Position pos) {
 		return new StringValue(args.get(0).toString());
 	}
 }

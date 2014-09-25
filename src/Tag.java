@@ -20,11 +20,10 @@ public class Tag {
 	public static final int TRUE = 272;
 	public static final int DEFINE = 273;
 	public static final int RETURN = 274;
-	public static final int NULL = 275;
-	public static final int For = 276;
-	public static final int Foreach = 277;
-	public static final int IN = 278;
-	public static final int Lambda = 279;
+	public static final int For = 275;
+	public static final int Foreach = 276;
+	public static final int IN = 277;
+	public static final int Lambda = 278;
 	
 	public static final String[] desc = {
 		"int",
@@ -46,7 +45,6 @@ public class Tag {
 		"true",
 		"define",
 		"return",
-		"null",
 		"for",
 		"foreach",
 		"in",

@@ -1,5 +1,12 @@
 public abstract class Node {
-	public static Stmt Null = new Null();
+	
+	public Position pos;
+	
+	public Node(Position pos) {
+		super();
+		this.pos = pos;
+	}
+
 	/**
 	 * 
 	 * eg: -3, -8, +3 => 0 - 3, 0 - 8, 0 + 3

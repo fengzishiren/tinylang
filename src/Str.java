@@ -2,7 +2,8 @@
 public class Str extends Node {
 	public String value;
 
-	public Str(Object content) {
+	public Str(Position pos, Object content) {
+		super(pos);
 		this.value = (String) content;
 	}
 

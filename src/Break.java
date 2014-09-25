@@ -1,6 +1,7 @@
 public class Break extends Stmt {
 
-	public Break() {
+	public Break(Position pos) {
+		super(pos);
 	}
 
 	@Override

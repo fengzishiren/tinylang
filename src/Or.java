@@ -3,7 +3,8 @@ public class Or extends Node {
 	public Node left, right;
 	public int op;
 
-	public Or(int op, Node left, Node right) {
+	public Or(Position pos, int op, Node left, Node right) {
+		super(pos);
 		this.op = op;
 		this.left = left;
 		this.right = right;
@@ -18,7 +19,7 @@ public class Or extends Node {
 			return new BoolValue(((BoolValue) lv).value
 					|| ((BoolValue) rv).value);
 		}
-		S.error("Type match error!");
+		S.error(pos, "Type match error!");
 		return Value.FALSE; // never touch
 	}
 

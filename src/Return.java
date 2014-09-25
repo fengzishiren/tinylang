@@ -2,8 +2,8 @@ public class Return extends Stmt {
 
 	public Node opexpr;
 
-	public Return(Node opexpr) {
-		super();
+	public Return(Position pos, Node opexpr) {
+		super(pos);
 		this.opexpr = opexpr;
 	}
 

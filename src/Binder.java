@@ -25,7 +25,7 @@ public class Binder {
 	public static void define(Name name, Value value, Scope s) {
 		Value v = s.lookup(name.id);
 		if (v != null)
-			S.error("函数重定义： %s", name);
+			S.error(name.pos, "函数重定义： %s", name);
 		s.putValue(name.id, value);
 	}
 

@@ -11,11 +11,11 @@ public class SprintfFun extends BuiltinFun {
 	}
 
 	@Override
-	public Value apply(List<Value> args) {
+	public Value apply(List<Value> args, Position pos) {
 		if (args.size() == 0)
-			S.error(this + "必须至少有一个参数");
+			S.error(pos, this + "必须至少有一个参数");
 		if (!(args.get(0) instanceof StringValue)) {
-			S.error(this + "第一个参数必须是String" + args);
+			S.error(pos, this + "第一个参数必须是String" + args);
 		}
 		ArrayList<Object> varargs = new ArrayList<>(args.size());
 		
@@ -28,7 +28,7 @@ public class SprintfFun extends BuiltinFun {
 			} else if (v instanceof StringValue) {
 				varargs.add(((StringValue) v).value);
 			} else
-				S.error(this + "格式化参数必须是：int、float和String");
+				S.error(pos, this + "格式化参数必须是：int、float和String");
 		}
 		String s = formatter.format(args.get(0).toString(), varargs.toArray()).toString();
 		return new StringValue(s);

@@ -7,6 +7,10 @@ import java.util.List;
  */
 public class Unit extends Node {
 
+	public Unit(Position pos) {
+		super(pos);
+	}
+
 	private List<Fun> funcs = new ArrayList<>();
 
 	public void addFun(Fun fun) {
@@ -36,7 +40,7 @@ public class Unit extends Node {
 		if (count == 0) {
 			S.error("找不到main函数");
 		}
-		Call call = new Call(main, Argument.noArgs());
+		Call call = new Call(main.pos, main, Argument.noArgs(Position.IGNORE));
 		return call.interp(s);
 	}
 

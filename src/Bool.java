@@ -3,8 +3,8 @@ public class Bool extends Node {
 
 	public boolean value;
 
-	public Bool(Object content) {
-		//assert content == "true" || content == "false"
+	public Bool(Position pos, Object content) {
+		super(pos);
 		value = "true".equals(content) ? true : false;
 	}
 

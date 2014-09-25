@@ -10,6 +10,7 @@ public class Lexer {
 
 	private String text;
 	private int offset;
+	private int row, col;
 
 	public Lexer(String s) {
 		text = s;
@@ -27,7 +28,6 @@ public class Lexer {
 		reserves.put("true", Tag.TRUE);
 		reserves.put("false", Tag.FALSE);
 		reserves.put("return", Tag.RETURN);
-		reserves.put("null", Tag.NULL);
 		reserves.put("foreach", Tag.Foreach);
 		reserves.put("in", Tag.IN);
 		reserves.put("lambda", Tag.Lambda);
@@ -71,8 +71,10 @@ public class Lexer {
 
 	private void forward() {
 		if (text.charAt(offset++) == '\n') {
+			row++;
+			col = 0;
 		} else
-			;
+			col++;
 	}
 
 	private char peek() {
@@ -84,50 +86,50 @@ public class Lexer {
 			;
 		if (text.length() == offset)
 			return Token.EOF;
-
+		int thisRow = row, thisCol = col;
 		switch (peek()) {
 		case '&':
 			forward();
 			if (lookequal('&')) {
 				forward();
-				return new Token(Tag.AND);
+				return new Token(Tag.AND, thisRow, thisCol);
 			} else
-				return new Token('&');
+				return new Token('&', thisRow, thisCol);
 		case '|':
 			forward();
 			if (lookequal('|')) {
 				forward();
-				return new Token(Tag.OR);
+				return new Token(Tag.OR, thisRow, thisCol);
 			} else
-				return new Token('|');
+				return new Token('|', thisRow, thisCol);
 		case '=':
 			forward();
 			if (lookequal('=')) {
 				forward();
-				return new Token(Tag.EQ);
+				return new Token(Tag.EQ, thisRow, thisCol);
 			} else
-				return new Token('=');
+				return new Token('=', thisRow, thisCol);
 		case '!':
 			forward();
 			if (lookequal('=')) {
 				forward();
-				return new Token(Tag.NE);
+				return new Token(Tag.NE, thisRow, thisCol);
 			} else
-				return new Token('!');
+				return new Token('!', thisRow, thisCol);
 		case '<':
 			forward();
 			if (lookequal('=')) {
 				forward();
-				return new Token(Tag.LE);
+				return new Token(Tag.LE, thisRow, thisCol);
 			} else
-				return new Token('<');
+				return new Token('<', thisRow, thisCol);
 		case '>':
 			forward();
 			if (lookequal('=')) {
 				forward();
-				return new Token(Tag.GE);
+				return new Token(Tag.GE, thisRow, thisCol);
 			} else
-				return new Token('>');
+				return new Token('>', thisRow, thisCol);
 		}
 		if (Character.isDigit(peek())) {
 			int v = 0;
@@ -136,7 +138,7 @@ public class Lexer {
 				forward();
 			} while (offset != text.length() && Character.isDigit(peek()));
 			if (!lookequal('.')) {
-				return new Token(Tag.INT, v);
+				return new Token(Tag.INT, v, thisRow, thisCol);
 			}
 			float x = v;
 			float d = 10;
@@ -146,7 +148,7 @@ public class Lexer {
 				d *= 10;
 				forward();
 			}
-			return new Token(Tag.FLOAT, x);
+			return new Token(Tag.FLOAT, x, thisRow, thisCol);
 		}
 		if (lookequal('"') || lookequal('\'')) {
 			StringBuilder buf = new StringBuilder();
@@ -165,7 +167,7 @@ public class Lexer {
 			} while (true);
 			if (offset != text.length())
 				forward();
-			return new Token(Tag.STRING, buf.toString()); // note:
+			return new Token(Tag.STRING, buf.toString(), thisRow, thisCol); // note:
 		}
 		if (Character.isLetter(peek()) || peek() == '_') {
 			int start = offset;
@@ -175,17 +177,17 @@ public class Lexer {
 					&& (Character.isLetterOrDigit(peek()) || peek() == '_'));
 			String word = text.substring(start, offset);
 			Integer tag = reserves.get(word);
-			return new Token(tag == null ? Tag.ID : tag, word);
+			return new Token(tag == null ? Tag.ID : tag, word, thisRow, thisCol);
 		}
-		Token to = new Token(peek());
+		Token to = new Token(peek(), thisRow, thisCol);
 		forward();
 		return to;
 	}
 
 	public static void main(String[] args) throws IOException, IOException {
-		Lexer lexer = new Lexer(U.readFile("example.sl"));
+		Lexer lexer = new Lexer(U.readFile("langs/error.tl"));
 		Token tok;
-		while ((tok = lexer.scan()) != null) {
+		while ((tok = lexer.scan()) != Token.EOF) {
 			System.out.println(tok);
 		}
 	}

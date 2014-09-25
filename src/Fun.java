@@ -8,8 +8,8 @@ public class Fun extends Node {
 	public Parameter params;
 	public Node body;
 
-	public Fun(Name name, Parameter params, Node body) {
-		super();
+	public Fun(Position pos, Name name, Parameter params, Node body) {
+		super(pos);
 		this.name = name;
 		this.params = params;
 		this.body = body;

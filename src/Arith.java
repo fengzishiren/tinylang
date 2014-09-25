@@ -2,8 +2,8 @@ public class Arith extends Node {
 	public Node left, right;
 	public int op;
 
-	public Arith(Node left, int op, Node right) {
-		super();
+	public Arith(Position pos, Node left, int op, Node right) {
+		super(pos);
 		this.left = left;
 		this.op = op;
 		this.right = right;
@@ -16,7 +16,7 @@ public class Arith extends Node {
 		//字符串连接操作： 任意类型和string都可自动连接
 		if (lv instanceof StringValue || rv instanceof StringValue) {
 			if (op != '+')
-				S.error("%s String连接不支持操作: %s", this, Tag.toString(op));
+				S.error(pos, "%s String连接不支持操作: %s", this, Tag.toString(op));
 			return new StringValue(lv + "" + rv);
 		}
 		if (lv instanceof IntValue && rv instanceof IntValue) {
@@ -40,7 +40,7 @@ public class Arith extends Node {
 			return new FloatValue(op(l, r));
 		}
 
-		S.error("类型不匹配的操作： " + this);
+		S.error(pos, "类型不匹配的操作： " + this);
 		return Value.VOID; // never touch
 	}
 
@@ -58,11 +58,11 @@ public class Arith extends Node {
 			break;
 		case '/':
 			if (r == 0x00)
-				S.error("除0错误:" + this);
+				S.error(pos, "除0错误:" + this);
 			ret = l / r;
 			break;
 		default:
-			S.error("不支持操作符: " + Tag.toString(op));
+			S.error(pos,"不支持操作符: " + Tag.toString(op));
 		}
 		return ret;
 	}
@@ -83,7 +83,7 @@ public class Arith extends Node {
 			ret = l / r;
 			break;
 		default:
-			S.error("不支持操作符: " + Tag.toString(op));
+			S.error(pos,"不支持操作符: " + Tag.toString(op));
 		}
 		return ret;
 	}

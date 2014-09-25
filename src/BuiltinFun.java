@@ -11,7 +11,7 @@ public abstract class BuiltinFun extends Value {
 		this.arity = arity;
 	}
 
-	public abstract Value apply(List<Value> args);
+	public abstract Value apply(List<Value> args, Position pos);
 
 	public Type type() {
 		return Type.BuiltinFuntion;

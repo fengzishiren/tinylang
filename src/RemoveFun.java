@@ -7,22 +7,21 @@ public class RemoveFun extends BuiltinFun {
 	}
 
 	@Override
-	public Value apply(List<Value> args) {
+	public Value apply(List<Value> args, Position pos) {
 		Value value = args.get(0);
 		if (value instanceof ListValue) {
 			Value val = args.get(1);
 			if (val instanceof IntValue) {// idx access
-				((ListValue) value).remove(((IntValue) val));
+				((ListValue) value).remove(((IntValue) val), pos);
 			} else
-				// val access
-				((ListValue) value).remove((val));
+				S.error(pos, "list访问只允许下标为int");
 		} else if (value instanceof DictValue) {
 			Value val = args.get(1);
 			if (!(val instanceof PrimValue))
-				S.error(this + " key必须是原始类型");
-			((DictValue) value).remove((PrimValue) val);
+				S.error(pos, this + "dict的key必须是原始类型");
+			((DictValue) value).remove((PrimValue) val, pos);
 		} else
-			S.error(value.type() + " 不支持remove函数");
+			S.error(pos, value.type() + " 不支持remove函数");
 		return Value.VOID;
 	}
 }
