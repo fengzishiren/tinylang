@@ -127,7 +127,7 @@ public class Parser {
 			Stmt.Enclosing = savedStmt;
 			forNode.init(init, x, update, s1);
 			return forNode;
-		case Tag.Foreach:// foreach (item in list) foreach (k, v in dict)
+		case Tag.Foreach:// foreach (item in list) or foreach (k, v in dict)
 			move();
 			Foreach foreachNode = new Foreach();
 			savedStmt = Stmt.Enclosing;
@@ -195,6 +195,8 @@ public class Parser {
 			ac = new Access(name, idx);
 			// case through: ls[0][0].append()....
 		case '.':// eg: ls.append(x) => append(ls, x)
+			// ls.append(x).append(y).append(z)
+			// append(append(append(ls, x), y), z)
 			move();
 			Name oname = new Name(look.content());
 			match(Tag.ID);
@@ -350,7 +352,7 @@ public class Parser {
 			if (look.tag == '[')// 下标访问
 				return new Access(name, access());
 			return name;// 变量
-		case Tag.STRING://"xxxx"
+		case Tag.STRING:// "xxxx"
 			String str = look.content();
 			move();
 			return new Str(str);
