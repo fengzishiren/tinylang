@@ -13,10 +13,10 @@ public class Arith extends Node {
 	public Value interp(Scope s) {
 		Value lv = left.interp(s);
 		Value rv = right.interp(s);
-		//
+		//字符串连接操作： 任意类型和string都可自动连接
 		if (lv instanceof StringValue || rv instanceof StringValue) {
 			if (op != '+')
-				S.error("String连接不支持操作: " + Tag.toString(op));
+				S.error("%s String连接不支持操作: %s", this, Tag.toString(op));
 			return new StringValue(lv + "" + rv);
 		}
 		if (lv instanceof IntValue && rv instanceof IntValue) {

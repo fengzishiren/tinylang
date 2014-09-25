@@ -236,6 +236,7 @@ public class Parser {
 	 * @return
 	 */
 	private Node bool() {
+		//同等优先级的while求值 更高优先级的优先求值
 		Node x = join();
 		while (look.tag == Tag.OR) {
 			move();
