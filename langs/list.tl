@@ -12,8 +12,6 @@ define main() {
 	print(a);
 	a.append(7);
 	print(a);
-	#hello:se
-	a = true;
 	a.remove(6);
 	print(a);
 	return len(a);

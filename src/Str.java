@@ -11,9 +11,12 @@ public class Str extends Node {
 		return new StringValue(value);
 	}
 
+	/**
+	 * eg: "你好，\t世界！\n"
+	 */
 	@Override
 	public String toString() {
-		return "\"" + value + "\"";
+		return "\"" + U.escape(value) + "\"";
 	}
 
 }
