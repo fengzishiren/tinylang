@@ -14,6 +14,17 @@
 :syntax region tlString start=+"+ skip=+\\\\\|\\"+ end=+"+ 
 :syntax match tlComment /#.*/ 
 
+:syntax match tlNumber	"\<0[oO]\=\o\+[Ll]\=\>"
+:syntax match tlNumber	"\<0[xX]\x\+[Ll]\=\>"
+:syntax match tlNumber	"\<0[bB][01]\+[Ll]\=\>"
+:syntax match tlNumber	"\<\%([1-9]\d*\|0\)[Ll]\=\>"
+:syntax match tlNumber	"\<\d\+[jJ]\>"
+:syntax match tlNumber	"\<\d\+[eE][+-]\=\d\+[jJ]\=\>"
+:syntax match tlNumber
+	\ "\<\d\+\.\%([eE][+-]\=\d\+\)\=[jJ]\=\%(\W\|$\)\@="
+:syntax match pythonNumber
+	\ "\%(^\|\W\)\@<=\d*\.\d\+\%([eE][+-]\=\d\+\)\=[jJ]\=\>"
+
 :highlight link tlStmt	Statement
 :highlight link tlType	define
 :highlight link tlConditional	Conditional
@@ -22,4 +33,4 @@
 :highlight link tlComment		Comment
 :highlight link tlString		String
 :highlight link tlBuiltin		Function
-
+:highlight link tlNumber		Number
