@@ -1,4 +1,4 @@
-public class Access extends Node {
+public class Access extends Stmt {
 
 	public Name name;
 	public Index idxs;
