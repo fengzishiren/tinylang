@@ -1,9 +1,11 @@
 import java.util.List;
 
-public class LenFun extends BuiltinFun {
+public class LengthFun extends BuiltinFun {
 
-	public LenFun() {
-		super("len", 1);
+	public static final String LEN = "len";
+	public static final String SIZE = "size";
+	public LengthFun(String name) {
+		super(name, 1);
 	}
 
 	@Override
