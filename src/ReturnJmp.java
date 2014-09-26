@@ -5,6 +5,7 @@
  *
  */
 public class ReturnJmp extends RuntimeException {
+	private static final long serialVersionUID = -2003545590032244848L;
 	public Value value = Value.VOID;
 
 	/**

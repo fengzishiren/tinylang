@@ -42,22 +42,34 @@ public class Foreach extends Stmt {
 				S.error(pos, "List类型不支持for (k, v in x)形式");
 			}
 			ListValue ls = ((ListValue) val);
-			for (Value v : ls) {
-				Binder.assign(first, v, s);
-				body.interp(s);
+			try {
+				for (Value v : ls) {
+					Binder.assign(first, v, s);
+					try {
+						body.interp(s);
+					} catch (Goon ignore) {
+					}
+				}
+			} catch (Goto ignore) {
 			}
 		} else if (val instanceof DictValue) {
 			if (second == Name.Null) {
-				S.error(pos,"Dict类型不支持 for (x in xx)形式");
+				S.error(pos, "Dict类型不支持 for (x in xx)形式");
 			}
 			DictValue dt = ((DictValue) val);
-			for (Entry<PrimValue, Value> e : dt) {
-				Binder.assign(first, e.getKey(), s);
-				Binder.assign(second, e.getValue(), s);
-				body.interp(s);
+			try {
+				for (Entry<PrimValue, Value> e : dt) {
+					Binder.assign(first, e.getKey(), s);
+					Binder.assign(second, e.getValue(), s);
+					try {
+						body.interp(s);
+					} catch (Goon ignore) {
+					}
+				}
+			} catch (Goto ignore) {
 			}
 		} else
-			S.error(pos,"不可迭代,必须为集合类型");
+			S.error(pos, "不可迭代,必须为集合类型");
 		return Value.VOID;
 	}
 

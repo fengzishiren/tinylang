@@ -9,5 +9,11 @@ define main() {
 	s = sprintf("%s + %d", re, 250);
 	print(s, str(a), type(str(a)));
 	
+	ls = [].append(33).append(33).append(33).append(33);
+	ls.append("EOF").append(33).append(33);
+	print(ls);
+	s = ls[4].str().str();
+	print(s);
+	
 	return 0;
 }

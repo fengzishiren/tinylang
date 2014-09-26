@@ -22,15 +22,16 @@ public class Lexer {
 		reserves.put("if", Tag.IF);
 		reserves.put("else", Tag.ELSE);
 		reserves.put("while", Tag.WHILE);
-		reserves.put("for", Tag.For);
+		reserves.put("for", Tag.FOR);
 		reserves.put("break", Tag.BREAK);
 		reserves.put("do", Tag.DO);
 		reserves.put("true", Tag.TRUE);
 		reserves.put("false", Tag.FALSE);
 		reserves.put("return", Tag.RETURN);
-		reserves.put("foreach", Tag.Foreach);
+		reserves.put("foreach", Tag.FOREACH);
 		reserves.put("in", Tag.IN);
-		reserves.put("lambda", Tag.Lambda);
+		reserves.put("lambda", Tag.LAMBDA);
+		reserves.put("continue", Tag.CONTINUE);
 	}
 
 	private boolean skipSpace() {

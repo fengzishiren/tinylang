@@ -16,13 +16,16 @@ public class While extends Stmt {
 	public Value interp(Scope s) {
 		try {
 			do {
-				Value vt = test.interp(s);
-				if (!(vt instanceof BoolValue))
-					S.error("必须是boolean " + test);
-				if (((BoolValue) vt).value)
-					stmt.interp(s);
-				else
-					break;
+				try {
+					Value vt = test.interp(s);
+					if (!(vt instanceof BoolValue))
+						S.error("必须是boolean " + test);
+					if (((BoolValue) vt).value)
+						stmt.interp(s);
+					else
+						break;
+				} catch (Goon ignore) {
+				}
 			} while (true);
 		} catch (Goto ignore) {
 		}

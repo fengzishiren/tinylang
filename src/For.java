@@ -25,14 +25,18 @@ public class For extends Stmt {
 		init.interp(s);
 		try {
 			do {
-				Value vt = test.interp(s);
-				if (!(vt instanceof BoolValue))
-					S.error(pos, "必须是boolean " + test);
-				if (((BoolValue) vt).value) {
-					stmt.interp(s);
+				try {
+					Value vt = test.interp(s);
+					if (!(vt instanceof BoolValue))
+						S.error(pos, "必须是boolean " + test);
+					if (((BoolValue) vt).value) {
+						stmt.interp(s);
+					} else
+						break;
+				} catch (Goon ignore) {
+				} finally {
 					update.interp(s);
-				} else
-					break;
+				}
 			} while (true);
 		} catch (Goto ignore) {
 		}

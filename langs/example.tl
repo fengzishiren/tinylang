@@ -15,7 +15,7 @@ define main() {
 	
 	if (a < 0 || true)
 		print("Hello World");
-	msg = echo("hello");
+	msg = echo(echo("hello"));
 	print(msg);
 	
 	return version() == "V1.0.1";

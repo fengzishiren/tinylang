@@ -1,8 +1,10 @@
 public class Position {
-	public int row, col;
 	public static final Position START = new Position(0, 0);
 	public static final Position EOF = new Position(-1, -1);
 	public static final Position IGNORE = EOF;
+
+	public int row, col;
+
 	public Position(int row, int col) {
 		super();
 		this.row = row;

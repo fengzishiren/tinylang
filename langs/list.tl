@@ -2,6 +2,7 @@ define main() {
 	a = [1, 2, 3, 4, 5, 6];
 	foreach(e in a) {
 		print(e);
+		continue;
 		print("----------");
 	}
 		

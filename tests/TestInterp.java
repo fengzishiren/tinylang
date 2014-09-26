@@ -23,7 +23,7 @@ public class TestInterp {
 
 	@Test
 	public void testInterp() throws IOException {
-		Interpreter interpreter = new Interpreter("langs/error.tl");
+		Interpreter interpreter = new Interpreter("langs/list.tl");
 		Value ret = interpreter.interp();
 		// print return value
 		System.out.println(ret);

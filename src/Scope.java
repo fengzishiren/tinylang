@@ -46,7 +46,9 @@ public class Scope {
 		share.putValue("sprintf", new SprintfFun());
 		share.putValue("type", new TypeFun());
 		share.putValue("version", new VersionFun());
-		share.putValue("len", new LenFun());
+		share.putValue("len", new LengthFun(LengthFun.LEN));
+		//str.size()
+		share.putValue("size", new LengthFun(LengthFun.SIZE));
 		share.putValue("str", new StrFun());
 		share.putValue("remove", new RemoveFun());
 		share.putValue("append", new AppendFun());
