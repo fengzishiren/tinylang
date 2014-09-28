@@ -55,6 +55,7 @@ public class Scope {
 		share.putValue("cons", new ConsFun());
 		share.putValue("car", new CarFun());
 		share.putValue("cdr", new CdrFun());
+		share.putValue("error", new ErrorFun());
 		return share;
 	}
 

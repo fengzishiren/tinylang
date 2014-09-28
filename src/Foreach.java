@@ -2,7 +2,7 @@ import java.util.Map.Entry;
 
 /**
  * 
- * foreach (item in list) foreach (k, v in dict)
+ * foreach (item in list) foreach (k, v in dict) foreach(k in dict)
  * 
  * @author lunatic
  *
@@ -53,14 +53,12 @@ public class Foreach extends Stmt {
 			} catch (Goto ignore) {
 			}
 		} else if (val instanceof DictValue) {
-			if (second == Name.Null) {
-				S.error(pos, "Dict类型不支持 for (x in xx)形式");
-			}
 			DictValue dt = ((DictValue) val);
 			try {
 				for (Entry<PrimValue, Value> e : dt) {
 					Binder.assign(first, e.getKey(), s);
-					Binder.assign(second, e.getValue(), s);
+					if (second != Name.Null)
+						Binder.assign(second, e.getValue(), s);
 					try {
 						body.interp(s);
 					} catch (Goon ignore) {

@@ -26,7 +26,7 @@ public class Parser {
 	}
 
 	private void error(String msg, Object... args) {
-		S.error(look.pos + " error! " + String.format(msg, args));
+		S.error(look.pos + " syntax error! " + String.format(msg, args));
 	}
 
 	private String name() {
