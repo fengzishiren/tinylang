@@ -3,7 +3,7 @@ import java.util.List;
 public class StrFun extends BuiltinFun {
 
 	public StrFun() {
-		super("str", 1);// ignore param's count
+		super("str", 1);
 	}
 
 	@Override
