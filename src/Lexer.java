@@ -32,6 +32,7 @@ public class Lexer {
 		reserves.put("in", Tag.IN);
 		reserves.put("lambda", Tag.LAMBDA);
 		reserves.put("continue", Tag.CONTINUE);
+		reserves.put("null", Tag.NULL);
 	}
 
 	private boolean skipSpace() {

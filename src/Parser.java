@@ -391,6 +391,10 @@ public class Parser {
 			x = bool();
 			match(')');
 			return x;
+		case Tag.NULL:
+			x = new Null(pos);
+			move();
+			return x;
 		case Tag.INT:
 			x = new Int(pos, look.content);
 			move();
