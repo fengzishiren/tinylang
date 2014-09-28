@@ -36,7 +36,7 @@ public class Parser {
 	}
 
 	public Node parse() {
-		Unit root = new Unit(Position.START);
+		Unit root = new Unit(look.pos);
 		while (look != Token.EOF)
 			root.addFun(function());
 		return root;

@@ -1,10 +1,15 @@
 public class Token {
-	public static final Token EOF = new Token(Tag.EOF, -1, -1);// avoid null pointer
-
+	public static final Token EOF = new Token(Tag.EOF, Position.EOF);// avoid null
+																// pointer
 	public int tag;
 	public Object content = "";
 
 	public Position pos;
+
+	private Token(int tag, Position pos) {
+		this.tag = tag;
+		this.pos = pos;
+	}
 
 	public Token(int tag, int row, int col) {
 		this.tag = tag;
@@ -20,6 +25,7 @@ public class Token {
 
 	@Override
 	public String toString() {
-		return String.format("<%s, %s> %s", Tag.toString(tag), content.toString(), pos);
+		return String.format("<%s, %s> %s", Tag.toString(tag),
+				content.toString(), pos);
 	}
 }
