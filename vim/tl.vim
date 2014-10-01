@@ -6,7 +6,7 @@
 :syntax keyword tlStmt	false, true, null
 :syntax keyword tlStmt	continue break
 :syntax keyword tlStmt	lambda return in
-:syntax keyword tlBuiltin print type len size version str sprintf cons car cdr append remove
+:syntax keyword tlBuiltin print type len size version str sprintf cons car cdr append remove error
 :syntax keyword tlType	define
 :syntax keyword tlConditional else if
 :syntax keyword tlRepeat for while foreach 
