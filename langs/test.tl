@@ -15,5 +15,5 @@ define main() {
 	s = ls[4].str().str();
 	print(s);
 	
-	return 0;
+	return type(null);
 }

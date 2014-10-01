@@ -1,5 +1,6 @@
 
 public class Tag {
+	
 	public static final int EOF = -1;
 	public static final int INT = 256;
 	public static final int STRING = 257;
@@ -25,6 +26,7 @@ public class Tag {
 	public static final int IN = 277;
 	public static final int LAMBDA = 278;
 	public static final int CONTINUE = 279;
+	public static final int NULL = 280;
 	
 	public static final String[] desc = {
 		"int",
@@ -50,7 +52,8 @@ public class Tag {
 		"foreach",
 		"in",
 		"lambda",
-		"continue"
+		"continue",
+		"null"
 	};
 
 

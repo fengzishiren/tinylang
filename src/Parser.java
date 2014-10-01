@@ -36,7 +36,7 @@ public class Parser {
 	}
 
 	public Node parse() {
-		Unit root = new Unit(Position.START);
+		Unit root = new Unit(look.pos);
 		while (look != Token.EOF)
 			root.addFun(function());
 		return root;
@@ -390,6 +390,10 @@ public class Parser {
 			move();
 			x = bool();
 			match(')');
+			return x;
+		case Tag.NULL:
+			x = new Null(pos);
+			move();
 			return x;
 		case Tag.INT:
 			x = new Int(pos, look.content);
