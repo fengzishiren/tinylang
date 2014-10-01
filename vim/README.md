@@ -1,1 +1,1 @@
-![Example](./eg.pgn)
+![Example](./eg.png)
