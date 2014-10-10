@@ -31,7 +31,7 @@ public class Parser {
 
 	private String name() {
 		if (Tag.EOF == look.tag)
-			S.error(look.pos, "unexpected %s", Tag.toString(Tag.EOF));
+			error("unexpected %s", Tag.toString(Tag.EOF));
 		return look.content.toString();
 	}
 
