@@ -73,8 +73,8 @@ public class Foreach extends Stmt {
 
 	@Override
 	public String toString() {
-		return (Name.Null == second) ? String.format("for (%s in %s) %s",
+		return (Name.Null == second) ? String.format("foreach (%s in %s) %s",
 				first, collection, body) : String.format(
-				"for (%s, %s in %s) %s", first, second, collection, body);
+				"foreach (%s, %s in %s) %s", first, second, collection, body);
 	}
 }
